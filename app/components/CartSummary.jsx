@@ -1,315 +1,409 @@
 import {CartForm, Money} from '@shopify/hydrogen';
 import {useEffect, useId, useRef, useState} from 'react';
-import {useFetcher} from 'react-router';
+import {useFetcher, Link} from 'react-router';
+import {useAside} from '~/components/Aside';
 
-/**
- * @param {CartSummaryProps}
- */
 export function CartSummary({cart, layout}) {
-  const className =
-    layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
-  const summaryId = useId();
-  const discountsHeadingId = useId();
+  const summaryId           = useId();
   const discountCodeInputId = useId();
-  const giftCardHeadingId = useId();
-  const giftCardInputId = useId();
+  const giftCardInputId     = useId();
+  const isAside             = layout === 'aside';
 
   return (
-    <div aria-labelledby={summaryId} className={className}>
-      <h4 id={summaryId}>Totals</h4>
-      <dl role="group" className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
-          {cart?.cost?.subtotalAmount?.amount ? (
-            <Money data={cart?.cost?.subtotalAmount} />
-          ) : (
-            '-'
-          )}
-        </dd>
-      </dl>
-      <CartDiscounts
-        discountCodes={cart?.discountCodes}
-        discountsHeadingId={discountsHeadingId}
-        discountCodeInputId={discountCodeInputId}
-      />
-      <CartGiftCard
-        giftCardCodes={cart?.appliedGiftCards}
-        giftCardHeadingId={giftCardHeadingId}
-        giftCardInputId={giftCardInputId}
-      />
-      <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} />
+    <div
+      aria-labelledby={summaryId}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0',
+        background: '#fff',
+        borderRadius: isAside ? '0' : '0.875rem',
+        border: isAside ? 'none' : '1px solid #e8e4dc',
+        overflow: 'hidden',
+        maxWidth: isAside ? '100%' : '420px',
+        marginLeft: isAside ? '0' : 'auto',
+        boxShadow: isAside ? 'none' : '0 2px 12px rgba(44,24,16,0.06)',
+      }}
+    >
+      <ShippingBadge />
+
+      <div style={{padding: isAside ? '0 0 1rem' : '1rem 1rem 0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+          <span style={{fontSize: '0.875rem', color: '#7a6a62'}}>Subtotal</span>
+          <Money data={cart?.cost?.subtotalAmount} style={{fontSize: '0.9375rem', fontWeight: 600, color: '#2C1810'}}/>
+        </div>
+
+        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+          <span style={{fontSize: '0.875rem', color: '#7a6a62'}}>Envío</span>
+          <span style={{fontSize: '0.8125rem', color: '#2a9d5c', fontWeight: 600}}>Calculado al finalizar</span>
+        </div>
+
+        <div style={{height: '1px', background: '#e8e4dc', margin: '0.375rem 0'}}/>
+
+        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'}}>
+          <span style={{fontSize: '1rem', fontWeight: 700, color: '#2C1810'}}>Total</span>
+          <Money data={cart?.cost?.totalAmount} style={{fontSize: '1.375rem', fontWeight: 800, color: '#2C1810'}}/>
+        </div>
+
+        <p style={{fontSize: '0.6875rem', color: '#b0a49c', margin: 0, lineHeight: 1.4}}>
+          Impuestos incluidos · Envío calculado en el siguiente paso
+        </p>
+      </div>
+
+      <div style={{padding: isAside ? '0' : '0 1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+        {isAside && <ViewCartLink />}
+        <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} />
+      </div>
+
+      <PaymentBadges />
+
+      <div style={{padding: isAside ? '0' : '0 1rem', paddingBottom: '0.5rem'}}>
+        <CartDiscounts
+          discountCodes={cart?.discountCodes}
+          discountCodeInputId={discountCodeInputId}
+        />
+      </div>
+
+      <div style={{padding: isAside ? '0' : '0 1rem 1rem'}}>
+        <CartGiftCard
+          giftCardCodes={cart?.appliedGiftCards}
+          giftCardInputId={giftCardInputId}
+        />
+      </div>
     </div>
   );
 }
 
-/**
- * @param {{checkoutUrl?: string}}
- */
+/* ── Ver carrito completo ── */
+function ViewCartLink() {
+  const {close} = useAside();
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <Link
+      to="/cart"
+      onClick={close}
+      style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+        width: '100%', padding: '0.75rem 1rem', borderRadius: '0.75rem',
+        border: `1.5px solid ${hovered ? '#2C1810' : '#e8e4dc'}`,
+        background: hovered ? '#2C1810' : '#fff',
+        color: hovered ? '#F5A623' : '#2C1810',
+        fontWeight: 700, fontSize: '0.9375rem',
+        textDecoration: 'none',
+        transition: 'all 0.15s',
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+      Ver carrito
+    </Link>
+  );
+}
+
+/* ── Shipping badge ── */
+function ShippingBadge() {
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '0.75rem 1rem',
+      background: 'linear-gradient(90deg, #fff8ee 0%, #fff3e0 100%)',
+      borderBottom: '1px solid #f0e4cc',
+    }}>
+      <div style={{display: 'flex', alignItems: 'center', gap: '0.625rem'}}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="1.75" aria-hidden="true">
+          <rect x="1" y="3" width="15" height="13" rx="1"/>
+          <path d="M16 8h3.5a1 1 0 01.9.55L22 12v4h-6"/>
+          <circle cx="6" cy="18" r="2"/>
+          <circle cx="18" cy="18" r="2"/>
+        </svg>
+        <span style={{fontSize: '0.8125rem', fontWeight: 700, color: '#2C1810', letterSpacing: '0.1px'}}>
+          Envío a domicilio disponible
+        </span>
+      </div>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2a9d5c" strokeWidth="2.5" aria-hidden="true">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+  );
+}
+
+/* ── Payment badges ── */
+function PaymentBadges() {
+  // const methods = [
+  //   {label: 'Visa',         icon: <VisaIcon />},
+  //   {label: 'Mastercard',   icon: <MastercardIcon />},
+  //   {label: 'Amex',         icon: <AmexIcon />},
+    
+  // ];
+
+  return (
+    <div style={{
+      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
+      padding: '0.75rem 1rem',
+      borderTop: '1px solid #f0ece6', borderBottom: '1px solid #f0ece6',
+      margin: '0.5rem 0', background: '#faf9f7',
+    }}>
+      <div style={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#b0a49c" strokeWidth="2.5" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0110 0v4"/>
+        </svg>
+        <span style={{fontSize: '0.6875rem', color: '#b0a49c', fontWeight: 500, letterSpacing: '0.5px', textTransform: 'uppercase'}}>
+          Pago seguro
+        </span>
+      </div>
+
+      {/* <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center'}}>
+        {methods.map((m) => (
+          <div
+            key={m.label}
+            aria-label={m.label}
+            title={m.label}
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: '#fff', border: '1px solid #e8e4dc',
+              borderRadius: '0.375rem', padding: '0.25rem 0.5rem',
+              height: '28px', minWidth: '44px',
+            }}
+          >
+            {m.icon}
+          </div>
+        ))}
+      </div> */}
+    </div>
+  );
+}
+
+/* ── Checkout CTA ── */
 function CartCheckoutActions({checkoutUrl}) {
+  const [hovered, setHovered] = useState(false);
   if (!checkoutUrl) return null;
 
   return (
-    <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
-      </a>
-      <br />
-    </div>
+    <a
+      href={checkoutUrl}
+      target="_self"
+      style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+        width: '100%', padding: '0.9375rem 1rem', borderRadius: '0.75rem',
+        background: hovered ? '#d4891a' : '#F5A623',
+        color: '#2C1810', fontWeight: 800, fontSize: '1rem', textDecoration: 'none',
+        marginTop: '0.25rem', transition: 'background 0.18s, transform 0.12s',
+        letterSpacing: '0.2px',
+        transform: hovered ? 'translateY(-1px)' : 'translateY(0)',
+        boxShadow: hovered ? '0 6px 20px rgba(245,166,35,0.35)' : '0 3px 10px rgba(245,166,35,0.2)',
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      Finalizar compra
+    </a>
   );
 }
 
-/**
- * @param {{
- *   discountCodes?: CartApiQueryFragment['discountCodes'];
- *   discountsHeadingId: string;
- *   discountCodeInputId: string;
- * }}
- */
-function CartDiscounts({
-  discountCodes,
-  discountsHeadingId,
-  discountCodeInputId,
-}) {
-  const codes =
-    discountCodes
-      ?.filter((discount) => discount.applicable)
-      ?.map(({code}) => code) || [];
+/* ── Descuentos (acordeón) ── */
+function CartDiscounts({discountCodes, discountCodeInputId}) {
+  const codes = discountCodes?.filter((d) => d.applicable)?.map(({code}) => code) || [];
+  const [open, setOpen] = useState(codes.length > 0);
+
+  useEffect(() => {
+    if (codes.length > 0) setOpen(true);
+  }, [codes.length]);
 
   return (
-    <section aria-label="Discounts">
-      {/* Have existing discount, display it with a remove option */}
-      <dl hidden={!codes.length}>
-        <div>
-          <dt id={discountsHeadingId}>Discounts</dt>
-          <UpdateDiscountForm>
-            <div
-              className="cart-discount"
-              role="group"
-              aria-labelledby={discountsHeadingId}
-            >
-              <code>{codes?.join(', ')}</code>
-              &nbsp;
-              <button type="submit" aria-label="Remove discount">
-                Remove
+    <div style={{display: 'flex', flexDirection: 'column', gap: '0.375rem'}}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          width: '100%', padding: '0.5rem 0',
+          background: 'none', border: 'none', borderTop: '1px solid #f0ece6',
+          cursor: 'pointer', fontFamily: 'inherit',
+        }}
+      >
+        <span style={{fontSize: '0.8125rem', fontWeight: 600, color: '#2C1810', display: 'flex', alignItems: 'center', gap: '0.375rem'}}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="2.5" aria-hidden="true">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+            <line x1="7" y1="7" x2="7.01" y2="7"/>
+          </svg>
+          {codes.length > 0 ? `Descuento: ${codes.join(', ')}` : '¿Tienes un código de descuento?'}
+        </span>
+        <svg
+          width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="#b0a49c" strokeWidth="2.5" aria-hidden="true"
+          style={{transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)'}}
+        >
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+
+      {open && (
+        <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem', paddingBottom: '0.5rem'}}>
+          {codes.length > 0 && (
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              background: '#fff8ee', border: '1px solid #f0d490',
+              borderRadius: '0.5rem', padding: '0.5rem 0.75rem',
+            }}>
+              <span style={{fontSize: '0.8125rem', fontWeight: 700, color: '#7a5200'}}>
+                🏷️ {codes.join(', ')}
+              </span>
+              <UpdateDiscountForm>
+                <button type="submit" style={{background: 'none', border: 'none', cursor: 'pointer', color: '#b0a49c', fontSize: '0.75rem', fontWeight: 600, padding: 0, fontFamily: 'inherit'}}>
+                  Quitar
+                </button>
+              </UpdateDiscountForm>
+            </div>
+          )}
+
+          <UpdateDiscountForm discountCodes={codes}>
+            <div style={{display: 'flex', gap: '0.5rem'}}>
+              <label htmlFor={discountCodeInputId} className="sr-only">Código de descuento</label>
+              <input
+                id={discountCodeInputId}
+                type="text"
+                name="discountCode"
+                placeholder="Ej. ROOF10"
+                style={{
+                  flex: 1, padding: '0.5625rem 0.75rem',
+                  border: '1.5px solid #e8e4dc', borderRadius: '0.5rem',
+                  fontSize: '0.8125rem', color: '#2C1810', outline: 'none',
+                  fontFamily: 'inherit', background: '#faf9f7', transition: 'border-color 0.15s',
+                }}
+                onFocus={(e) => (e.target.style.borderColor = '#acc3fa')}
+                onBlur={(e) => (e.target.style.borderColor = '#e8e4dc')}
+              />
+              <button
+                type="submit"
+                style={{
+                  padding: '0.5625rem 0.875rem', borderRadius: '0.5rem',
+                  border: '1.5px solid #2C1810', background: 'transparent',
+                  color: '#2C1810', fontWeight: 700, fontSize: '0.8125rem',
+                  cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap',
+                  transition: 'background 0.15s, color 0.15s',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = '#2C1810'; e.currentTarget.style.color = '#F5A623'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#2C1810'; }}
+              >
+                Aplicar
               </button>
             </div>
           </UpdateDiscountForm>
         </div>
-      </dl>
-
-      {/* Show an input to apply a discount */}
-      <UpdateDiscountForm discountCodes={codes}>
-        <div>
-          <label htmlFor={discountCodeInputId} className="sr-only">
-            Discount code
-          </label>
-          <input
-            id={discountCodeInputId}
-            type="text"
-            name="discountCode"
-            placeholder="Discount code"
-          />
-          &nbsp;
-          <button type="submit" aria-label="Apply discount code">
-            Apply
-          </button>
-        </div>
-      </UpdateDiscountForm>
-    </section>
+      )}
+    </div>
   );
 }
 
-/**
- * @param {{
- *   discountCodes?: string[];
- *   children: React.ReactNode;
- * }}
- */
 function UpdateDiscountForm({discountCodes, children}) {
   return (
-    <CartForm
-      route="/cart"
-      action={CartForm.ACTIONS.DiscountCodesUpdate}
-      inputs={{
-        discountCodes: discountCodes || [],
-      }}
-    >
+    <CartForm route="/cart" action={CartForm.ACTIONS.DiscountCodesUpdate} inputs={{discountCodes: discountCodes || []}}>
       {children}
     </CartForm>
   );
 }
 
-/**
- * @param {{
- *   giftCardCodes: CartApiQueryFragment['appliedGiftCards'] | undefined;
- *   giftCardHeadingId: string;
- *   giftCardInputId: string;
- * }}
- */
-function CartGiftCard({giftCardCodes, giftCardHeadingId, giftCardInputId}) {
-  const giftCardCodeInput = useRef(null);
-  const removeButtonRefs = useRef(new Map());
+/* ── Gift Cards ── */
+function CartGiftCard({giftCardCodes, giftCardInputId}) {
+  const giftCardCodeInput  = useRef(null);
+  const removeButtonRefs   = useRef(new Map());
   const previousCardIdsRef = useRef([]);
   const giftCardAddFetcher = useFetcher({key: 'gift-card-add'});
   const [removedCardIndex, setRemovedCardIndex] = useState(null);
 
   useEffect(() => {
-    if (giftCardAddFetcher.data) {
-      if (giftCardCodeInput.current !== null) {
-        giftCardCodeInput.current.value = '';
-      }
+    if (giftCardAddFetcher.data && giftCardCodeInput.current) {
+      giftCardCodeInput.current.value = '';
     }
   }, [giftCardAddFetcher.data]);
 
   useEffect(() => {
-    const currentCardIds = giftCardCodes?.map((card) => card.id) || [];
-
+    const currentCardIds = giftCardCodes?.map((c) => c.id) || [];
     if (removedCardIndex !== null && giftCardCodes) {
-      const focusTargetIndex = Math.min(
-        removedCardIndex,
-        giftCardCodes.length - 1,
-      );
-      const focusTargetCard = giftCardCodes[focusTargetIndex];
-      const focusButton = focusTargetCard
-        ? removeButtonRefs.current.get(focusTargetCard.id)
-        : null;
-
-      if (focusButton) {
-        focusButton.focus();
-      } else if (giftCardCodeInput.current) {
-        giftCardCodeInput.current.focus();
-      }
-
+      const idx = Math.min(removedCardIndex, giftCardCodes.length - 1);
+      const btn = giftCardCodes[idx] ? removeButtonRefs.current.get(giftCardCodes[idx].id) : null;
+      (btn || giftCardCodeInput.current)?.focus();
       setRemovedCardIndex(null);
     }
-
     previousCardIdsRef.current = currentCardIds;
   }, [giftCardCodes, removedCardIndex]);
 
-  const handleRemoveClick = (cardId) => {
-    const index = previousCardIdsRef.current.indexOf(cardId);
-    if (index !== -1) {
-      setRemovedCardIndex(index);
-    }
-  };
+  if (!giftCardCodes?.length) return null;
 
   return (
-    <section aria-label="Gift cards">
-      {giftCardCodes && giftCardCodes.length > 0 && (
-        <dl>
-          <dt id={giftCardHeadingId}>Applied Gift Card(s)</dt>
-          {giftCardCodes.map((giftCard) => (
-            <dd key={giftCard.id} className="cart-discount">
-              <RemoveGiftCardForm
-                giftCardId={giftCard.id}
-                lastCharacters={giftCard.lastCharacters}
-                onRemoveClick={() => handleRemoveClick(giftCard.id)}
-                buttonRef={(el) => {
-                  if (el) {
-                    removeButtonRefs.current.set(giftCard.id, el);
-                  } else {
-                    removeButtonRefs.current.delete(giftCard.id);
-                  }
-                }}
-              >
-                <code>***{giftCard.lastCharacters}</code>
-                &nbsp;
-                <Money data={giftCard.amountUsed} />
-              </RemoveGiftCardForm>
-            </dd>
-          ))}
-        </dl>
-      )}
-
-      <AddGiftCardForm fetcherKey="gift-card-add">
-        <div>
-          <label htmlFor={giftCardInputId} className="sr-only">
-            Gift card code
-          </label>
-          <input
-            id={giftCardInputId}
-            type="text"
-            name="giftCardCode"
-            placeholder="Gift card code"
-            ref={giftCardCodeInput}
-          />
-          &nbsp;
-          <button
-            type="submit"
-            disabled={giftCardAddFetcher.state !== 'idle'}
-            aria-label="Apply gift card code"
-          >
-            Apply
-          </button>
+    <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+      {giftCardCodes.map((card) => (
+        <div
+          key={card.id}
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            background: '#f0f3fd', border: '1px solid #acc3fa',
+            borderRadius: '0.5rem', padding: '0.5rem 0.75rem',
+          }}
+        >
+          <span style={{fontSize: '0.8125rem', fontWeight: 600, color: '#2C1810'}}>
+            🎁 ***{card.lastCharacters} — <Money data={card.amountUsed} as="span"/>
+          </span>
+          <CartForm route="/cart" action={CartForm.ACTIONS.GiftCardCodesRemove} inputs={{giftCardCodes: [card.id]}}>
+            <button
+              type="submit"
+              ref={(el) => { el ? removeButtonRefs.current.set(card.id, el) : removeButtonRefs.current.delete(card.id); }}
+              onClick={() => { const idx = previousCardIdsRef.current.indexOf(card.id); if (idx !== -1) setRemovedCardIndex(idx); }}
+              style={{background: 'none', border: 'none', cursor: 'pointer', color: '#b0a49c', fontSize: '0.75rem', fontWeight: 600, padding: 0, fontFamily: 'inherit'}}
+            >
+              Quitar
+            </button>
+          </CartForm>
         </div>
-      </AddGiftCardForm>
-    </section>
+      ))}
+    </div>
   );
 }
 
-/**
- * @param {{
- *   fetcherKey?: string;
- *   children: React.ReactNode;
- * }}
- */
-function AddGiftCardForm({fetcherKey, children}) {
+/* ── SVG Payment Icons ── */
+function VisaIcon() {
   return (
-    <CartForm
-      fetcherKey={fetcherKey}
-      route="/cart"
-      action={CartForm.ACTIONS.GiftCardCodesAdd}
-    >
-      {children}
-    </CartForm>
+    <svg width="32" height="10" viewBox="0 0 32 10" aria-label="Visa">
+      <text x="0" y="9" fontFamily="Arial, sans-serif" fontSize="10" fontWeight="800" fill="#1a1f71" letterSpacing="-0.5">VISA</text>
+    </svg>
   );
 }
 
-/**
- * @param {{
- *   giftCardId: string;
- *   lastCharacters: string;
- *   children: React.ReactNode;
- *   onRemoveClick?: () => void;
- *   buttonRef?: (el: HTMLButtonElement | null) => void;
- * }}
- */
-function RemoveGiftCardForm({
-  giftCardId,
-  lastCharacters,
-  children,
-  onRemoveClick,
-  buttonRef,
-}) {
+function MastercardIcon() {
   return (
-    <CartForm
-      route="/cart"
-      action={CartForm.ACTIONS.GiftCardCodesRemove}
-      inputs={{
-        giftCardCodes: [giftCardId],
-      }}
-    >
-      {children}
-      &nbsp;
-      <button
-        type="submit"
-        aria-label={`Remove gift card ending in ${lastCharacters}`}
-        onClick={onRemoveClick}
-        ref={buttonRef}
-      >
-        Remove
-      </button>
-    </CartForm>
+    <svg width="28" height="18" viewBox="0 0 28 18">
+      <circle cx="10" cy="9" r="8" fill="#EB001B" opacity="0.9"/>
+      <circle cx="18" cy="9" r="8" fill="#F79E1B" opacity="0.9"/>
+      <path d="M14 3.5a8 8 0 010 11A8 8 0 0114 3.5z" fill="#FF5F00"/>
+    </svg>
   );
 }
 
-/**
- * @typedef {{
- *   cart: OptimisticCart<CartApiQueryFragment | null>;
- *   layout: CartLayout;
- * }} CartSummaryProps
- */
+function AmexIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 24" width="38" height="24" aria-label="American Express">
+      <rect width="38" height="24" rx="3" fill="#0071CE"/>
+      <path d="M25.8 6.3V3H31l.87 2.53L32.73 3H37v11.2h-.2l-1.93 2.07 1.93 2.09H37v3.07h-3.4l-1.67-1.87-1.73 1.87H19.47v-8.6H16L20.27 3h4.13L25.8 6.3zM20.6 20.27H27v-1.73h-4.33v-1.13h4.2v-1.73h-4.2v-1.13H27V12.8h-6.4v7.47zm9.93-3.73L27 20.27h2.6l2.27-2.4 2.2 2.4h2.67l-3.53-3.8 3.53-3.67h-2.6l-2.27 2.4-2.27-2.4H26l3.53 3.74zM17.67 11.73h2.27l.6-1.53h3.47l.67 1.53H27l-3.33-7.53h-2.67l-3.33 7.53zm5.6-3.27h-2l1-2.47 1 2.47zm10.13 0l-1.67 4.67h-3.2L27 4.2h3.07V6.4l1.93-2.2h2.8v7.47h-2V8.46z" fill="white"/>
+    </svg>
+  );
+}
 
+
+
+
+
+/** @typedef {{cart: OptimisticCart<CartApiQueryFragment | null>; layout: CartLayout;}} CartSummaryProps */
 /** @typedef {import('storefrontapi.generated').CartApiQueryFragment} CartApiQueryFragment */
 /** @typedef {import('~/components/CartMain').CartLayout} CartLayout */
 /** @typedef {import('@shopify/hydrogen').OptimisticCart} OptimisticCart */

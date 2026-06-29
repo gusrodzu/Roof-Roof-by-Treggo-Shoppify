@@ -1,6 +1,7 @@
 import {useLoaderData, Link} from 'react-router';
 import {getPaginationVariables, Image} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import { TrustBar } from '~/components/Header';
 
 /**
  * @param {Route.LoaderArgs} args
@@ -35,6 +36,8 @@ async function loadCriticalData({context, request}) {
   return {collections};
 }
 
+
+
 /**
  * Load data for rendering content below the fold. This data is deferred and will be
  * fetched after the initial page load. If it's unavailable, the page should still 200.
@@ -52,6 +55,7 @@ export default function Collections() {
   return (
     <div className="collections">
       <h1>Collections</h1>
+       <TrustBar />
       <PaginatedResourceSection
         connection={collections}
         resourcesClassName="collections-grid"

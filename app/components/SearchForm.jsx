@@ -2,23 +2,8 @@ import {useRef, useEffect} from 'react';
 import {Form} from 'react-router';
 
 /**
- * Search form component that sends search requests to the `/search` route.
- * @example
- * ```tsx
- * <SearchForm>
- *  {({inputRef}) => (
- *    <>
- *      <input
- *        ref={inputRef}
- *        type="search"
- *        defaultValue={term}
- *        name="q"
- *        placeholder="Search…"
- *      />
- *      <button type="submit">Search</button>
- *   </>
- *  )}
- *  </SearchForm>
+ * Formulario de búsqueda para la ruta /search
+ * Soporta Cmd+K para enfocar y Escape para desenfocar
  * @param {SearchFormProps}
  */
 export function SearchForm({children, ...props}) {
@@ -26,9 +11,7 @@ export function SearchForm({children, ...props}) {
 
   useFocusOnCmdK(inputRef);
 
-  if (typeof children !== 'function') {
-    return null;
-  }
+  if (typeof children !== 'function') return null;
 
   return (
     <Form method="get" {...props}>
@@ -37,38 +20,25 @@ export function SearchForm({children, ...props}) {
   );
 }
 
-/**
- * Focuses the input when cmd+k is pressed
- * @param {React.RefObject<HTMLInputElement>} inputRef
- */
 function useFocusOnCmdK(inputRef) {
-  // focus the input when cmd+k is pressed
   useEffect(() => {
     function handleKeyDown(event) {
       if (event.key === 'k' && event.metaKey) {
         event.preventDefault();
         inputRef.current?.focus();
       }
-
       if (event.key === 'Escape') {
         inputRef.current?.blur();
       }
     }
-
     document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [inputRef]);
 }
 
+/** @typedef {import('react-router').FormProps} FormProps */
 /**
  * @typedef {Omit<FormProps, 'children'> & {
- *   children: (args: {
- *     inputRef: React.RefObject<HTMLInputElement>;
- *   }) => React.ReactNode;
+ *   children: (args: { inputRef: React.RefObject<HTMLInputElement> }) => React.ReactNode;
  * }} SearchFormProps
  */
-
-/** @typedef {import('react-router').FormProps} FormProps */

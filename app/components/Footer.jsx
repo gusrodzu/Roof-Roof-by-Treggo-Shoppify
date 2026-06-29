@@ -1,42 +1,343 @@
 import {Suspense} from 'react';
-import {Await, NavLink} from 'react-router';
+import {Await, NavLink, Link} from 'react-router';
+import {useState, useEffect} from 'react';
+import logo from '~/assets/logo.png';
 
-/**
- * @param {FooterProps}
- */
+const FOOTER_COLS = [
+  {
+    heading: 'Productos',
+    links: [
+      {label: 'Casas para mascotas', to: '/collections/roof-roof-casas'},
+      {label: 'Camas elevadas', to: '/collections/roof-roof-camas'},
+      {label: 'Jaulas y corrales', to: '/collections/roof-roof-jaulas'},
+      {label: 'Dispensadores', to: '/collections/roof-roof-dispensadores'},
+      {label: 'Ver todo', to: '/collections/roof-roof'},
+    ],
+  },
+  {
+    heading: 'Ayuda',
+    links: [
+      {label: 'Preguntas frecuentes', to: '/pages/ayuda'},
+      {label: 'Política de envíos', to: '/policies/shipping-policy'},
+      {label: 'Cambios y devoluciones', to: '/policies/refund-policy'},
+      {label: 'Términos y condiciones', to: '/policies/terms-of-service'},
+      {label: 'Privacidad', to: '/policies/privacy-policy'},
+    ],
+  },
+  {
+    heading: 'Empresa',
+    links: [
+      {label: 'Nosotros', to: '/pages/nosotros'},
+      {label: 'Blog', to: '/blogs/news'},
+      {label: 'Contacto', to: '/pages/contacto'},
+    ],
+  },
+];
+
+const SOCIAL = [
+  {
+    label: 'Instagram',
+    href: 'https://instagram.com/roofroof.mx',
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        aria-hidden="true"
+      >
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Facebook',
+    href: 'https://facebook.com/roofroof.mx',
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        aria-hidden="true"
+      >
+        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'TikTok',
+    href: 'https://tiktok.com/@roofroof.mx',
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        aria-hidden="true"
+      >
+        <path d="M9 12a4 4 0 104 4V4a5 5 0 005 5" />
+      </svg>
+    ),
+  },
+];
+
 export function Footer({footer: footerPromise, header, publicStoreDomain}) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    setIsMobile(mq.matches);
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
   return (
-    <Suspense>
-      <Await resolve={footerPromise}>
-        {(footer) => (
-          <footer className="footer">
-            {footer?.menu && header.shop.primaryDomain?.url && (
-              <FooterMenu
-                menu={footer.menu}
-                primaryDomainUrl={header.shop.primaryDomain.url}
-                publicStoreDomain={publicStoreDomain}
+    <footer style={{background: '#2C1810', color: '#ffffff'}}>
+      {/* Body */}
+      <div
+        style={{
+          maxWidth: '1100px',
+          margin: '0 auto',
+          padding: isMobile ? '2.5rem 1.25rem 1.5rem' : '3.5rem 1.5rem 2rem',
+        }}
+      >
+        {/* Top row: brand + cols */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : '1.6fr 1fr 1fr 1fr',
+            gap: isMobile ? '2rem' : '2.5rem',
+            paddingBottom: isMobile ? '2rem' : '2.5rem',
+            borderBottom: '1px solid rgba(255,255,255,0.1)',
+          }}
+        >
+          {/* Brand column */}
+          <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+            <Link
+              to="/"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                width: '100%',
+              }}
+            >
+              <img
+                src={logo}
+                alt="Roof Roof"
+                style={{
+                  width: '140px',
+                  height: 'auto',
+                  display: 'block',
+                  filter: 'brightness(0) invert(1)',
+                }}
               />
-            )}
-          </footer>
-        )}
-      </Await>
-    </Suspense>
+            </Link>
+            {/* <Link to="/" style={{display: 'inline-block', textDecoration: 'none'}}>
+              <span style={{
+                fontSize: '1.375rem',
+                fontWeight: 900,
+                color: '#F5A623',
+                letterSpacing: '-0.02em',
+              }}>
+                Roof Roof 🐾
+              </span>
+            </Link> */}
+
+            <p
+              style={{
+                fontSize: '0.875rem',
+                color: 'rgb(255, 255, 255)',
+                lineHeight: 1.65,
+                margin: 0,
+                maxWidth: '260px',
+              }}
+            >
+              Espacios pensados para vidas más felices. Productos de calidad
+              para el bienestar de tu mascota.
+            </p>
+
+            {/* Social */}
+            <div
+              style={{display: 'flex', gap: '0.625rem', marginTop: '0.25rem'}}
+            >
+              {SOCIAL.map(({label, href, icon}) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  style={{
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: '50%',
+                    border: '1.5px solid rgba(255,255,255,0.2)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'rgb(255, 255, 255)',
+                    textDecoration: 'none',
+                    transition:
+                      'border-color 0.15s, color 0.15s, background 0.15s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#F5A623';
+                    e.currentTarget.style.color = '#F5A623';
+                    e.currentTarget.style.background = 'rgba(245,166,35,0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.75)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  {icon}
+                </a>
+              ))}
+            </div>
+
+            {/* Trust chips */}
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '0.5rem',
+                marginTop: '0.25rem',
+              }}
+            >
+              {['Envío gratis +$599', 'Pago seguro', 'Garantía incluida'].map(
+                (t) => (
+                  <span
+                    key={t}
+                    style={{
+                      fontSize: '0.6875rem',
+                      fontWeight: 600,
+                      color: 'rgb(255, 255, 255)',
+                      border: '1px solid rgba(255,255,255,0.12)',
+                      borderRadius: '999px',
+                      padding: '3px 10px',
+                    }}
+                  >
+                    {t}
+                  </span>
+                ),
+              )}
+            </div>
+          </div>
+
+          {/* Link columns */}
+          {FOOTER_COLS.map((col) => (
+            <div key={col.heading}>
+              <p
+                style={{
+                  fontSize: '0.6875rem',
+                  fontWeight: 800,
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  color: '#F5A623',
+                  margin: '0 0 1rem',
+                }}
+              >
+                {col.heading}
+              </p>
+              <ul
+                style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.625rem',
+                }}
+              >
+                {col.links.map(({label, to}) => (
+                  <li key={label}>
+                    <Link
+                      to={to}
+                      style={{
+                        fontSize: '0.875rem',
+                        color: 'rgb(255, 255, 255)',
+                        textDecoration: 'none',
+                        transition: 'color 0.15s',
+                      }}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.color = '#F5A623')
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.color = 'rgb(255, 255, 255)')
+                      }
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom row */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'flex-start' : 'center',
+            justifyContent: 'space-between',
+            gap: '0.75rem',
+            paddingTop: '1.5rem',
+          }}
+        >
+          <p
+            style={{
+              fontSize: '0.75rem',
+              color: 'rgb(255, 255, 255)',
+              margin: 0,
+            }}
+          >
+            © {new Date().getFullYear()} Roof Roof · Una marca de Treggo ·
+            Monterrey, México
+          </p>
+
+          {/* Shopify / Hydrogen badge */}
+          <Suspense fallback={null}>
+            <Await resolve={footerPromise}>
+              {(footer) =>
+                footer?.menu && header.shop.primaryDomain?.url ? (
+                  <FooterLegalLinks
+                    menu={footer.menu}
+                    primaryDomainUrl={header.shop.primaryDomain.url}
+                    publicStoreDomain={publicStoreDomain}
+                  />
+                ) : null
+              }
+            </Await>
+          </Suspense>
+        </div>
+      </div>
+    </footer>
   );
 }
 
-/**
- * @param {{
- *   menu: FooterQuery['menu'];
- *   primaryDomainUrl: FooterProps['header']['shop']['primaryDomain']['url'];
- *   publicStoreDomain: string;
- * }}
- */
-function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
+function FooterLegalLinks({menu, primaryDomainUrl, publicStoreDomain}) {
   return (
-    <nav className="footer-menu" role="navigation">
+    <nav
+      style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem 1.25rem'}}
+      role="navigation"
+      aria-label="Legal"
+    >
       {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
         if (!item.url) return null;
-        // if the url is internal, we strip the domain
         const url =
           item.url.includes('myshopify.com') ||
           item.url.includes(publicStoreDomain) ||
@@ -44,17 +345,36 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
             ? new URL(item.url).pathname
             : item.url;
         const isExternal = !url.startsWith('/');
+        const linkStyle = {
+          fontSize: '0.75rem',
+          color: 'rgb(255, 255, 255)',
+          textDecoration: 'none',
+          transition: 'color 0.15s',
+        };
         return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
+          <a
+            key={item.id}
+            href={url}
+            rel="noopener noreferrer"
+            target="_blank"
+            style={linkStyle}
+            onMouseEnter={(e) => (e.currentTarget.style.color = '#F5A623')}
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.color = 'rgba(232,228,220,0.45)')
+            }
+          >
             {item.title}
           </a>
         ) : (
           <NavLink
-            end
             key={item.id}
+            end
             prefetch="intent"
-            style={activeLinkStyle}
             to={url}
+            style={({isActive}) => ({
+              ...linkStyle,
+              color: isActive ? '#F5A623' : 'rgb(255, 255, 255)',
+            })}
           >
             {item.title}
           </NavLink>
@@ -68,37 +388,29 @@ const FALLBACK_FOOTER_MENU = {
   id: 'gid://shopify/Menu/199655620664',
   items: [
     {
-      id: 'gid://shopify/MenuItem/461633060920',
-      resourceId: 'gid://shopify/ShopPolicy/23358046264',
-      tags: [],
-      title: 'Privacy Policy',
+      id: '1',
+      title: 'Privacidad',
       type: 'SHOP_POLICY',
       url: '/policies/privacy-policy',
       items: [],
     },
     {
-      id: 'gid://shopify/MenuItem/461633093688',
-      resourceId: 'gid://shopify/ShopPolicy/23358013496',
-      tags: [],
-      title: 'Refund Policy',
+      id: '2',
+      title: 'Devoluciones',
       type: 'SHOP_POLICY',
       url: '/policies/refund-policy',
       items: [],
     },
     {
-      id: 'gid://shopify/MenuItem/461633126456',
-      resourceId: 'gid://shopify/ShopPolicy/23358111800',
-      tags: [],
-      title: 'Shipping Policy',
+      id: '3',
+      title: 'Envíos',
       type: 'SHOP_POLICY',
       url: '/policies/shipping-policy',
       items: [],
     },
     {
-      id: 'gid://shopify/MenuItem/461633159224',
-      resourceId: 'gid://shopify/ShopPolicy/23358079032',
-      tags: [],
-      title: 'Terms of Service',
+      id: '4',
+      title: 'Términos',
       type: 'SHOP_POLICY',
       url: '/policies/terms-of-service',
       items: [],
@@ -106,25 +418,10 @@ const FALLBACK_FOOTER_MENU = {
   ],
 };
 
-/**
- * @param {{
- *   isActive: boolean;
- *   isPending: boolean;
- * }}
- */
-function activeLinkStyle({isActive, isPending}) {
-  return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'white',
-  };
-}
-
-/**
- * @typedef {Object} FooterProps
+/** @typedef {Object} FooterProps
  * @property {Promise<FooterQuery|null>} footer
  * @property {HeaderQuery} header
  * @property {string} publicStoreDomain
  */
-
 /** @typedef {import('storefrontapi.generated').FooterQuery} FooterQuery */
 /** @typedef {import('storefrontapi.generated').HeaderQuery} HeaderQuery */
