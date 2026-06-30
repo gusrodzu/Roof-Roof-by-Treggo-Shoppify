@@ -10,20 +10,27 @@
   --brand:            #f8b32a;   /* Header, accents */
   --brand-cta:        #F5A623;   /* Botones primarios, badges */
   --brand-cta-hover:  #d4891a;   /* Hover de botones primarios */
+  --brand-deep:       #7a5200;   /* Texto sobre fondos crema/dorados (badges de descuento) */
 
   /* ── Ink / texto ── */
   --ink:              #2C1810;   /* Texto principal, fondos oscuros */
+  --ink-hover:        #3d2117;   /* Hover sobre fondos oscuros (banners, footer) */
   --ink-soft:         #7a6a62;   /* Texto secundario */
   --ink-muted:        #b0a49c;   /* Texto deshabilitado / placeholders */
+  --ink-disabled:     #c8b8b0;   /* Íconos/controles deshabilitados */
 
   /* ── Surfaces ── */
   --surface-cream:    #fff8ee;   /* Fondos cálidos / highlights */
+  --surface-cream-2:  #fdf0d5;   /* Segundo tono cálido (gradientes) */
   --surface-light:    #f5f7fa;   /* Fondo general de página */
   --surface-ivory:    #e8e4dc;   /* Ivory brand */
+  --surface-cool:     #f5f7fa;   /* Fondo frío neutro (alias de surface-light) */
+  --surface-warm:     #faf9f7;   /* Fondo cálido sutil (inputs, cards internas) */
 
   /* ── Borders ── */
   --border:           #e8e4dc;   /* Bordes generales */
   --border-soft:      #f0ece6;   /* Bordes más sutiles */
+  --border-gold:      #f0d490;   /* Bordes dorados (banners, badges cálidos) */
 
   /* ── Semantic ── */
   --success:          #2a9d5c;   /* Verde éxito / disponible */
