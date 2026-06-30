@@ -102,7 +102,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
   }, []);
 
   return (
-    <footer style={{background: '#2C1810', color: '#ffffff'}}>
+    <footer style={{background: 'var(--ink)', color: '#ffffff'}}>
       {/* Body */}
       <div
         style={{
@@ -147,7 +147,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
               <span style={{
                 fontSize: '1.375rem',
                 fontWeight: 900,
-                color: '#F5A623',
+                color: 'var(--brand-cta)',
                 letterSpacing: '-0.02em',
               }}>
                 Roof Roof 🐾
@@ -192,8 +192,8 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                       'border-color 0.15s, color 0.15s, background 0.15s',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#F5A623';
-                    e.currentTarget.style.color = '#F5A623';
+                    e.currentTarget.style.borderColor = 'var(--brand-cta)';
+                    e.currentTarget.style.color = 'var(--brand-cta)';
                     e.currentTarget.style.background = 'rgba(245,166,35,0.1)';
                   }}
                   onMouseLeave={(e) => {
@@ -245,7 +245,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                   fontWeight: 800,
                   letterSpacing: '1.5px',
                   textTransform: 'uppercase',
-                  color: '#F5A623',
+                  color: 'var(--brand-cta)',
                   margin: '0 0 1rem',
                 }}
               >
@@ -272,7 +272,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                         transition: 'color 0.15s',
                       }}
                       onMouseEnter={(e) =>
-                        (e.currentTarget.style.color = '#F5A623')
+                        (e.currentTarget.style.color = 'var(--brand-cta)')
                       }
                       onMouseLeave={(e) =>
                         (e.currentTarget.style.color = 'rgb(255, 255, 255)')
@@ -358,7 +358,7 @@ function FooterLegalLinks({menu, primaryDomainUrl, publicStoreDomain}) {
             rel="noopener noreferrer"
             target="_blank"
             style={linkStyle}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#F5A623')}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--brand-cta)')}
             onMouseLeave={(e) =>
               (e.currentTarget.style.color = 'rgba(232,228,220,0.45)')
             }
@@ -373,7 +373,7 @@ function FooterLegalLinks({menu, primaryDomainUrl, publicStoreDomain}) {
             to={url}
             style={({isActive}) => ({
               ...linkStyle,
-              color: isActive ? '#F5A623' : 'rgb(255, 255, 255)',
+              color: isActive ? 'var(--brand-cta)' : 'rgb(255, 255, 255)',
             })}
           >
             {item.title}

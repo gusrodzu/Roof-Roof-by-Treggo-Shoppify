@@ -45,17 +45,17 @@ function SearchResultsPredictiveProducts({term, products, closeSearch}) {
             <li key={product.id}>
               <PredictiveRow to={url} onClick={closeSearch}>
                 {image ? (
-                  <div style={{width: '44px', height: '44px', flexShrink: 0, borderRadius: '0.375rem', overflow: 'hidden', background: '#f5f7fa', border: '1px solid #e8e4dc'}}>
+                  <div style={{width: '44px', height: '44px', flexShrink: 0, borderRadius: '0.375rem', overflow: 'hidden', background: 'var(--surface-cool)', border: '1px solid var(--border)'}}>
                     <Image data={image} alt={product.title} width={44} height={44} style={{width: '100%', height: '100%', objectFit: 'contain'}}/>
                   </div>
                 ) : (
-                  <div style={{width: '44px', height: '44px', flexShrink: 0, borderRadius: '0.375rem', background: '#f5f7fa', border: '1px solid #e8e4dc', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem'}}>🐾</div>
+                  <div style={{width: '44px', height: '44px', flexShrink: 0, borderRadius: '0.375rem', background: 'var(--surface-cool)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem'}}>🐾</div>
                 )}
                 <div style={{flex: 1, minWidth: 0}}>
-                  <p style={{fontSize: '0.875rem', fontWeight: 600, color: '#2C1810', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
+                  <p style={{fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
                     {product.title}
                   </p>
-                  {price && <Money data={price} style={{fontSize: '0.8125rem', fontWeight: 700, color: '#7a6a62'}}/>}
+                  {price && <Money data={price} style={{fontSize: '0.8125rem', fontWeight: 700, color: 'var(--ink-soft)'}}/>}
                 </div>
                 <Chevron />
               </PredictiveRow>
@@ -80,13 +80,13 @@ function SearchResultsPredictiveCollections({term, collections, closeSearch}) {
             <li key={collection.id}>
               <PredictiveRow to={url} onClick={closeSearch}>
                 {collection.image?.url ? (
-                  <div style={{width: '36px', height: '36px', flexShrink: 0, borderRadius: '0.375rem', overflow: 'hidden', background: '#f5f7fa'}}>
+                  <div style={{width: '36px', height: '36px', flexShrink: 0, borderRadius: '0.375rem', overflow: 'hidden', background: 'var(--surface-cool)'}}>
                     <Image alt={collection.image.altText ?? ''} src={collection.image.url} width={36} height={36} style={{width: '100%', height: '100%', objectFit: 'cover'}}/>
                   </div>
                 ) : (
                   <div style={{width: '36px', height: '36px', flexShrink: 0, borderRadius: '0.375rem', background: '#f0f3fd', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem'}}>📦</div>
                 )}
-                <span style={{fontSize: '0.875rem', fontWeight: 600, color: '#2C1810', flex: 1}}>{collection.title}</span>
+                <span style={{fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink)', flex: 1}}>{collection.title}</span>
                 <Chevron />
               </PredictiveRow>
             </li>
@@ -110,7 +110,7 @@ function SearchResultsPredictiveArticles({term, articles, closeSearch}) {
             <li key={article.id}>
               <PredictiveRow to={url} onClick={closeSearch}>
                 <span style={{fontSize: '1.125rem', flexShrink: 0}}>📄</span>
-                <span style={{fontSize: '0.875rem', fontWeight: 600, color: '#2C1810', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{article.title}</span>
+                <span style={{fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{article.title}</span>
                 <Chevron />
               </PredictiveRow>
             </li>
@@ -134,7 +134,7 @@ function SearchResultsPredictivePages({term, pages, closeSearch}) {
             <li key={page.id}>
               <PredictiveRow to={url} onClick={closeSearch}>
                 <span style={{fontSize: '1.125rem', flexShrink: 0}}>📋</span>
-                <span style={{fontSize: '0.875rem', fontWeight: 600, color: '#2C1810', flex: 1}}>{page.title}</span>
+                <span style={{fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink)', flex: 1}}>{page.title}</span>
                 <Chevron />
               </PredictiveRow>
             </li>
@@ -161,10 +161,10 @@ function SearchResultsPredictiveEmpty({term}) {
   return (
     <div style={{textAlign: 'center', padding: '1.5rem 1rem'}}>
       <p style={{fontSize: '1.75rem', margin: '0 0 0.5rem'}}>🔍</p>
-      <p style={{fontSize: '0.9375rem', fontWeight: 600, color: '#2C1810', margin: '0 0 0.25rem'}}>
+      <p style={{fontSize: '0.9375rem', fontWeight: 600, color: 'var(--ink)', margin: '0 0 0.25rem'}}>
         Sin resultados
       </p>
-      <p style={{fontSize: '0.875rem', color: '#7a6a62', margin: 0}}>
+      <p style={{fontSize: '0.875rem', color: 'var(--ink-soft)', margin: 0}}>
         No encontramos nada para "{term.current}"
       </p>
     </div>
@@ -177,7 +177,7 @@ function PredictiveLabel({children}) {
     <p style={{
       fontSize: '0.6875rem', fontWeight: 800,
       textTransform: 'uppercase', letterSpacing: '1px',
-      color: '#F5A623', margin: '0 0 0.375rem',
+      color: 'var(--brand-cta)', margin: '0 0 0.375rem',
     }}>
       {children}
     </p>
@@ -194,8 +194,8 @@ function PredictiveRow({to, onClick, children}) {
         display: 'flex', alignItems: 'center', gap: '0.625rem',
         padding: '0.5rem 0.625rem', borderRadius: '0.5rem',
         textDecoration: 'none',
-        background: hovered ? '#fff8ee' : 'transparent',
-        border: `1px solid ${hovered ? '#f0d490' : 'transparent'}`,
+        background: hovered ? 'var(--surface-cream)' : 'transparent',
+        border: `1px solid ${hovered ? 'var(--border-gold)' : 'transparent'}`,
         transition: 'background 0.15s, border-color 0.15s',
       }}
       onMouseEnter={() => setHovered(true)}

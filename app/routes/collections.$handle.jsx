@@ -131,7 +131,7 @@ function SidebarContent({filterConfig, activeFilters, openSections, setOpenSecti
   return (
     <div style={{background: '#fff', border: '1px solid #e8e4dc', borderRadius: '0.75rem', overflow: 'hidden'}}>
       {/* Header sidebar */}
-      <div style={{padding: '0.875rem 1rem', background: '#f5f7fa', borderBottom: '1px solid #e8e4dc', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+      <div style={{padding: '0.875rem 1rem', background: '#ffffff', borderBottom: '1px solid #e8e4dc', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
         <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2C1810" strokeWidth="2.5" aria-hidden="true">
             <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
@@ -839,7 +839,7 @@ function ProductCard({product, isMobile}) {
         onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = '#e8e4dc'; }}
       >
         {/* Favorito */}
-        <button
+        {/* <button
           onClick={(e) => e.preventDefault()}
           aria-label="Favorito"
           style={{position: 'absolute', top: '0.5rem', right: '0.5rem', zIndex: 2, background: 'rgba(255,255,255,0.95)', border: '1px solid #e8e4dc', borderRadius: '50%', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer'}}
@@ -847,11 +847,11 @@ function ProductCard({product, isMobile}) {
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c8b8b0" strokeWidth="2" aria-hidden="true">
             <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
           </svg>
-        </button>
+        </button> */}
 
         {/* Imagen */}
         <div
-          style={{aspectRatio: '1', background: '#f5f7fa', overflow: 'hidden', position: 'relative', flexShrink: 0}}
+          style={{aspectRatio: '1',  overflow: 'hidden', position: 'relative', flexShrink: 0}}
           onMouseEnter={() => setImgHovered(true)}
           onMouseLeave={() => setImgHovered(false)}
         >

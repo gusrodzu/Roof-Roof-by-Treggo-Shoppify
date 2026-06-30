@@ -1,20 +1,21 @@
 import {Link} from 'react-router';
 import {useState, useEffect, useCallback, useRef} from 'react';
+import {Button, IconButton} from '~/components/design-system';
 
 const SLIDES = [
   {
     badge: '-20%',
-    badgeBg: '#c0392b',
+    badgeBg: 'var(--danger)',
     title: 'En camas y casas elevadas',
     subtitle: 'Válido del 12/06 al 30/06 · Solo en roofroof.mx',
     cta: 'Comprar ahora',
     to: '/collections/roof-roof',
     image: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/PORTADACOVAGRISCHICA.jpg?v=1752704348',
-    bg: 'linear-gradient(135deg, #fff8ee 0%, #fdf0d5 100%)',
+    bg: 'linear-gradient(135deg, var(--surface-cream) 0%, #fdf0d5 100%)',
   },
   {
     badge: 'Nuevo',
-    badgeBg: '#2a9d5c',
+    badgeBg: 'var(--success)',
     title: 'Jaulas y corrales portátiles',
     subtitle: 'Seguridad y libertad para tu mascota',
     cta: 'Ver jaulas',
@@ -24,8 +25,8 @@ const SLIDES = [
   },
   {
     badge: 'Envío gratis',
-    badgeBg: '#F5A623',
-    badgeColor: '#2C1810',
+    badgeBg: 'var(--brand-cta)',
+    badgeColor: 'var(--ink)',
     title: 'En compras desde $599',
     subtitle: 'Aplica en toda la colección Roof Roof',
     cta: 'Ver colección',
@@ -86,7 +87,7 @@ export function HeroBanner() {
             minHeight: isMobile ? '340px' : '420px',
             padding: isMobile ? '1.75rem 1.5rem' : '3rem 2.5rem',
             background: slide.bg,
-            border: '1px solid #e8e4dc',
+            border: '1px solid var(--border)',
             display: 'flex',
             flexDirection: isMobile ? 'column' : 'row',
             alignItems: 'center',
@@ -114,7 +115,7 @@ export function HeroBanner() {
             <h2 style={{
               fontSize: isMobile ? '1.5rem' : '2rem',
               lineHeight: 1.1,
-              color: '#2C1810',
+              color: 'var(--ink)',
               margin: '0 0 0.875rem',
               fontWeight: 800,
               letterSpacing: '-0.02em',
@@ -124,7 +125,7 @@ export function HeroBanner() {
 
             <p style={{
               fontSize: '0.9375rem',
-              color: '#7a6a62',
+              color: 'var(--ink-soft)',
               margin: '0 0 1.5rem',
               lineHeight: 1.55,
             }}>
@@ -133,33 +134,20 @@ export function HeroBanner() {
 
             <Link
               to={slide.to}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                background: '#F5A623',
-                color: '#2C1810',
-                padding: '0.875rem 1.75rem',
-                borderRadius: '999px',
-                textDecoration: 'none',
-                fontWeight: 800,
-                fontSize: '0.9375rem',
-                boxShadow: '0 8px 24px rgba(245,166,35,0.3)',
-                transition: 'background 0.15s, transform 0.15s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#d4891a';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#F5A623';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+              style={{textDecoration: 'none', display: 'inline-block'}}
             >
-              {slide.cta}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
-              </svg>
+              <Button
+                variant="primary"
+                size="lg"
+                iconAfter={
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                    <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+                  </svg>
+                }
+                style={{boxShadow: '0 8px 24px rgba(245,166,35,0.3)'}}
+              >
+                {slide.cta}
+              </Button>
             </Link>
           </div>
 
@@ -180,39 +168,27 @@ export function HeroBanner() {
           />
 
           {/* Nav buttons */}
-          <button
-            onClick={prev}
-            aria-label="Slide anterior"
-            style={{
-              position: 'absolute', top: '50%', left: '1rem',
-              transform: 'translateY(-50%)',
-              background: 'rgba(255,255,255,0.85)',
-              border: '1px solid #e8e4dc',
-              borderRadius: '50%',
-              width: '36px', height: '36px',
-              cursor: 'pointer', fontSize: '16px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: '#2C1810', zIndex: 2,
-              backdropFilter: 'blur(4px)',
-            }}
-          >‹</button>
+          <span style={{position: 'absolute', top: '50%', left: '1rem', transform: 'translateY(-50%)', zIndex: 2}}>
+            <IconButton
+              variant="outline"
+              size="md"
+              onClick={prev}
+              aria-label="Slide anterior"
+              style={{background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(4px)'}}
+              icon={<span style={{fontSize: '16px', lineHeight: 1}}>‹</span>}
+            />
+          </span>
 
-          <button
-            onClick={next}
-            aria-label="Slide siguiente"
-            style={{
-              position: 'absolute', top: '50%', right: '1rem',
-              transform: 'translateY(-50%)',
-              background: 'rgba(255,255,255,0.85)',
-              border: '1px solid #e8e4dc',
-              borderRadius: '50%',
-              width: '36px', height: '36px',
-              cursor: 'pointer', fontSize: '16px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: '#2C1810', zIndex: 2,
-              backdropFilter: 'blur(4px)',
-            }}
-          >›</button>
+          <span style={{position: 'absolute', top: '50%', right: '1rem', transform: 'translateY(-50%)', zIndex: 2}}>
+            <IconButton
+              variant="outline"
+              size="md"
+              onClick={next}
+              aria-label="Slide siguiente"
+              style={{background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(4px)'}}
+              icon={<span style={{fontSize: '16px', lineHeight: 1}}>›</span>}
+            />
+          </span>
 
           {/* Dots */}
           <div style={{
@@ -230,7 +206,7 @@ export function HeroBanner() {
                   height: '6px',
                   borderRadius: '999px',
                   border: 'none',
-                  background: current === i ? '#F5A623' : 'rgba(44,24,16,0.3)',
+                  background: current === i ? 'var(--brand-cta)' : 'rgba(44,24,16,0.3)',
                   cursor: 'pointer',
                   padding: 0,
                   transition: 'width 0.3s ease, background 0.3s ease',
@@ -254,7 +230,7 @@ export function HeroBanner() {
                 backgroundImage: 'linear-gradient(to top, rgba(44,24,16,.85), rgba(44,24,16,.1)), url("https://cdn.shopify.com/s/files/1/0761/8252/0128/files/WhatsApp_Image_2026-01-12_at_2.22.35_PM_177222520669a202b690d334996.jpg?v=1772225208")',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                border: '1px solid #e8e4dc',
+                border: '1px solid var(--border)',
               }}
             >
               <div style={{
@@ -279,7 +255,7 @@ export function HeroBanner() {
                 height: '200px',
                 flex: 1,
                 position: 'relative',
-                border: '1px solid #e8e4dc',
+                border: '1px solid var(--border)',
               }}
             >
               <img
@@ -296,7 +272,7 @@ export function HeroBanner() {
                 bottom: 0, left: 0, right: 0,
                 padding: '1.25rem',
               }}>
-                <p style={{margin: 0, fontSize: '0.6875rem', fontWeight: 700, color: '#F5A623', textTransform: 'uppercase', letterSpacing: '0.8px'}}>
+                <p style={{margin: 0, fontSize: '0.6875rem', fontWeight: 700, color: 'var(--brand-cta)', textTransform: 'uppercase', letterSpacing: '0.8px'}}>
                   Materiales premium
                 </p>
                 <h3 style={{margin: '0.25rem 0 0', fontWeight: 800, color: '#fff', fontSize: '1.0625rem', lineHeight: 1.25}}>

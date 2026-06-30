@@ -85,12 +85,12 @@ export function Aside({children, heading, type}) {
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             padding: '1rem 1.25rem',
             background: '#fff',
-            borderBottom: '1px solid #e8e4dc',
+            borderBottom: '1px solid var(--border)',
             flexShrink: 0,
           }}>
             <h2
               id={id}
-              style={{fontSize: '1rem', fontWeight: 700, color: '#2C1810', margin: 0}}
+              style={{fontSize: '1rem', fontWeight: 700, color: 'var(--ink)', margin: 0}}
             >
               {cfg.heading}
             </h2>
@@ -100,14 +100,14 @@ export function Aside({children, heading, type}) {
               aria-label="Cerrar"
               style={{
                 width: '32px', height: '32px', borderRadius: '50%',
-                background: '#f5f7fa', border: '1px solid #e8e4dc',
+                background: 'var(--surface-cool)', border: '1px solid var(--border)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                cursor: 'pointer', color: '#2C1810', fontSize: '1.125rem',
+                cursor: 'pointer', color: 'var(--ink)', fontSize: '1.125rem',
                 lineHeight: 1, padding: 0, transition: 'background 0.15s',
                 flexShrink: 0,
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = '#e8e4dc')}
-              onMouseLeave={(e) => (e.currentTarget.style.background = '#f5f7fa')}
+              onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--border)')}
+              onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--surface-cool)')}
             >
               ×
             </button>

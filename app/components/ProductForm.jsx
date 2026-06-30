@@ -24,7 +24,7 @@ export function ProductForm({productOptions, selectedVariant}) {
             <span style={{
               fontSize: '0.8125rem',
               fontWeight: 700,
-              color: '#2C1810',
+              color: 'var(--ink)',
               textTransform: 'uppercase',
               letterSpacing: '0.8px',
             }}>
@@ -46,10 +46,10 @@ export function ProductForm({productOptions, selectedVariant}) {
                   width: hasSwatch ? '36px' : 'auto',
                   height: hasSwatch ? '36px' : 'auto',
                   border: selected
-                    ? '2px solid #F5A623'
-                    : '1.5px solid #e8e4dc',
-                  background: selected ? '#fff8ee' : '#fff',
-                  color: selected ? '#2C1810' : '#7a6a62',
+                    ? '2px solid var(--brand-cta)'
+                    : '1.5px solid var(--border)',
+                  background: selected ? 'var(--surface-cream)' : '#fff',
+                  color: selected ? 'var(--ink)' : 'var(--ink-soft)',
                   fontWeight: selected ? 700 : 500,
                   fontSize: '0.875rem',
                   cursor: exists ? 'pointer' : 'not-allowed',
@@ -73,7 +73,7 @@ export function ProductForm({productOptions, selectedVariant}) {
                       to={`/products/${handle}?${variantUriQuery}`}
                       style={baseStyle}
                       onMouseEnter={(e) => { if (!selected) e.currentTarget.style.borderColor = '#acc3fa'; }}
-                      onMouseLeave={(e) => { if (!selected) e.currentTarget.style.borderColor = '#e8e4dc'; }}
+                      onMouseLeave={(e) => { if (!selected) e.currentTarget.style.borderColor = 'var(--border)'; }}
                     >
                       <ProductOptionSwatch swatch={swatch} name={name} />
                     </Link>
@@ -95,7 +95,7 @@ export function ProductForm({productOptions, selectedVariant}) {
                       }
                     }}
                     onMouseEnter={(e) => { if (!selected && exists) e.currentTarget.style.borderColor = '#acc3fa'; }}
-                    onMouseLeave={(e) => { if (!selected) e.currentTarget.style.borderColor = '#e8e4dc'; }}
+                    onMouseLeave={(e) => { if (!selected) e.currentTarget.style.borderColor = 'var(--border)'; }}
                   >
                     <ProductOptionSwatch swatch={swatch} name={name} />
                   </button>
@@ -124,8 +124,8 @@ export function ProductForm({productOptions, selectedVariant}) {
           width: '100%',
           padding: '1rem 1.5rem',
           borderRadius: '0.75rem',
-          background: selectedVariant?.availableForSale ? '#F5A623' : '#e8e4dc',
-          color: selectedVariant?.availableForSale ? '#2C1810' : '#b0a49c',
+          background: selectedVariant?.availableForSale ? 'var(--brand-cta)' : 'var(--border)',
+          color: selectedVariant?.availableForSale ? 'var(--ink)' : 'var(--ink-muted)',
           fontWeight: 800,
           fontSize: '1rem',
           letterSpacing: '0.2px',
@@ -159,8 +159,8 @@ export function ProductForm({productOptions, selectedVariant}) {
             justifyContent: 'center',
             padding: '0.875rem 1.5rem',
             borderRadius: '0.75rem',
-            border: '1.5px solid #2C1810',
-            color: '#2C1810',
+            border: '1.5px solid var(--ink)',
+            color: 'var(--ink)',
             fontWeight: 700,
             fontSize: '0.9375rem',
             textDecoration: 'none',
@@ -169,12 +169,12 @@ export function ProductForm({productOptions, selectedVariant}) {
             textAlign: 'center',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = '#2C1810';
-            e.currentTarget.style.color = '#F5A623';
+            e.currentTarget.style.background = 'var(--ink)';
+            e.currentTarget.style.color = 'var(--brand-cta)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.color = '#2C1810';
+            e.currentTarget.style.color = 'var(--ink)';
           }}
         >
           Comprar ahora

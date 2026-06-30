@@ -18,7 +18,7 @@ const DEFAULT_LINKS = [
     imgSrc:      'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/dog.png?v=1781818470',
     imgAlt:      'Descuento primera compra',
     accentColor: '#000000',
-    bg:          'linear-gradient(135deg, #fff8ee 0%, #fdf0d5 100%)',
+    bg:          'linear-gradient(135deg, var(--surface-cream) 0%, #fdf0d5 100%)',
     badge:       '🐾 Roof Roof',
   },
   {
@@ -161,7 +161,7 @@ function InterestCard({link}) {
             <p style={{
               fontSize: '1.0625rem',
               fontWeight: 800,
-              color: '#2C1810',
+              color: 'var(--ink)',
               margin: 0,
               lineHeight: 1.25,
               whiteSpace: 'pre-line',
@@ -172,7 +172,7 @@ function InterestCard({link}) {
             {/* Sub */}
             <p style={{
               fontSize: '0.8125rem',
-              color: '#7a6a62',
+              color: 'var(--ink-soft)',
               margin: 0,
               lineHeight: 1.45,
             }}>

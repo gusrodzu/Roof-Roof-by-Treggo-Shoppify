@@ -10,14 +10,14 @@ export function ProductImage({image}) {
     return (
       <div style={{
         aspectRatio: '1 / 1',
-        background: '#f5f7fa',
+        background: 'var(--surface-cool)',
         borderRadius: '0.875rem',
-        border: '1.5px solid #e8e4dc',
+        border: '1.5px solid var(--border)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: '3rem',
-        color: '#c8b8b0',
+        color: 'var(--ink-disabled)',
       }}>
         🐾
       </div>
@@ -27,9 +27,9 @@ export function ProductImage({image}) {
   return (
     <div style={{
       aspectRatio: '1 / 1',
-      background: '#faf9f7',
+      background: 'var(--surface-warm)',
       borderRadius: '0.875rem',
-      border: '1.5px solid #e8e4dc',
+      border: '1.5px solid var(--border)',
       overflow: 'hidden',
       display: 'flex',
       alignItems: 'center',

@@ -46,7 +46,7 @@ export function PromoBanners() {
           style={{
             fontSize: '1.25rem',
             fontWeight: 700,
-            color: '#2C1810',
+            color: 'var(--ink)',
             margin: '0 0 1.25rem',
           }}
         >
@@ -159,8 +159,8 @@ export function PromoBanners() {
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '0.375rem',
-                      background: '#F5A623',
-                      color: '#2C1810',
+                      background: 'var(--brand-cta)',
+                      color: 'var(--ink)',
                       fontWeight: 700,
                       fontSize: '0.875rem',
                       padding: '0.625rem 1.25rem',
@@ -170,10 +170,10 @@ export function PromoBanners() {
                       boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
                     }}
                     onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = '#d4891a')
+                      (e.currentTarget.style.background = 'var(--brand-cta-hover)')
                     }
                     onMouseLeave={(e) =>
-                      (e.currentTarget.style.background = '#F5A623')
+                      (e.currentTarget.style.background = 'var(--brand-cta)')
                     }
                   >
                     {b.cta}
@@ -194,7 +194,7 @@ export function PromoBanners() {
                   style={{
                     fontSize: '0.875rem',
                     fontWeight: 500,
-                    color: '#2C1810',
+                    color: 'var(--ink)',
                   }}
                 >
                   {b.footerLabel}

@@ -19,18 +19,18 @@ export function ProductPrice({price, compareAtPrice, style}) {
           {price && (
             <Money
               data={price}
-              style={{fontSize: '1rem', fontWeight: 800, color: '#2C1810', ...style}}
+              style={{fontSize: '1rem', fontWeight: 800, color: 'var(--ink)', ...style}}
             />
           )}
           <Money
             data={compareAtPrice}
-            style={{fontSize: '0.875rem', fontWeight: 500, color: '#b0a49c', textDecoration: 'line-through'}}
+            style={{fontSize: '0.875rem', fontWeight: 500, color: 'var(--ink-muted)', textDecoration: 'line-through'}}
           />
           {price && compareAtPrice && parseFloat(compareAtPrice.amount) > parseFloat(price.amount) && (
             <span style={{
               fontSize: '0.6875rem',
               fontWeight: 800,
-              color: '#c0392b',
+              color: 'var(--danger)',
               background: '#fdf0ee',
               border: '1px solid #f5c6bb',
               borderRadius: '999px',
@@ -43,7 +43,7 @@ export function ProductPrice({price, compareAtPrice, style}) {
       ) : price ? (
         <Money
           data={price}
-          style={{fontSize: '1rem', fontWeight: 800, color: '#2C1810', ...style}}
+          style={{fontSize: '1rem', fontWeight: 800, color: 'var(--ink)', ...style}}
         />
       ) : (
         <span>&nbsp;</span>

@@ -72,13 +72,13 @@ function ProductCard({url, image, title, price, compare, discount}) {
       <div style={{
         background: '#fff',
         borderRadius: '0.875rem',
-        border: `1.5px solid ${hovered ? '#F5A623' : '#e8e4dc'}`,
+        border: `1.5px solid ${hovered ? 'var(--brand-cta)' : 'var(--border)'}`,
         overflow: 'hidden',
         transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
         boxShadow: hovered ? '0 6px 18px rgba(44,24,16,0.09)' : '0 1px 4px rgba(44,24,16,0.04)',
         transform: hovered ? 'translateY(-2px)' : 'none',
       }}>
-        <div style={{background: '#f5f7fa', aspectRatio: '1/1', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{background: 'var(--surface-cool)', aspectRatio: '1/1', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           {image ? (
             <Image
               data={image}
@@ -90,20 +90,20 @@ function ProductCard({url, image, title, price, compare, discount}) {
             <span style={{fontSize: '2.5rem'}}>🐾</span>
           )}
           {discount && (
-            <span style={{position: 'absolute', top: '0.5rem', left: '0.5rem', background: '#c0392b', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px'}}>
+            <span style={{position: 'absolute', top: '0.5rem', left: '0.5rem', background: 'var(--danger)', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px'}}>
               {discount}% OFF
             </span>
           )}
         </div>
         <div style={{padding: '0.75rem'}}>
-          <p style={{fontSize: '0.6875rem', fontWeight: 700, color: '#F5A623', margin: '0 0 0.25rem', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Roof Roof</p>
-          <p style={{fontSize: '0.8125rem', fontWeight: 600, color: '#2C1810', margin: '0 0 0.375rem', lineHeight: 1.4, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}>
+          <p style={{fontSize: '0.6875rem', fontWeight: 700, color: 'var(--brand-cta)', margin: '0 0 0.25rem', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Roof Roof</p>
+          <p style={{fontSize: '0.8125rem', fontWeight: 600, color: 'var(--ink)', margin: '0 0 0.375rem', lineHeight: 1.4, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}>
             {title}
           </p>
           <div style={{display: 'flex', alignItems: 'baseline', gap: '0.375rem', flexWrap: 'wrap'}}>
-            {price && <Money data={price} style={{fontSize: '1rem', fontWeight: 800, color: '#2C1810'}}/>}
+            {price && <Money data={price} style={{fontSize: '1rem', fontWeight: 800, color: 'var(--ink)'}}/>}
             {compare && parseFloat(compare.amount) > parseFloat(price?.amount ?? '0') && (
-              <Money data={compare} style={{fontSize: '0.75rem', color: '#b0a49c', textDecoration: 'line-through'}}/>
+              <Money data={compare} style={{fontSize: '0.75rem', color: 'var(--ink-muted)', textDecoration: 'line-through'}}/>
             )}
           </div>
         </div>
@@ -151,10 +151,10 @@ function SearchResultsEmpty() {
   return (
     <div style={{textAlign: 'center', padding: '3rem 1.5rem'}}>
       <p style={{fontSize: '3rem', margin: '0 0 1rem'}}>🔍</p>
-      <h3 style={{fontSize: '1.125rem', fontWeight: 700, color: '#2C1810', margin: '0 0 0.5rem'}}>
+      <h3 style={{fontSize: '1.125rem', fontWeight: 700, color: 'var(--ink)', margin: '0 0 0.5rem'}}>
         Sin resultados
       </h3>
-      <p style={{fontSize: '0.9375rem', color: '#7a6a62', margin: '0 0 1.5rem'}}>
+      <p style={{fontSize: '0.9375rem', color: 'var(--ink-soft)', margin: '0 0 1.5rem'}}>
         Intenta con otra búsqueda o explora nuestras categorías.
       </p>
       <Link
@@ -162,12 +162,12 @@ function SearchResultsEmpty() {
         style={{
           display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
           padding: '0.75rem 1.5rem', borderRadius: '999px',
-          background: '#F5A623', color: '#2C1810',
+          background: 'var(--brand-cta)', color: 'var(--ink)',
           fontWeight: 700, fontSize: '0.9375rem', textDecoration: 'none',
           transition: 'background 0.15s',
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = '#d4891a')}
-        onMouseLeave={(e) => (e.currentTarget.style.background = '#F5A623')}
+        onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--brand-cta-hover)')}
+        onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--brand-cta)')}
       >
         Ver todos los productos
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
@@ -183,10 +183,10 @@ function SectionLabel({emoji, label, count}) {
   return (
     <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.875rem'}}>
       <span>{emoji}</span>
-      <h2 style={{fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1.5px', color: '#F5A623', margin: 0}}>
+      <h2 style={{fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1.5px', color: 'var(--brand-cta)', margin: 0}}>
         {label}
       </h2>
-      <span style={{fontSize: '0.75rem', color: '#b0a49c', fontWeight: 500}}>({count})</span>
+      <span style={{fontSize: '0.75rem', color: 'var(--ink-muted)', fontWeight: 500}}>({count})</span>
     </div>
   );
 }
@@ -201,19 +201,19 @@ function ContentRow({url, title, emoji, sub}) {
         display: 'flex', alignItems: 'center', gap: '0.875rem',
         padding: '0.875rem 1rem',
         background: '#fff',
-        border: `1.5px solid ${hovered ? '#F5A623' : '#e8e4dc'}`,
+        border: `1.5px solid ${hovered ? 'var(--brand-cta)' : 'var(--border)'}`,
         borderRadius: '0.75rem', textDecoration: 'none',
         transition: 'border-color 0.15s',
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{width: '40px', height: '40px', background: '#f5f7fa', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '1.125rem'}}>
+      <div style={{width: '40px', height: '40px', background: 'var(--surface-cool)', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '1.125rem'}}>
         {emoji}
       </div>
       <div style={{flex: 1, minWidth: 0}}>
-        <p style={{fontSize: '0.9375rem', fontWeight: 600, color: '#2C1810', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{title}</p>
-        {sub && <p style={{fontSize: '0.75rem', color: '#7a6a62', margin: 0}}>{sub}</p>}
+        <p style={{fontSize: '0.9375rem', fontWeight: 600, color: 'var(--ink)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{title}</p>
+        {sub && <p style={{fontSize: '0.75rem', color: 'var(--ink-soft)', margin: 0}}>{sub}</p>}
       </div>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b0a49c" strokeWidth="2.5" aria-hidden="true" style={{flexShrink: 0}}>
         <polyline points="9 18 15 12 9 6"/>
@@ -231,9 +231,9 @@ function PaginationBtn({link: PLink, isLoading, label, up}) {
           style={{
             display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
             padding: '0.625rem 1.25rem', borderRadius: '999px',
-            border: `1.5px solid ${hov && !isLoading ? '#F5A623' : isLoading ? '#e8e4dc' : '#2C1810'}`,
-            background: hov && !isLoading ? '#2C1810' : 'transparent',
-            color: isLoading ? '#b0a49c' : hov ? '#F5A623' : '#2C1810',
+            border: `1.5px solid ${hov && !isLoading ? 'var(--brand-cta)' : isLoading ? 'var(--border)' : 'var(--ink)'}`,
+            background: hov && !isLoading ? 'var(--ink)' : 'transparent',
+            color: isLoading ? 'var(--ink-muted)' : hov ? 'var(--brand-cta)' : 'var(--ink)',
             fontSize: '0.875rem', fontWeight: 700, transition: 'all 0.15s', cursor: isLoading ? 'wait' : 'pointer',
           }}
           onMouseEnter={() => setHov(true)}

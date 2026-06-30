@@ -2,6 +2,7 @@ import {CartForm, Money} from '@shopify/hydrogen';
 import {useEffect, useId, useRef, useState} from 'react';
 import {useFetcher, Link} from 'react-router';
 import {useAside} from '~/components/Aside';
+import {Button, TextInput} from '~/components/design-system';
 
 export function CartSummary({cart, layout}) {
   const summaryId           = useId();
@@ -18,7 +19,7 @@ export function CartSummary({cart, layout}) {
         gap: '0',
         background: '#fff',
         borderRadius: isAside ? '0' : '0.875rem',
-        border: isAside ? 'none' : '1px solid #e8e4dc',
+        border: isAside ? 'none' : '1px solid var(--border)',
         overflow: 'hidden',
         maxWidth: isAside ? '100%' : '420px',
         marginLeft: isAside ? '0' : 'auto',
@@ -29,23 +30,23 @@ export function CartSummary({cart, layout}) {
 
       <div style={{padding: isAside ? '0 0 1rem' : '1rem 1rem 0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-          <span style={{fontSize: '0.875rem', color: '#7a6a62'}}>Subtotal</span>
-          <Money data={cart?.cost?.subtotalAmount} style={{fontSize: '0.9375rem', fontWeight: 600, color: '#2C1810'}}/>
+          <span style={{fontSize: '0.875rem', color: 'var(--ink-soft)'}}>Subtotal</span>
+          <Money data={cart?.cost?.subtotalAmount} style={{fontSize: '0.9375rem', fontWeight: 600, color: 'var(--ink)'}}/>
         </div>
 
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-          <span style={{fontSize: '0.875rem', color: '#7a6a62'}}>Envío</span>
-          <span style={{fontSize: '0.8125rem', color: '#2a9d5c', fontWeight: 600}}>Calculado al finalizar</span>
+          <span style={{fontSize: '0.875rem', color: 'var(--ink-soft)'}}>Envío</span>
+          <span style={{fontSize: '0.8125rem', color: 'var(--success)', fontWeight: 600}}>Calculado al finalizar</span>
         </div>
 
-        <div style={{height: '1px', background: '#e8e4dc', margin: '0.375rem 0'}}/>
+        <div style={{height: '1px', background: 'var(--border)', margin: '0.375rem 0'}}/>
 
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'}}>
-          <span style={{fontSize: '1rem', fontWeight: 700, color: '#2C1810'}}>Total</span>
-          <Money data={cart?.cost?.totalAmount} style={{fontSize: '1.375rem', fontWeight: 800, color: '#2C1810'}}/>
+          <span style={{fontSize: '1rem', fontWeight: 700, color: 'var(--ink)'}}>Total</span>
+          <Money data={cart?.cost?.totalAmount} style={{fontSize: '1.375rem', fontWeight: 800, color: 'var(--ink)'}}/>
         </div>
 
-        <p style={{fontSize: '0.6875rem', color: '#b0a49c', margin: 0, lineHeight: 1.4}}>
+        <p style={{fontSize: '0.6875rem', color: 'var(--ink-muted)', margin: 0, lineHeight: 1.4}}>
           Impuestos incluidos · Envío calculado en el siguiente paso
         </p>
       </div>
@@ -77,30 +78,21 @@ export function CartSummary({cart, layout}) {
 /* ── Ver carrito completo ── */
 function ViewCartLink() {
   const {close} = useAside();
-  const [hovered, setHovered] = useState(false);
 
   return (
-    <Link
-      to="/cart"
-      onClick={close}
-      style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-        width: '100%', padding: '0.75rem 1rem', borderRadius: '0.75rem',
-        border: `1.5px solid ${hovered ? '#2C1810' : '#e8e4dc'}`,
-        background: hovered ? '#2C1810' : '#fff',
-        color: hovered ? '#F5A623' : '#2C1810',
-        fontWeight: 700, fontSize: '0.9375rem',
-        textDecoration: 'none',
-        transition: 'all 0.15s',
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-        <circle cx="12" cy="12" r="3"/>
-      </svg>
-      Ver carrito
+    <Link to="/cart" onClick={close} style={{textDecoration: 'none'}}>
+      <Button
+        variant="outline"
+        fullWidth
+        icon={
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        }
+      >
+        Ver carrito
+      </Button>
     </Link>
   );
 }
@@ -111,8 +103,8 @@ function ShippingBadge() {
     <div style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       padding: '0.75rem 1rem',
-      background: 'linear-gradient(90deg, #fff8ee 0%, #fff3e0 100%)',
-      borderBottom: '1px solid #f0e4cc',
+      background: 'linear-gradient(90deg, var(--surface-cream) 0%, var(--surface-cream-2) 100%)',
+      borderBottom: '1px solid var(--border-gold)',
     }}>
       <div style={{display: 'flex', alignItems: 'center', gap: '0.625rem'}}>
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="1.75" aria-hidden="true">
@@ -121,7 +113,7 @@ function ShippingBadge() {
           <circle cx="6" cy="18" r="2"/>
           <circle cx="18" cy="18" r="2"/>
         </svg>
-        <span style={{fontSize: '0.8125rem', fontWeight: 700, color: '#2C1810', letterSpacing: '0.1px'}}>
+        <span style={{fontSize: '0.8125rem', fontWeight: 700, color: 'var(--ink)', letterSpacing: '0.1px'}}>
           Envío a domicilio disponible
         </span>
       </div>
@@ -145,15 +137,15 @@ function PaymentBadges() {
     <div style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
       padding: '0.75rem 1rem',
-      borderTop: '1px solid #f0ece6', borderBottom: '1px solid #f0ece6',
-      margin: '0.5rem 0', background: '#faf9f7',
+      borderTop: '1px solid var(--border-soft)', borderBottom: '1px solid var(--border-soft)',
+      margin: '0.5rem 0', background: 'var(--surface-warm)',
     }}>
       <div style={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#b0a49c" strokeWidth="2.5" aria-hidden="true">
           <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
           <path d="M7 11V7a5 5 0 0110 0v4"/>
         </svg>
-        <span style={{fontSize: '0.6875rem', color: '#b0a49c', fontWeight: 500, letterSpacing: '0.5px', textTransform: 'uppercase'}}>
+        <span style={{fontSize: '0.6875rem', color: 'var(--ink-muted)', fontWeight: 500, letterSpacing: '0.5px', textTransform: 'uppercase'}}>
           Pago seguro
         </span>
       </div>
@@ -166,7 +158,7 @@ function PaymentBadges() {
             title={m.label}
             style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: '#fff', border: '1px solid #e8e4dc',
+              background: '#fff', border: '1px solid var(--border)',
               borderRadius: '0.375rem', padding: '0.25rem 0.5rem',
               height: '28px', minWidth: '44px',
             }}
@@ -181,32 +173,25 @@ function PaymentBadges() {
 
 /* ── Checkout CTA ── */
 function CartCheckoutActions({checkoutUrl}) {
-  const [hovered, setHovered] = useState(false);
   if (!checkoutUrl) return null;
 
   return (
-    <a
-      href={checkoutUrl}
-      target="_self"
-      style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-        width: '100%', padding: '0.9375rem 1rem', borderRadius: '0.75rem',
-        background: hovered ? '#d4891a' : '#F5A623',
-        color: '#2C1810', fontWeight: 800, fontSize: '1rem', textDecoration: 'none',
-        marginTop: '0.25rem', transition: 'background 0.18s, transform 0.12s',
-        letterSpacing: '0.2px',
-        transform: hovered ? 'translateY(-1px)' : 'translateY(0)',
-        boxShadow: hovered ? '0 6px 20px rgba(245,166,35,0.35)' : '0 3px 10px rgba(245,166,35,0.2)',
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-        <line x1="3" y1="6" x2="21" y2="6"/>
-        <path d="M16 10a4 4 0 01-8 0"/>
-      </svg>
-      Finalizar compra
+    <a href={checkoutUrl} target="_self" style={{textDecoration: 'none', display: 'block'}}>
+      <Button
+        variant="primary"
+        size="lg"
+        fullWidth
+        style={{marginTop: '0.25rem'}}
+        icon={
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+        }
+      >
+        Finalizar compra
+      </Button>
     </a>
   );
 }
@@ -228,11 +213,11 @@ function CartDiscounts({discountCodes, discountCodeInputId}) {
         style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           width: '100%', padding: '0.5rem 0',
-          background: 'none', border: 'none', borderTop: '1px solid #f0ece6',
+          background: 'none', border: 'none', borderTop: '1px solid var(--border-soft)',
           cursor: 'pointer', fontFamily: 'inherit',
         }}
       >
-        <span style={{fontSize: '0.8125rem', fontWeight: 600, color: '#2C1810', display: 'flex', alignItems: 'center', gap: '0.375rem'}}>
+        <span style={{fontSize: '0.8125rem', fontWeight: 600, color: 'var(--ink)', display: 'flex', alignItems: 'center', gap: '0.375rem'}}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="2.5" aria-hidden="true">
             <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
             <line x1="7" y1="7" x2="7.01" y2="7"/>
@@ -253,51 +238,32 @@ function CartDiscounts({discountCodes, discountCodeInputId}) {
           {codes.length > 0 && (
             <div style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              background: '#fff8ee', border: '1px solid #f0d490',
+              background: 'var(--surface-cream)', border: '1px solid var(--border-gold)',
               borderRadius: '0.5rem', padding: '0.5rem 0.75rem',
             }}>
-              <span style={{fontSize: '0.8125rem', fontWeight: 700, color: '#7a5200'}}>
+              <span style={{fontSize: '0.8125rem', fontWeight: 700, color: 'var(--brand-deep)'}}>
                 🏷️ {codes.join(', ')}
               </span>
               <UpdateDiscountForm>
-                <button type="submit" style={{background: 'none', border: 'none', cursor: 'pointer', color: '#b0a49c', fontSize: '0.75rem', fontWeight: 600, padding: 0, fontFamily: 'inherit'}}>
+                <Button type="submit" variant="ghost" size="sm" style={{padding: 0, color: 'var(--ink-muted)'}}>
                   Quitar
-                </button>
+                </Button>
               </UpdateDiscountForm>
             </div>
           )}
 
           <UpdateDiscountForm discountCodes={codes}>
             <div style={{display: 'flex', gap: '0.5rem'}}>
-              <label htmlFor={discountCodeInputId} className="sr-only">Código de descuento</label>
-              <input
-                id={discountCodeInputId}
-                type="text"
-                name="discountCode"
-                placeholder="Ej. ROOF10"
-                style={{
-                  flex: 1, padding: '0.5625rem 0.75rem',
-                  border: '1.5px solid #e8e4dc', borderRadius: '0.5rem',
-                  fontSize: '0.8125rem', color: '#2C1810', outline: 'none',
-                  fontFamily: 'inherit', background: '#faf9f7', transition: 'border-color 0.15s',
-                }}
-                onFocus={(e) => (e.target.style.borderColor = '#acc3fa')}
-                onBlur={(e) => (e.target.style.borderColor = '#e8e4dc')}
-              />
-              <button
-                type="submit"
-                style={{
-                  padding: '0.5625rem 0.875rem', borderRadius: '0.5rem',
-                  border: '1.5px solid #2C1810', background: 'transparent',
-                  color: '#2C1810', fontWeight: 700, fontSize: '0.8125rem',
-                  cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap',
-                  transition: 'background 0.15s, color 0.15s',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = '#2C1810'; e.currentTarget.style.color = '#F5A623'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#2C1810'; }}
-              >
+              <div style={{flex: 1}}>
+                <TextInput
+                  id={discountCodeInputId}
+                  name="discountCode"
+                  placeholder="Ej. ROOF10"
+                />
+              </div>
+              <Button type="submit" variant="outline">
                 Aplicar
-              </button>
+              </Button>
             </div>
           </UpdateDiscountForm>
         </div>
@@ -352,18 +318,20 @@ function CartGiftCard({giftCardCodes, giftCardInputId}) {
             borderRadius: '0.5rem', padding: '0.5rem 0.75rem',
           }}
         >
-          <span style={{fontSize: '0.8125rem', fontWeight: 600, color: '#2C1810'}}>
+          <span style={{fontSize: '0.8125rem', fontWeight: 600, color: 'var(--ink)'}}>
             🎁 ***{card.lastCharacters} — <Money data={card.amountUsed} as="span"/>
           </span>
           <CartForm route="/cart" action={CartForm.ACTIONS.GiftCardCodesRemove} inputs={{giftCardCodes: [card.id]}}>
-            <button
+            <Button
               type="submit"
+              variant="ghost"
+              size="sm"
               ref={(el) => { el ? removeButtonRefs.current.set(card.id, el) : removeButtonRefs.current.delete(card.id); }}
               onClick={() => { const idx = previousCardIdsRef.current.indexOf(card.id); if (idx !== -1) setRemovedCardIndex(idx); }}
-              style={{background: 'none', border: 'none', cursor: 'pointer', color: '#b0a49c', fontSize: '0.75rem', fontWeight: 600, padding: 0, fontFamily: 'inherit'}}
+              style={{padding: 0, color: 'var(--ink-muted)'}}
             >
               Quitar
-            </button>
+            </Button>
           </CartForm>
         </div>
       ))}

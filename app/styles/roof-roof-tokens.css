@@ -1,0 +1,36 @@
+/* ============================================================
+   Roof Roof — Design Tokens
+   Importar una vez en app/root.jsx:
+   import tokens from './styles/roof-roof-tokens.css?url';
+   export const links = () => [{rel: 'stylesheet', href: tokens}];
+   ============================================================ */
+
+:root {
+  /* ── Brand ── */
+  --brand:            #f8b32a;   /* Header, accents */
+  --brand-cta:        #F5A623;   /* Botones primarios, badges */
+  --brand-cta-hover:  #d4891a;   /* Hover de botones primarios */
+
+  /* ── Ink / texto ── */
+  --ink:              #2C1810;   /* Texto principal, fondos oscuros */
+  --ink-soft:         #7a6a62;   /* Texto secundario */
+  --ink-muted:        #b0a49c;   /* Texto deshabilitado / placeholders */
+
+  /* ── Surfaces ── */
+  --surface-cream:    #fff8ee;   /* Fondos cálidos / highlights */
+  --surface-light:    #f5f7fa;   /* Fondo general de página */
+  --surface-ivory:    #e8e4dc;   /* Ivory brand */
+
+  /* ── Borders ── */
+  --border:           #e8e4dc;   /* Bordes generales */
+  --border-soft:      #f0ece6;   /* Bordes más sutiles */
+
+  /* ── Semantic ── */
+  --success:          #2a9d5c;   /* Verde éxito / disponible */
+  --danger:           #c0392b;   /* Rojo error / off badge */
+  --accent:           #acc3fa;   /* Baby purple / links secundarios */
+
+  /* ── Layout ── */
+  --header-height:    0px;       /* Actualizado via ResizeObserver en Header.jsx */
+  --bottom-nav-height: 64px;     /* Bottom nav mobile */
+}

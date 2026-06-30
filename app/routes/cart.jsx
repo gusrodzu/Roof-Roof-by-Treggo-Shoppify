@@ -1,7 +1,8 @@
-import {useLoaderData, data} from 'react-router';
+import {useLoaderData, data, Link} from 'react-router';
 import {CartForm} from '@shopify/hydrogen';
 import {CartMain} from '~/components/CartMain';
 import {useState, useEffect} from 'react';
+import {Button, Badge, Breadcrumb} from '~/components/design-system';
 
 export const meta = () => [{title: 'Carrito — Roof Roof'}];
 export const headers = ({actionHeaders}) => actionHeaders;
@@ -79,44 +80,35 @@ export default function Cart() {
     <div style={{background: '#f5f7fa', minHeight: '100vh', fontFamily: 'inherit'}}>
 
       {/* Breadcrumb */}
-      <div style={{background: '#fff', borderBottom: '1px solid #e8e4dc', padding: '0.625rem 1.5rem'}}>
-        <nav style={{maxWidth: '1100px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem', color: '#7a6a62'}}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-            <polyline points="9 22 9 12 15 12 15 22"/>
-          </svg>
-          <a href="/" style={{color: '#7a6a62', textDecoration: 'none'}}
-            onMouseOver={(e) => (e.currentTarget.style.color = '#F5A623')}
-            onMouseOut={(e) => (e.currentTarget.style.color = '#7a6a62')}
-          >Inicio</a>
-          <span style={{color: '#c8b8b0'}}>/</span>
-          <span style={{color: '#2C1810', fontWeight: 600}}>CARRITO</span>
-        </nav>
+      <div style={{background: '#fff', borderBottom: '1px solid var(--border)', padding: '0.625rem 1.5rem'}}>
+        <div style={{maxWidth: '1100px', margin: '0 auto'}}>
+          <Breadcrumb items={[{label: 'Inicio', to: '/'}, {label: 'CARRITO'}]} />
+        </div>
       </div>
 
       <div style={{maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '1.25rem 0' : '2rem 1.5rem'}}>
 
         {/* Header */}
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.5rem', padding: isMobile ? '0 1rem' : '0'}}>
-          <h1 style={{fontSize: isMobile ? '1.375rem' : '1.75rem', fontWeight: 800, color: '#2C1810', margin: 0, display: 'flex', alignItems: 'center', gap: '0.625rem'}}>
+          <h1 style={{fontSize: isMobile ? '1.375rem' : '1.75rem', fontWeight: 800, color: 'var(--ink)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.625rem'}}>
             Tu carrito
             {cart?.totalQuantity > 0 && (
-              <span style={{background: '#F5A623', color: '#2C1810', fontSize: '0.8125rem', fontWeight: 800, padding: '2px 10px', borderRadius: '999px'}}>
+              <Badge tone="warning">
                 {cart.totalQuantity} {cart.totalQuantity === 1 ? 'artículo' : 'artículos'}
-              </span>
+              </Badge>
             )}
           </h1>
-          <a
-            href="/collections/roof-roof"
-            style={{fontSize: '0.875rem', color: '#7a6a62', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.375rem', transition: 'color 0.15s'}}
-            onMouseOver={(e) => (e.currentTarget.style.color = '#F5A623')}
-            onMouseOut={(e) => (e.currentTarget.style.color = '#7a6a62')}
+          <Link
+            to="/collections/roof-roof"
+            style={{fontSize: '0.875rem', color: 'var(--ink-soft)', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.375rem', transition: 'color 0.15s'}}
+            onMouseOver={(e) => (e.currentTarget.style.color = 'var(--brand-cta-hover)')}
+            onMouseOut={(e) => (e.currentTarget.style.color = 'var(--ink-soft)')}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
               <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
             </svg>
             Seguir comprando
-          </a>
+          </Link>
         </div>
 
         {isEmpty ? (
@@ -143,25 +135,19 @@ export default function Cart() {
               </p>
             </div>
 
-            <a
-              href="/collections/roof-roof"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                background: '#F5A623', color: '#2C1810',
-                fontWeight: 700, fontSize: '0.9375rem',
-                padding: '0.875rem 2rem', borderRadius: '999px',
-                textDecoration: 'none',
-                boxShadow: '0 6px 20px rgba(245,166,35,0.3)',
-                transition: 'background 0.15s',
-              }}
-              onMouseOver={(e) => (e.currentTarget.style.background = '#d4891a')}
-              onMouseOut={(e) => (e.currentTarget.style.background = '#F5A623')}
-            >
-              Ver productos
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
-              </svg>
-            </a>
+            <Link to="/collections/roof-roof" style={{textDecoration: 'none'}}>
+              <Button
+                variant="primary"
+                size="lg"
+                iconAfter={
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                    <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+                  </svg>
+                }
+              >
+                Ver productos
+              </Button>
+            </Link>
 
             {/* Sugerencias de categoría */}
             <div style={{display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.25rem'}}>
@@ -171,21 +157,9 @@ export default function Cart() {
                 {label: '🔒 Jaulas', to: '/collections/roof-roof-jaulas'},
                 {label: '🍽️ Dispensadores', to: '/collections/roof-roof-dispensadores'},
               ].map(({label, to}) => (
-                <a
-                  key={to}
-                  href={to}
-                  style={{
-                    fontSize: '0.8125rem', fontWeight: 600,
-                    color: '#2C1810', background: '#f5f7fa',
-                    border: '1.5px solid #e8e4dc', borderRadius: '999px',
-                    padding: '0.4rem 0.875rem', textDecoration: 'none',
-                    transition: 'border-color 0.15s',
-                  }}
-                  onMouseOver={(e) => (e.currentTarget.style.borderColor = '#F5A623')}
-                  onMouseOut={(e) => (e.currentTarget.style.borderColor = '#e8e4dc')}
-                >
-                  {label}
-                </a>
+                <Link key={to} to={to} style={{textDecoration: 'none'}}>
+                  <Button variant="outline" size="sm">{label}</Button>
+                </Link>
               ))}
             </div>
           </div>

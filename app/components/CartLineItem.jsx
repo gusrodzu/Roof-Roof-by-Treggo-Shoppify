@@ -3,6 +3,7 @@ import {useVariantUrl} from '~/lib/variants';
 import {Link} from 'react-router';
 import {ProductPrice} from './ProductPrice';
 import {useAside} from './Aside';
+import {IconButton, Button} from '~/components/design-system';
 
 export function CartLineItem({layout, line, childrenMap}) {
   const {id, merchandise} = line;
@@ -15,7 +16,7 @@ export function CartLineItem({layout, line, childrenMap}) {
   return (
     <li style={{
       display: 'flex', flexDirection: 'column', gap: '0.5rem',
-      padding: '0.875rem 0', borderBottom: '1px solid #e8e4dc', listStyle: 'none',
+      padding: '0.875rem 0', borderBottom: '1px solid var(--border)', listStyle: 'none',
     }}>
       {/* Fila principal: imagen + info */}
       <div style={{display: 'flex', gap: '0.875rem', alignItems: 'flex-start'}}>
@@ -25,7 +26,7 @@ export function CartLineItem({layout, line, childrenMap}) {
           <div style={{
             width: '72px', height: '72px', flexShrink: 0,
             borderRadius: '0.5rem', overflow: 'hidden',
-            background: '#f5f7fa', border: '1px solid #e8e4dc',
+            background: 'var(--surface-cool)', border: '1px solid var(--border)',
           }}>
             <Image
               alt={title} aspectRatio="1/1" data={image}
@@ -38,7 +39,7 @@ export function CartLineItem({layout, line, childrenMap}) {
         {/* Info */}
         <div style={{flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '0.2rem'}}>
 
-          <p style={{fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#F5A623', margin: 0}}>
+          <p style={{fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--brand-cta)', margin: 0}}>
             Roof Roof
           </p>
 
@@ -49,7 +50,7 @@ export function CartLineItem({layout, line, childrenMap}) {
             style={{textDecoration: 'none'}}
           >
             <p style={{
-              fontSize: '0.8125rem', fontWeight: 600, color: '#2C1810',
+              fontSize: '0.8125rem', fontWeight: 600, color: 'var(--ink)',
               margin: 0, lineHeight: 1.4,
               overflow: 'hidden', display: '-webkit-box',
               WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
@@ -63,8 +64,8 @@ export function CartLineItem({layout, line, childrenMap}) {
             <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem', marginTop: '0.125rem'}}>
               {selectedOptions.filter((o) => o.value !== 'Default Title').map((option) => (
                 <span key={option.name} style={{
-                  fontSize: '10px', color: '#7a6a62',
-                  background: '#f5f7fa', border: '1px solid #e8e4dc',
+                  fontSize: '10px', color: 'var(--ink-soft)',
+                  background: 'var(--surface-cool)', border: '1px solid var(--border)',
                   borderRadius: '999px', padding: '1px 8px',
                 }}>
                   {option.name}: {option.value}
@@ -76,7 +77,7 @@ export function CartLineItem({layout, line, childrenMap}) {
           <div style={{marginTop: '0.25rem'}}>
             <ProductPrice
               price={line?.cost?.totalAmount}
-              style={{fontSize: '0.9375rem', fontWeight: 800, color: '#2C1810'}}
+              style={{fontSize: '0.9375rem', fontWeight: 800, color: 'var(--ink)'}}
             />
           </div>
 
@@ -110,7 +111,7 @@ function CartLineQuantity({line}) {
   return (
     <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.375rem'}}>
       {/* Selector cantidad */}
-      <div style={{display: 'flex', alignItems: 'center', border: '1.5px solid #e8e4dc', borderRadius: '0.5rem', overflow: 'hidden'}}>
+      <div style={{display: 'flex', alignItems: 'center', border: '1.5px solid var(--border)', borderRadius: '0.5rem', overflow: 'hidden'}}>
         <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
           <button
             aria-label="Disminuir cantidad"
@@ -118,7 +119,7 @@ function CartLineQuantity({line}) {
             style={{
               width: '30px', height: '30px', border: 'none',
               background: 'transparent',
-              color: quantity <= 1 ? '#c8b8b0' : '#2C1810',
+              color: quantity <= 1 ? 'var(--ink-disabled)' : 'var(--ink)',
               cursor: quantity <= 1 ? 'not-allowed' : 'pointer',
               fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
@@ -129,8 +130,8 @@ function CartLineQuantity({line}) {
 
         <span style={{
           minWidth: '28px', textAlign: 'center',
-          fontSize: '0.8125rem', fontWeight: 700, color: '#2C1810',
-          borderLeft: '1px solid #e8e4dc', borderRight: '1px solid #e8e4dc',
+          fontSize: '0.8125rem', fontWeight: 700, color: 'var(--ink)',
+          borderLeft: '1px solid var(--border)', borderRight: '1px solid var(--border)',
           padding: '0 0.25rem', lineHeight: '30px',
         }}>
           {quantity}
@@ -142,7 +143,7 @@ function CartLineQuantity({line}) {
             disabled={!!isOptimistic}
             style={{
               width: '30px', height: '30px', border: 'none',
-              background: 'transparent', color: '#2C1810',
+              background: 'transparent', color: 'var(--ink)',
               cursor: isOptimistic ? 'not-allowed' : 'pointer',
               fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
@@ -166,26 +167,22 @@ function CartLineRemoveButton({lineIds, disabled}) {
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button
-        disabled={disabled}
+      <Button
         type="submit"
-        aria-label="Eliminar producto"
-        style={{
-          background: 'transparent', border: 'none',
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          color: '#c8b8b0', padding: '0.25rem',
-          display: 'flex', alignItems: 'center', transition: 'color 0.15s',
-        }}
-        onMouseEnter={(e) => { if (!disabled) e.currentTarget.style.color = '#c0392b'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = '#c8b8b0'; }}
+        variant="danger"
+        size="sm"
+        disabled={disabled}
+        icon={
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6l-1 14H6L5 6"/>
+            <path d="M10 11v6"/><path d="M14 11v6"/>
+            <path d="M9 6V4h6v2"/>
+          </svg>
+        }
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-          <polyline points="3 6 5 6 21 6"/>
-          <path d="M19 6l-1 14H6L5 6"/>
-          <path d="M10 11v6"/><path d="M14 11v6"/>
-          <path d="M9 6V4h6v2"/>
-        </svg>
-      </button>
+        Eliminar
+      </Button>
     </CartForm>
   );
 }

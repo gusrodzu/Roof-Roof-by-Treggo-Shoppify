@@ -2,6 +2,7 @@ import {Await, Link, useNavigate} from 'react-router';
 import {useState, useEffect, useRef, useId, Suspense} from 'react';
 import {useAside} from '~/components/Aside';
 import {useCartAnimation, CartBadge} from '~/components/CartAnimation';
+import {IconButton, Button} from '~/components/design-system';
 import logo from '~/assets/logo.png';
 
 const MEGA_MENU = [
@@ -221,27 +222,99 @@ export function Header({header, cart, isLoggedIn, publicStoreDomain}) {
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-    color: '#2C1810',
+    color: 'var(--ink)',
     flexShrink: 0,
   };
 
-  const SearchBar = ({id}) => (
-    <form onSubmit={handleSearchSubmit} role="search" style={{display: 'flex', alignItems: 'center', position: 'relative', width: '100%'}}>
-      <label htmlFor={id} style={{position: 'absolute', width: 1, height: 1, overflow: 'hidden'}}>Buscar productos</label>
-      <input
-        id={id}
-        name="q"
-        type="search"
-        placeholder="Buscar casas, camas, jaulas..."
-        style={{width: '100%', background: '#ffffff', border: '1px solid #ffffff', borderRadius: '0.5rem', padding: '0.625rem 2.75rem 0.625rem 1rem', color: '#0a2a5e', fontSize: '0.875rem', outline: 'none', boxSizing: 'border-box'}}
-      />
-      <button type="submit" aria-label="Buscar" style={{position: 'absolute', right: '0.5rem', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: '#0a2a5e', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0.25rem'}}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-      </button>
-    </form>
-  );
+  const SearchBar = ({id}) => {
+    const inputRef = useRef(null);
+    const [focused, setFocused] = useState(false);
+    const [value, setValue] = useState('');
+
+    // Atajo de teclado: Cmd/Ctrl + K enfoca el buscador
+    useEffect(() => {
+      const handler = (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          inputRef.current?.focus();
+        }
+      };
+      window.addEventListener('keydown', handler);
+      return () => window.removeEventListener('keydown', handler);
+    }, []);
+
+    const clearSearch = () => {
+      setValue('');
+      inputRef.current?.focus();
+    };
+
+    return (
+      <form onSubmit={handleSearchSubmit} role="search" 
+
+      style={{display: 'flex', alignItems: 'center', position: 'relative', width: '100%'     }}>
+        <label htmlFor={id} style={{position: 'absolute', width: 1, height: 1, overflow: 'hidden'}}>Buscar productos</label>
+
+        {/* Ícono lupa a la izquierda */}
+        <span style={{
+          position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)',
+          color: focused ? 'var(--brand-cta)' : 'var(--ink-soft)',
+          display: 'flex', pointerEvents: 'none', transition: 'color 0.15s',
+        }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+
+        <input
+          ref={inputRef}
+          id={id}
+          name="q"
+          type="search"
+          placeholder="Croquetas, juguetes…"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          autoComplete="off"
+          style={{
+            width: '100%',
+            background: '#fff',
+            border: `1.5px solid ${focused ? 'var(--brand-cta)' : 'var(--border-gold)'}`,
+            borderRadius: '999px',
+            padding: '0.75rem 2.75rem 0.75rem 2.75rem',
+            color: 'black',
+            fontSize: '0.9375rem',
+            outline: 'none',
+            boxSizing: 'border-box',
+            boxShadow: focused ? '0 0 0 3px rgba(245,166,35,0.18)' : 'none',
+            transition: 'border-color 0.15s, box-shadow 0.15s',
+          }}
+        />
+
+        {/* Botón limpiar — solo visible con texto */}
+        {value && (
+          <button
+            type="button"
+            onClick={clearSearch}
+            aria-label="Limpiar búsqueda"
+            style={{
+              position: 'absolute', right: '2.75rem', top: '50%', transform: 'translateY(-50%)',
+              width: '20px', height: '20px', borderRadius: '50%',
+              background: 'var(--border)', border: 'none',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', color: 'var(--ink-soft)', padding: 0,
+            }}
+          >
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        )}
+
+        <button type="submit" aria-label="Buscar" style={{position: 'absolute', right: '0.5rem', top: '50%', transform: 'translateY(-50%)', width: '32px', height: '32px', border: 'none', background: 'transparent', cursor: 'pointer'}} />
+      </form>
+    );
+  };
 
   return (
     <header
@@ -323,7 +396,7 @@ export function Header({header, cart, isLoggedIn, publicStoreDomain}) {
                   display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem',
                   padding: '0.375rem 0.625rem',
                 }}>
-                  <CartButton cart={cart} badgeShadow="0 0 0 2px #f8b32a" />
+                  <CartButton cart={cart} badgeShadow="0 0 0 2px #fff" />
                   <span style={{fontSize: '0.6875rem', fontWeight: 700, color: '#2C1810'}}>Carrito</span>
                 </div>
               </div>
@@ -397,15 +470,18 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
           alt="Roof Roof"
           style={{width: '120px', height: 'auto', filter: 'brightness(0) saturate(100%) invert(9%) sepia(33%) saturate(1200%) hue-rotate(340deg) brightness(0.85)'}}
         />
-        <button
+        <IconButton
+          variant="outline"
+          size="md"
           onClick={close}
           aria-label="Cerrar menú"
-          style={{background: 'rgba(255, 255, 255, 0.57)', border: 'none', borderRadius: '50%', width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#2C1810', flexShrink: 0}}
-        >
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-        </button>
+          style={{background: 'rgba(255, 255, 255, 0.57)', border: 'none'}}
+          icon={
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          }
+        />
       </div>
 
       {/* Links scrolleables */}
@@ -570,12 +646,19 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
 
       {/* Footer sticky */}
       <div style={{padding: '1rem 1.25rem', background: '#fff', borderTop: '1px solid #e8e4dc', flexShrink: 0}}>
-        <button
+        <Button
+          variant="ghost"
+          fullWidth
           onClick={close}
-          style={{width: '100%', background: '#2C1810', color: '#F5A623', border: 'none', borderRadius: '0.625rem', padding: '0.875rem', fontSize: '0.9375rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', letterSpacing: '0.3px'}}
+          style={{
+            background: 'var(--ink)',
+            color: 'var(--brand-cta)',
+            borderRadius: '0.625rem',
+            padding: '0.875rem',
+          }}
         >
           Cerrar menú
-        </button>
+        </Button>
       </div>
 
     </div>

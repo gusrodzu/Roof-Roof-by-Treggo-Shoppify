@@ -1,6 +1,7 @@
 import {Link} from 'react-router';
 import {Image} from '@shopify/hydrogen';
 import {useState, useRef, useEffect} from 'react';
+import {Tabs, IconButton} from '~/components/design-system';
 
 const CATEGORY_MAP = {
   'roof-roof-casas': {label: 'Casas', tab: 'perro'},
@@ -45,42 +46,12 @@ export function CategoryTabs({collections = []}) {
       }}
     >
       {/* Tabs */}
-      <div
-        style={{
-          maxWidth: '680px',
-          width: 'calc(100% - 2rem)',
-          margin: '0 auto 2rem',
-        
-          borderRadius: '999px',
-          padding: '5px',
-          border: '1px solid #E8E4DC',
-          display: 'flex',
-        }}
-      >
-        {TABS.map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => {
-              setActiveTab(tab.key);
-              setActiveItem(null);
-            }}
-            style={{
-              flex: 1,
-              padding: isMobile ? '.65rem' : '.75rem 1rem',
-              borderRadius: '999px',
-              border: 'none',
-              background: activeTab === tab.key ? '#2C1810' : 'transparent',
-              color: activeTab === tab.key ? '#fff' : '#8fa3c4',
-              fontSize: isMobile ? '.8125rem' : '.9375rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              transition: 'all .2s',
-             
-            }}
-          >
-            {tab.label}
-          </button>
-        ))}
+      <div style={{display: 'flex', justifyContent: 'center', margin: '0 auto 2rem'}}>
+        <Tabs
+          tabs={TABS.map((t) => ({key: t.key, label: t.label}))}
+          active={activeTab}
+          onChange={(key) => { setActiveTab(key); setActiveItem(null); }}
+        />
       </div>
 
     {/* Categorías */}
@@ -135,22 +106,22 @@ export function CategoryTabs({collections = []}) {
               height: isMobile ? '110px' : '160px',
               borderRadius: '.875rem',
               overflow: 'hidden',
-              background: '#f5f7fa',
+              background: 'var(--surface-cool)',
               border: isActive
-                ? '3px solid #2C1810'
-                : '2px solid #E8E4DC',
+                ? '3px solid var(--ink)'
+                : '2px solid var(--border)',
               transition: 'all .15s',
               flexShrink: 0,
             }}
             onMouseEnter={(e) => {
               if (!isActive) {
-                e.currentTarget.style.borderColor = '#F5A623';
+                e.currentTarget.style.borderColor = 'var(--brand-cta)';
               }
               e.currentTarget.style.transform = 'translateY(-3px)';
             }}
             onMouseLeave={(e) => {
               if (!isActive) {
-                e.currentTarget.style.borderColor = '#E8E4DC';
+                e.currentTarget.style.borderColor = 'var(--border)';
               }
               e.currentTarget.style.transform = 'translateY(0)';
             }}
@@ -185,7 +156,7 @@ export function CategoryTabs({collections = []}) {
             style={{
               fontSize: isMobile ? '.75rem' : '.8125rem',
               fontWeight: isActive ? 700 : 500,
-              color: '#2C1810',
+              color: 'var(--ink)',
               textAlign: 'center',
               lineHeight: 1.3,
             }}
@@ -208,48 +179,33 @@ export function CategoryTabs({collections = []}) {
         alignSelf: 'center',
       }}
     >
-      <Link
-        to="/collections/roof-roof"
-        style={{
-          width: isMobile ? '42px' : '48px',
-          height: isMobile ? '42px' : '48px',
-          borderRadius: '50%',
-          border: '2px solid #2C1810',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textDecoration: 'none',
-          background: 'transparent',
-          transition: 'all .15s',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.background = '#2C1810';
-          e.currentTarget.querySelector('svg').style.stroke = '#F5A623';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = 'transparent';
-          e.currentTarget.querySelector('svg').style.stroke = '#2C1810';
-        }}
-      >
-        <svg
-          width={isMobile ? '18' : '20'}
-          height={isMobile ? '18' : '20'}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#2C1810"
-          strokeWidth="2.5"
-          style={{transition: 'stroke .15s'}}
-        >
-          <path d="M5 12h14" />
-          <path d="M12 5l7 7-7 7" />
-        </svg>
+      <Link to="/collections/roof-roof" style={{textDecoration: 'none'}}>
+        <IconButton
+          variant="outline"
+          size={isMobile ? 'sm' : 'md'}
+          aria-label="Ver todo"
+          style={{border: '2px solid var(--ink)', pointerEvents: 'none'}}
+          icon={
+            <svg
+              width={isMobile ? '18' : '20'}
+              height={isMobile ? '18' : '20'}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--ink)"
+              strokeWidth="2.5"
+            >
+              <path d="M5 12h14" />
+              <path d="M12 5l7 7-7 7" />
+            </svg>
+          }
+        />
       </Link>
 
       <span
         style={{
           fontSize: '.75rem',
           fontWeight: 600,
-          color: '#2C1810',
+          color: 'var(--ink)',
           textAlign: 'center',
         }}
       >

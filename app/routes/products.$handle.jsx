@@ -2,6 +2,7 @@ import {useLoaderData, Link} from 'react-router';
 import {CartForm, Image, Money} from '@shopify/hydrogen';
 import {useState, useEffect} from 'react';
 import {useAside} from '~/components/Aside';
+import {Button, Badge, Breadcrumb, QuantityStepper, FilterTag} from '~/components/design-system';
 
 export const meta = ({data}) => [
   {title: `${data?.product?.title ?? 'Producto'} — Roof Roof`},
@@ -56,20 +57,16 @@ export default function ProductRoute() {
     <div style={{background: '#ffffff', minHeight: '100vh'}}>
 
       {/* ── BREADCRUMB ── */}
-      <div style={{background: '#fff', borderBottom: '1px solid #e8e4dc', padding: '0.625rem 1.5rem'}}>
-        <nav style={{maxWidth: '1100px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem', color: '#7a6a62', flexWrap: 'wrap'}}>
-          <Link to="/" style={{color: '#7a6a62', textDecoration: 'none'}}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#F5A623')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = '#7a6a62')}
-          >Inicio</Link>
-          <span style={{color: '#c8b8b0'}}>/</span>
-          <Link to="/collections/roof-roof" style={{color: '#7a6a62', textDecoration: 'none', textTransform: 'uppercase', fontWeight: 500}}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#F5A623')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = '#7a6a62')}
-          >Roof Roof</Link>
-          <span style={{color: '#c8b8b0'}}>/</span>
-          <span style={{color: '#2C1810', fontWeight: 600}}>{product.title}</span>
-        </nav>
+      <div style={{background: '#fff', borderBottom: '1px solid var(--border)', padding: '0.625rem 1.5rem'}}>
+        <div style={{maxWidth: '1100px', margin: '0 auto'}}>
+          <Breadcrumb
+            items={[
+              {label: 'Inicio', to: '/'},
+              {label: 'Roof Roof', to: '/collections/roof-roof'},
+              {label: product.title},
+            ]}
+          />
+        </div>
       </div>
 
       {/* ── SECCIÓN PRINCIPAL ── */}
@@ -97,8 +94,8 @@ export default function ProductRoute() {
             position: 'relative',
           }}>
             {hasDiscount && (
-              <span style={{position: 'absolute', top: '1rem', left: '1rem', background: '#c0392b', color: '#fff', fontSize: '12px', fontWeight: 800, padding: '4px 12px', borderRadius: '999px', zIndex: 1}}>
-                -{discountPct}%
+              <span style={{position: 'absolute', top: '1rem', left: '1rem', zIndex: 1}}>
+                <Badge tone="danger">-{discountPct}%</Badge>
               </span>
             )}
             {images[mainImageIdx] ? (
@@ -259,27 +256,19 @@ export default function ProductRoute() {
                       v.selectedOptions.some((o) => o.name === option.name && o.value === val),
                     );
                     return (
-                      <button
+                      <FilterTag
                         key={val}
-                        onClick={() => matchingIdx >= 0 && setSelectedVariantIdx(matchingIdx)}
-                        disabled={!isAvailable}
+                        active={isActive}
+                        onClick={() => isAvailable && matchingIdx >= 0 && setSelectedVariantIdx(matchingIdx)}
                         style={{
-                          padding: '0.5rem 1rem',
-                          borderRadius: '0.5rem',
-                          border: `2px solid ${isActive ? '#F5A623' : '#e8e4dc'}`,
-                          background: isActive ? '#fff8ee' : '#fff',
-                          color: isActive ? '#2C1810' : '#7a6a62',
-                          fontSize: '0.8125rem',
-                          fontWeight: isActive ? 700 : 500,
-                          cursor: isAvailable ? 'pointer' : 'not-allowed',
                           opacity: isAvailable ? 1 : 0.4,
                           textDecoration: !isAvailable ? 'line-through' : 'none',
-                          fontFamily: 'inherit',
-                          transition: 'border-color 0.15s, background 0.15s',
+                          cursor: isAvailable ? 'pointer' : 'not-allowed',
+                        
                         }}
                       >
                         {val}
-                      </button>
+                      </FilterTag>
                     );
                   })}
                 </div>
@@ -289,22 +278,8 @@ export default function ProductRoute() {
 
           {/* Cantidad */}
           <div style={{marginBottom: '1.25rem'}}>
-            <p style={{fontSize: '0.8125rem', fontWeight: 700, color: '#2C1810', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Cantidad</p>
-            <div style={{display: 'flex', alignItems: 'center', width: 'fit-content', border: '1.5px solid #e8e4dc', borderRadius: '0.5rem', overflow: 'hidden', background: '#fff'}}>
-              <button
-                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                aria-label="Disminuir"
-                style={{width: '40px', height: '40px', border: 'none', borderRight: '1px solid #e8e4dc', background: '#f5f7fa', color: '#2C1810', fontSize: '1.25rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700}}
-              >−</button>
-              <span style={{width: '48px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9375rem', fontWeight: 700, color: '#2C1810'}}>
-                {quantity}
-              </span>
-              <button
-                onClick={() => setQuantity((q) => q + 1)}
-                aria-label="Aumentar"
-                style={{width: '40px', height: '40px', border: 'none', borderLeft: '1px solid #e8e4dc', background: '#f5f7fa', color: '#2C1810', fontSize: '1.25rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700}}
-              >+</button>
-            </div>
+            <p style={{fontSize: '0.8125rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Cantidad</p>
+            <QuantityStepper value={quantity} onChange={setQuantity} min={1} />
           </div>
 
           {/* Botón — Añadir al carrito */}
@@ -316,47 +291,29 @@ export default function ProductRoute() {
               onSubmit={() => open('cart')}
             >
               {(fetcher) => (
-                <button
+                <Button
                   type="submit"
-                  disabled={fetcher.state !== 'idle'}
-                  style={{
-                    width: '100%', padding: '1rem', borderRadius: '0.75rem', border: 'none',
-                    background: fetcher.state !== 'idle' ? '#e8e4dc' : '#F5A623',
-                    color: fetcher.state !== 'idle' ? '#b0a49c' : '#2C1810',
-                    fontSize: '1rem', fontWeight: 800, cursor: fetcher.state !== 'idle' ? 'not-allowed' : 'pointer',
-                    marginBottom: '0.75rem', transition: 'background 0.15s, transform 0.1s',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-                    fontFamily: 'inherit',
-                    boxShadow: fetcher.state === 'idle' ? '0 6px 20px rgba(245,166,35,0.3)' : 'none',
-                  }}
-                  onMouseEnter={(e) => { if (fetcher.state === 'idle') e.currentTarget.style.background = '#d4891a'; }}
-                  onMouseLeave={(e) => { if (fetcher.state === 'idle') e.currentTarget.style.background = '#F5A623'; }}
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  loading={fetcher.state !== 'idle'}
+                  style={{marginBottom: '0.75rem'}}
+                  icon={
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                      <line x1="3" y1="6" x2="21" y2="6"/>
+                      <path d="M16 10a4 4 0 01-8 0"/>
+                    </svg>
+                  }
                 >
-                  {fetcher.state !== 'idle' ? (
-                    <>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{animation: 'spin 0.8s linear infinite'}} aria-hidden="true">
-                        <style>{`@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}`}</style>
-                        <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" opacity="0.3"/><path d="M21 12a9 9 0 00-9-9"/>
-                      </svg>
-                      Agregando...
-                    </>
-                  ) : (
-                    <>
-                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                        <line x1="3" y1="6" x2="21" y2="6"/>
-                        <path d="M16 10a4 4 0 01-8 0"/>
-                      </svg>
-                      Añadir al carrito
-                    </>
-                  )}
-                </button>
+                  {fetcher.state !== 'idle' ? 'Agregando...' : 'Añadir al carrito'}
+                </Button>
               )}
             </CartForm>
           ) : (
-            <button disabled style={{width: '100%', padding: '1rem', borderRadius: '0.75rem', border: 'none', background: '#e8e4dc', color: '#b0a49c', fontSize: '1rem', fontWeight: 700, cursor: 'not-allowed', marginBottom: '0.75rem', fontFamily: 'inherit'}}>
+            <Button variant="primary" size="lg" fullWidth disabled style={{marginBottom: '0.75rem'}}>
               Agotado
-            </button>
+            </Button>
           )}
 
           {/* Botón — Comprar ahora */}
@@ -367,22 +324,21 @@ export default function ProductRoute() {
               inputs={{lines: [{merchandiseId: variant.id, quantity}], redirectTo: '/checkout'}}
             >
               {(fetcher) => (
-                <button
+                <Button
                   type="submit"
-                  disabled={fetcher.state !== 'idle'}
-                  style={{
-                    width: '100%', padding: '1rem', borderRadius: '0.75rem',
-                    border: '2px solid #2C1810', background: 'transparent',
-                    color: '#2C1810', fontSize: '1rem', fontWeight: 700,
-                    cursor: fetcher.state !== 'idle' ? 'not-allowed' : 'pointer',
-                    marginBottom: '1.5rem', transition: 'background 0.15s, color 0.15s',
-                    fontFamily: 'inherit',
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = '#2C1810'; e.currentTarget.style.color = '#F5A623'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#2C1810'; }}
+                  variant="outline"
+                  size="lg"
+                  fullWidth
+                  loading={fetcher.state !== 'idle'}
+                  style={{marginBottom: '1.5rem'}}
+                  iconAfter={fetcher.state === 'idle' ? (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                      <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+                    </svg>
+                  ) : null}
                 >
-                  {fetcher.state !== 'idle' ? 'Procesando...' : 'Comprar ahora →'}
-                </button>
+                  {fetcher.state !== 'idle' ? 'Procesando...' : 'Comprar ahora'}
+                </Button>
               )}
             </CartForm>
           )}
@@ -483,18 +439,13 @@ function RelatedCard({product: p}) {
         >
           {p.title}
         </p>
-        <span style={{
-          display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
-          background: hovered ? '#d4891a' : '#F5A623',
-          color: '#2C1810', fontSize: '0.75rem', fontWeight: 700,
-          padding: '0.4rem 0.875rem', borderRadius: '999px',
-          transition: 'background 0.15s',
-        }}>
-          Ver detalles
+        <Button size="sm" iconAfter={
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
             <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
           </svg>
-        </span>
+        }>
+          Ver detalles
+        </Button>
         {p.description && (
           <p style={{fontSize: '0.75rem', color: '#7a6a62', lineHeight: 1.5, margin: 0}}>
             {p.description.slice(0, 70)}{p.description.length > 70 ? '...' : ''}

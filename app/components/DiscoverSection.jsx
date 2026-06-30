@@ -1,6 +1,7 @@
 import {Link} from 'react-router';
 import {Image} from '@shopify/hydrogen';
 import {useState, useEffect} from 'react';
+import {Button} from '~/components/design-system';
 
 export function DiscoverSection({products = []}) {
   const [isMobile, setIsMobile] = useState(false);
@@ -61,7 +62,7 @@ export function DiscoverSection({products = []}) {
           style={{
             fontSize: isMobile ? '1.15rem' : '1.375rem',
             fontWeight: 700,
-            color: '#2C1810',
+            color: 'var(--ink)',
             margin: '0 0 1.25rem',
           }}
         >
@@ -152,45 +153,26 @@ export function DiscoverSection({products = []}) {
                 >
                   {title}
                 </p>
-                                <Link
-                  to={to}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    background: '#F5A623',
-                    color: '#2C1810',
-                    fontWeight: 700,
-                    fontSize: isMobile ? '.8125rem' : '.875rem',
-                    padding: isMobile
-                      ? '.45rem .9rem'
-                      : '.5rem 1.125rem',
-                    borderRadius: '999px',
-                    textDecoration: 'none',
-                    alignSelf: 'flex-start',
-                    transition: 'background .15s',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#d4891a';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#F5A623';
-                  }}
-                >
-                  {cta}
-
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    aria-hidden="true"
+                                <Link to={to} style={{textDecoration: 'none', alignSelf: 'flex-start'}}>
+                  <Button
+                    size={isMobile ? 'sm' : 'md'}
+                    iconAfter={
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        aria-hidden="true"
+                      >
+                        <path d="M5 12h14" />
+                        <path d="M12 5l7 7-7 7" />
+                      </svg>
+                    }
                   >
-                    <path d="M5 12h14" />
-                    <path d="M12 5l7 7-7 7" />
-                  </svg>
+                    {cta}
+                  </Button>
                 </Link>
               </div>
             </div>

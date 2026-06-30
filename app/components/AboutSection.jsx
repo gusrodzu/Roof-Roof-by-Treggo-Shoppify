@@ -1,5 +1,6 @@
 import {Link} from 'react-router';
 import {useState, useEffect} from 'react';
+import {Button} from '~/components/design-system';
 
 const VALUES = [
   {
@@ -13,9 +14,9 @@ const VALUES = [
         <circle cx="18" cy="18" r="2"/>
       </svg>
     ),
-    accent: '#F5A623',
-    bg: '#fff8ee',
-    border: '#f0d490',
+    accent: 'var(--brand-cta)',
+    bg: 'var(--surface-cream)',
+    border: 'var(--border-gold)',
   },
   {
     title: 'Calidad asegurada',
@@ -72,7 +73,7 @@ export function AboutSection() {
             fontWeight: 800,
             letterSpacing: '2px',
             textTransform: 'uppercase',
-            color: '#F5A623',
+            color: 'var(--brand-cta)',
             marginBottom: '0.5rem',
             margin: '0 0 0.5rem',
           }}>
@@ -82,7 +83,7 @@ export function AboutSection() {
           <h2 style={{
             fontSize: isMobile ? '1.375rem' : '1.875rem',
             fontWeight: 800,
-            color: '#2C1810',
+            color: 'var(--ink)',
             margin: '0 0 0.875rem',
             letterSpacing: '-0.02em',
           }}>
@@ -91,7 +92,7 @@ export function AboutSection() {
 
           <p style={{
             fontSize: '0.9375rem',
-            color: '#7a6a62',
+            color: 'var(--ink-soft)',
             maxWidth: '560px',
             margin: '0 auto 1.5rem',
             lineHeight: 1.6,
@@ -99,28 +100,18 @@ export function AboutSection() {
             Diseñamos productos pensados para el bienestar, comodidad y vida diaria de tu mascota.
           </p>
 
-          <Link
-            to="/collections/roof-roof"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.75rem 1.5rem',
-              borderRadius: '999px',
-              background: '#2C1810',
-              color: '#F5A623',
-              fontWeight: 700,
-              fontSize: '0.875rem',
-              textDecoration: 'none',
-              transition: 'background 0.15s',
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = '#3d2515')}
-            onMouseLeave={(e) => (e.currentTarget.style.background = '#2C1810')}
-          >
-            Explorar productos
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-              <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
-            </svg>
+          <Link to="/collections/roof-roof" style={{textDecoration: 'none', display: 'inline-block'}}>
+            <Button
+              variant="ghost"
+              iconAfter={
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                  <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+                </svg>
+              }
+              style={{background: 'var(--ink)', color: 'var(--brand-cta)'}}
+            >
+              Explorar productos
+            </Button>
           </Link>
         </div>
 

@@ -93,7 +93,7 @@ export function BottomNav({cart, isLoggedIn}) {
           bottom: 0, left: 0, right: 0,
           zIndex: 60,
           background: '#fff',
-          borderTop: '1px solid #e8e4dc',
+          borderTop: '1px solid var(--border)',
           display: 'flex',
           alignItems: 'stretch',
           height: 'var(--bottom-nav-height, 64px)',
@@ -152,7 +152,7 @@ function NavLink({to, label, icon, active}) {
         alignItems: 'center', justifyContent: 'center',
         gap: '3px',
         textDecoration: 'none',
-        color: active ? '#2C1810' : '#b0a49c',
+        color: active ? 'var(--ink)' : 'var(--ink-muted)',
         transition: 'color 0.15s',
         position: 'relative',
         paddingTop: active ? '0' : '0',
@@ -164,12 +164,12 @@ function NavLink({to, label, icon, active}) {
           position: 'absolute', top: 0, left: '50%',
           transform: 'translateX(-50%)',
           width: '32px', height: '3px',
-          background: '#F5A623', borderRadius: '0 0 3px 3px',
+          background: 'var(--brand-cta)', borderRadius: '0 0 3px 3px',
         }}/>
       )}
       <span style={{
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        color: active ? '#F5A623' : '#b0a49c',
+        color: active ? 'var(--brand-cta)' : 'var(--ink-muted)',
       }}>
         {icon}
       </span>
@@ -194,12 +194,12 @@ function NavButton({label, icon, active, onClick}) {
         alignItems: 'center', justifyContent: 'center',
         gap: '3px',
         background: 'none', border: 'none', cursor: 'pointer',
-        color: active ? '#2C1810' : '#b0a49c',
+        color: active ? 'var(--ink)' : 'var(--ink-muted)',
         fontFamily: 'inherit',
         padding: 0,
       }}
     >
-      <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#b0a49c'}}>
+      <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink-muted)'}}>
         {icon}
       </span>
       <span style={{fontSize: '10px', fontWeight: 500}}>
@@ -231,9 +231,9 @@ function CartNavItem({cart, cartIconRef, onOpen}) {
       <span style={{
         width: '44px', height: '44px',
         borderRadius: '50%',
-        background: '#F5A623',
+        background: 'var(--brand-cta)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        color: '#2C1810',
+        color: 'var(--ink)',
         position: 'relative',
         boxShadow: '0 2px 8px rgba(245,166,35,0.4)',
         marginTop: '-14px', // sobresale hacia arriba
@@ -248,13 +248,13 @@ function CartNavItem({cart, cartIconRef, onOpen}) {
             {(resolvedCart) => (
               <CartBadge
                 count={resolvedCart?.totalQuantity ?? 0}
-                shadow="0 0 0 2px #F5A623"
+                shadow="0 0 0 2px #fff"
               />
             )}
           </Await>
         </Suspense>
       </span>
-      <span style={{fontSize: '10px', fontWeight: 700, color: '#2C1810', marginTop: '2px'}}>
+      <span style={{fontSize: '10px', fontWeight: 700, color: 'var(--ink)', marginTop: '2px'}}>
         Carrito
       </span>
     </button>

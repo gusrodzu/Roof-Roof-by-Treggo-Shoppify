@@ -60,7 +60,7 @@ function CartAside({cart}) {
   return (
     <Aside type="cart" heading="Tu carrito">
       <Suspense fallback={
-        <div style={{padding: '2rem', textAlign: 'center', color: '#7a6a62', fontSize: '0.875rem'}}>
+        <div style={{padding: '2rem', textAlign: 'center', color: 'var(--ink-soft)', fontSize: '0.875rem'}}>
           Cargando carrito...
         </div>
       }>
@@ -103,29 +103,29 @@ function SearchAside() {
                   list={queriesDatalistId}
                   style={{
                     width: '100%', padding: '0.625rem 0.75rem 0.625rem 2.25rem',
-                    border: '1.5px solid #e8e4dc', borderRadius: '0.5rem',
-                    fontSize: '0.875rem', color: '#2C1810',
+                    border: '1.5px solid var(--border)', borderRadius: '0.5rem',
+                    fontSize: '0.875rem', color: 'var(--ink)',
                     fontFamily: 'inherit', outline: 'none',
-                    background: '#faf9f7', transition: 'border-color 0.15s',
+                    background: 'var(--surface-warm)', transition: 'border-color 0.15s',
                     boxSizing: 'border-box',
                   }}
                   onFocus={(e) => (e.target.style.borderColor = '#acc3fa')}
-                  onBlur={(e) => (e.target.style.borderColor = '#e8e4dc')}
+                  onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
                 />
               </div>
               <button
                 onClick={goToSearch}
                 style={{
                   padding: '0.625rem 1rem',
-                  background: '#F5A623', color: '#2C1810',
+                  background: 'var(--brand-cta)', color: 'var(--ink)',
                   border: 'none', borderRadius: '0.5rem',
                   fontWeight: 700, fontSize: '0.875rem',
                   cursor: 'pointer', fontFamily: 'inherit',
                   whiteSpace: 'nowrap', flexShrink: 0,
                   transition: 'background 0.15s',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = '#d4891a')}
-                onMouseLeave={(e) => (e.currentTarget.style.background = '#F5A623')}
+                onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--brand-cta-hover)')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--brand-cta)')}
               >
                 Buscar
               </button>
@@ -141,7 +141,7 @@ function SearchAside() {
 
               if (state === 'loading' && term.current) {
                 return (
-                  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', gap: '0.5rem', color: '#7a6a62', fontSize: '0.875rem'}}>
+                  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', gap: '0.5rem', color: 'var(--ink-soft)', fontSize: '0.875rem'}}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
                       style={{animation: 'spin 0.8s linear infinite', flexShrink: 0}} aria-hidden="true">
                       <style>{`@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}`}</style>
@@ -192,10 +192,10 @@ function SearchAside() {
                         marginTop: '0.75rem', padding: '0.625rem 0.75rem',
                         fontSize: '0.875rem', fontWeight: 700,
                         color: '#acc3fa', textDecoration: 'none',
-                        borderTop: '1px solid #f0ece6',
+                        borderTop: '1px solid var(--border-soft)',
                         transition: 'color 0.15s',
                       }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = '#F5A623')}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--brand-cta)')}
                       onMouseLeave={(e) => (e.currentTarget.style.color = '#acc3fa')}
                     >
                       Ver todos los resultados de "{term.current}"

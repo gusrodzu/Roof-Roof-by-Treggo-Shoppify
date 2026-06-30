@@ -57,9 +57,9 @@ export function LifeStagesSection() {
             overflow: 'hidden',
             marginBottom: '2rem',
             minHeight: isMobile ? '100px' : '120px',
-            border: '1px solid #f0d490',
+            border: '1px solid var(--border-gold)',
             textDecoration: 'none',
-            background: 'linear-gradient(90deg, #2C1810 0%, #3d2515 55%, #2C1810 100%)',
+            background: 'linear-gradient(90deg, var(--ink) 0%, var(--ink-hover) 55%, var(--ink) 100%)',
           }}
         >
           {/* Contenido */}
@@ -75,7 +75,7 @@ export function LifeStagesSection() {
               width: isMobile ? '44px' : '56px',
               height: isMobile ? '44px' : '56px',
               borderRadius: '0.625rem',
-              background: '#F5A623',
+              background: 'var(--brand-cta)',
               flexShrink: 0,
               display: 'flex',
               alignItems: 'center',
@@ -141,7 +141,7 @@ export function LifeStagesSection() {
         <h2 style={{
           fontSize: isMobile ? '1.125rem' : '1.25rem',
           fontWeight: 700,
-          color: '#2C1810',
+          color: 'var(--ink)',
           margin: '0 0 1.25rem',
         }}>
           Cuidamos cada etapa de su vida contigo
@@ -163,16 +163,16 @@ export function LifeStagesSection() {
                 borderRadius: '0.75rem',
                 overflow: 'hidden',
                 aspectRatio: '3 / 4',
-                border: '1.5px solid #e8e4dc',
+                border: '1.5px solid var(--border)',
                 textDecoration: 'none',
                 transition: 'border-color 0.15s, transform 0.2s',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#F5A623';
+                e.currentTarget.style.borderColor = 'var(--brand-cta)';
                 e.currentTarget.style.transform = 'translateY(-3px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#e8e4dc';
+                e.currentTarget.style.borderColor = 'var(--border)';
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >

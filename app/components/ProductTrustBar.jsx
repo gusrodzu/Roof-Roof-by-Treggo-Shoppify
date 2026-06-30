@@ -9,8 +9,8 @@ import {Link} from 'react-router';
  *   highlight   — texto destacado debajo del headline (opcional)
  *   bg          — color de fondo de la sección (default: '#e8f4fb')
  *   cardBg      — color de fondo de las cards (default: '#fff')
- *   accentColor — color del ícono circle y CTA (default: '#F5A623')
- *   textColor   — color de títulos (default: '#2C1810')
+ *   accentColor — color del ícono circle y CTA (default: 'var(--brand-cta)')
+ *   textColor   — color de títulos (default: 'var(--ink)')
  */
 
 const DEFAULT_ITEMS = [
@@ -63,8 +63,8 @@ export function ProductTrustBar({
   highlight   = '¡Lo puedes cambiar o te devolvemos el 100% de tu dinero!',
   bg          = '#e8f5fb',
   cardBg      = '#fff',
-  accentColor = '#F5A623',
-  textColor   = '#2C1810',
+  accentColor = 'var(--brand-cta)',
+  textColor   = 'var(--ink)',
 }) {
   return (
     <section style={{background: bg, width: '100%', padding: '2.5rem 1.5rem'}}>
@@ -135,7 +135,7 @@ export function ProductTrustBar({
               <h3 style={{fontSize: '0.9375rem', fontWeight: 700, color: textColor, margin: '0 0 0.375rem', lineHeight: 1.3}}>
                 {title}
               </h3>
-              <p style={{fontSize: '0.875rem', color: '#7a6a62', margin: cta ? '0 0 0.875rem' : 0, lineHeight: 1.6}}>
+              <p style={{fontSize: '0.875rem', color: 'var(--ink-soft)', margin: cta ? '0 0 0.875rem' : 0, lineHeight: 1.6}}>
                 {desc}
               </p>
               {cta && to && (

@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {useAside} from '~/components/Aside';
 import {CartLineItem} from '~/components/CartLineItem';
 import {CartSummary} from './CartSummary';
+import {Button} from '~/components/design-system';
 
 function getLineItemChildrenMap(lines) {
   const children = {};
@@ -69,9 +70,9 @@ export function CartMain({layout, cart: originalCart, summaryOnly = false}) {
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               width: '100%',
               padding: isPage ? '0.875rem 1.25rem' : '0.75rem 1rem',
-              background: itemsOpen ? '#f5f7fa' : '#fff',
+              background: itemsOpen ? 'var(--surface-cool)' : '#fff',
               border: 'none',
-              borderBottom: '1px solid #e8e4dc',
+              borderBottom: '1px solid var(--border)',
               cursor: 'pointer', fontFamily: 'inherit',
               transition: 'background 0.15s',
             }}
@@ -82,13 +83,13 @@ export function CartMain({layout, cart: originalCart, summaryOnly = false}) {
                 <line x1="3" y1="6" x2="21" y2="6"/>
                 <path d="M16 10a4 4 0 01-8 0"/>
               </svg>
-              <span style={{fontSize: isPage ? '0.9375rem' : '0.8125rem', fontWeight: 700, color: '#2C1810'}}>
+              <span style={{fontSize: isPage ? '0.9375rem' : '0.8125rem', fontWeight: 700, color: 'var(--ink)'}}>
                 {totalProducts} producto{totalProducts !== 1 ? 's' : ''}
               </span>
               <span style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                 minWidth: '20px', height: '20px', padding: '0 5px',
-                background: '#F5A623', color: '#2C1810',
+                background: 'var(--brand-cta)', color: 'var(--ink)',
                 borderRadius: '999px', fontSize: '10px', fontWeight: 900,
               }}>
                 {totalItems} {totalItems === 1 ? 'unidad' : 'unidades'}
@@ -101,15 +102,15 @@ export function CartMain({layout, cart: originalCart, summaryOnly = false}) {
                   {rootLines.slice(0, 3).map((line, i) => {
                     const src = line.merchandise?.image?.url ?? line.merchandise?.image?.src ?? null;
                     return src ? (
-                      <div key={line.id} style={{width: '28px', height: '28px', borderRadius: '50%', border: '2px solid #f8b32a', overflow: 'hidden', background: '#f5f7fa', marginLeft: i > 0 ? '-8px' : '0', flexShrink: 0, zIndex: 3 - i, position: 'relative'}}>
+                      <div key={line.id} style={{width: '28px', height: '28px', borderRadius: '50%', border: '2px solid var(--brand)', overflow: 'hidden', background: 'var(--surface-cool)', marginLeft: i > 0 ? '-8px' : '0', flexShrink: 0, zIndex: 3 - i, position: 'relative'}}>
                         <img src={src} alt="" width={28} height={28} style={{width: '100%', height: '100%', objectFit: 'contain'}}/>
                       </div>
                     ) : (
-                      <div key={line.id} style={{width: '28px', height: '28px', borderRadius: '50%', border: '2px solid #f8b32a', background: '#fff8ee', marginLeft: i > 0 ? '-8px' : '0', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px'}}>🐾</div>
+                      <div key={line.id} style={{width: '28px', height: '28px', borderRadius: '50%', border: '2px solid var(--brand)', background: 'var(--surface-cream)', marginLeft: i > 0 ? '-8px' : '0', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px'}}>🐾</div>
                     );
                   })}
                   {rootLines.length > 3 && (
-                    <div style={{width: '28px', height: '28px', borderRadius: '50%', border: '2px solid #f8b32a', background: '#e8e4dc', marginLeft: '-8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', fontWeight: 800, color: '#7a6a62'}}>
+                    <div style={{width: '28px', height: '28px', borderRadius: '50%', border: '2px solid var(--brand)', background: 'var(--border)', marginLeft: '-8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', fontWeight: 800, color: 'var(--ink-soft)'}}>
                       +{rootLines.length - 3}
                     </div>
                   )}
@@ -131,7 +132,7 @@ export function CartMain({layout, cart: originalCart, summaryOnly = false}) {
                   padding: isPage ? '0' : '0 1rem',
                   maxHeight: isPage ? 'none' : '320px',
                   scrollbarWidth: 'thin',
-                  scrollbarColor: '#e8e4dc transparent',
+                  scrollbarColor: 'var(--border) transparent',
                 }}
               >
                 <ul aria-label="Productos en el carrito" style={{listStyle: 'none', padding: 0, margin: 0}}>
@@ -155,7 +156,7 @@ export function CartMain({layout, cart: originalCart, summaryOnly = false}) {
 
           {/* ── Resumen ── */}
           {!isPage && (
-            <div style={{borderTop: '1px solid #e8e4dc', padding: '1rem', background: '#fff', flexShrink: 0}}>
+            <div style={{borderTop: '1px solid var(--border)', padding: '1rem', background: '#fff', flexShrink: 0}}>
               <CartSummary cart={cart} layout={layout} />
             </div>
           )}
@@ -185,10 +186,10 @@ function CartEmpty({hidden = false}) {
       <EmptyBowlIllustration />
 
       <div style={{display: 'flex', flexDirection: 'column', gap: '0.375rem'}}>
-        <p style={{fontSize: '1rem', fontWeight: 800, color: '#2C1810', margin: 0}}>
+        <p style={{fontSize: '1rem', fontWeight: 800, color: 'var(--ink)', margin: 0}}>
           ¡El plato está vacío!
         </p>
-        <p style={{fontSize: '0.875rem', color: '#7a6a62', margin: 0, lineHeight: 1.55, maxWidth: '220px'}}>
+        <p style={{fontSize: '0.875rem', color: 'var(--ink-soft)', margin: 0, lineHeight: 1.55, maxWidth: '220px'}}>
           Tu mascota está esperando. Agrega productos para comenzar.
         </p>
       </div>
@@ -197,21 +198,19 @@ function CartEmpty({hidden = false}) {
         to="/collections/roof-roof"
         onClick={close}
         prefetch="viewport"
-        style={{
-          display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-          background: '#F5A623', color: '#2C1810',
-          fontWeight: 700, fontSize: '0.875rem',
-          padding: '0.75rem 1.5rem', borderRadius: '999px',
-          textDecoration: 'none', transition: 'background 0.15s',
-          boxShadow: '0 4px 14px rgba(245,166,35,0.3)',
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = '#d4891a')}
-        onMouseLeave={(e) => (e.currentTarget.style.background = '#F5A623')}
+        style={{textDecoration: 'none'}}
       >
-        Ver productos
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-          <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
-        </svg>
+        <Button
+          variant="primary"
+          iconAfter={
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+              <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+            </svg>
+          }
+          style={{boxShadow: '0 4px 14px rgba(245,166,35,0.3)'}}
+        >
+          Ver productos
+        </Button>
       </Link>
     </div>
   );

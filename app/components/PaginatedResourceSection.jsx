@@ -74,9 +74,9 @@ function PaginationSpan({children}) {
       style={{
         display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
         padding: '0.75rem 1.5rem', borderRadius: '999px',
-        border: `1.5px solid ${hovered ? '#F5A623' : '#2C1810'}`,
-        background: hovered ? '#2C1810' : 'transparent',
-        color: hovered ? '#F5A623' : '#2C1810',
+        border: `1.5px solid ${hovered ? 'var(--brand-cta)' : 'var(--ink)'}`,
+        background: hovered ? 'var(--ink)' : 'transparent',
+        color: hovered ? 'var(--brand-cta)' : 'var(--ink)',
         fontWeight: 700, fontSize: '0.9375rem',
         cursor: 'pointer', transition: 'all 0.15s',
         fontFamily: 'inherit',
@@ -94,8 +94,8 @@ function LoadingSpan() {
     <span style={{
       display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
       padding: '0.75rem 1.5rem', borderRadius: '999px',
-      border: '1.5px solid #e8e4dc',
-      color: '#b0a49c', fontWeight: 700, fontSize: '0.9375rem', cursor: 'wait',
+      border: '1.5px solid var(--border)',
+      color: 'var(--ink-muted)', fontWeight: 700, fontSize: '0.9375rem', cursor: 'wait',
     }}>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
         style={{animation: 'spin 0.8s linear infinite'}} aria-hidden="true">

@@ -145,7 +145,7 @@ export function TrustBar() {
                   width: current === i ? '18px' : '6px',
                   height: '6px',
                   borderRadius: '999px',
-                  background: current === i ? '#F5A623' : '#444',
+                  background: current === i ? 'var(--brand-cta)' : '#444',
                   border: 'none',
                   padding: 0,
                   cursor: 'pointer',

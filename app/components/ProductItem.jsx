@@ -32,7 +32,7 @@ export function ProductItem({product, loading}) {
         style={{
           background: '#fff',
           borderRadius: '0.875rem',
-          border: `1.5px solid ${hovered ? '#F5A623' : '#e8e4dc'}`,
+          border: `1.5px solid ${hovered ? 'var(--brand-cta)' : 'var(--border)'}`,
           overflow: 'hidden',
           transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
           boxShadow: hovered
@@ -84,7 +84,7 @@ export function ProductItem({product, loading}) {
               position: 'absolute',
               top: '0.625rem',
               left: '0.625rem',
-              background: '#c0392b',
+              background: 'var(--danger)',
               color: '#fff',
               fontSize: '0.6875rem',
               fontWeight: 800,
@@ -105,7 +105,7 @@ export function ProductItem({product, loading}) {
             fontWeight: 700,
             textTransform: 'uppercase',
             letterSpacing: '1px',
-            color: '#F5A623',
+            color: 'var(--brand-cta)',
             margin: '0 0 0.25rem',
           }}>
             Roof Roof
@@ -115,7 +115,7 @@ export function ProductItem({product, loading}) {
           <h4 style={{
             fontSize: '0.875rem',
             fontWeight: 600,
-            color: '#2C1810',
+            color: 'var(--ink)',
             margin: '0 0 0.625rem',
             lineHeight: 1.4,
             overflow: 'hidden',
@@ -131,13 +131,13 @@ export function ProductItem({product, loading}) {
             {minPrice && (
               <Money
                 data={minPrice}
-                style={{fontSize: '1rem', fontWeight: 800, color: '#2C1810'}}
+                style={{fontSize: '1rem', fontWeight: 800, color: 'var(--ink)'}}
               />
             )}
             {hasDiscount && (
               <Money
                 data={compareAt}
-                style={{fontSize: '0.8125rem', fontWeight: 500, color: '#b0a49c', textDecoration: 'line-through'}}
+                style={{fontSize: '0.8125rem', fontWeight: 500, color: 'var(--ink-muted)', textDecoration: 'line-through'}}
               />
             )}
           </div>
