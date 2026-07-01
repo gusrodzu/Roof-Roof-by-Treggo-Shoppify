@@ -36,7 +36,7 @@ export function HeroBanner() {
   const total = SLIDES.length;
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 967px)');
+    const mq = window.matchMedia('(max-width: 767px)');
     setIsMobile(mq.matches);
     const handler = (e) => setIsMobile(e.matches);
     mq.addEventListener('change', handler);
@@ -187,7 +187,7 @@ export function HeroBanner() {
                 height: '200px',
                 flex: 1,
                 position: 'relative',
-                backgroundImage: 'linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(20, 19, 19, 0.25)), url("https://cdn.shopify.com/s/files/1/0761/8252/0128/files/06CHCAFE.jpg?v=1767025898")',
+                backgroundImage: 'linear-gradient(to top, rgba(44,24,16,.85), rgba(44,24,16,.1)), url("https://cdn.shopify.com/s/files/1/0761/8252/0128/files/06_GRIS_M.jpg?v=1773175757")',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 border: '1px solid var(--border)',
@@ -219,13 +219,13 @@ export function HeroBanner() {
               }}
             >
               <img
-                src="https://cdn.shopify.com/s/files/1/0761/8252/0128/files/4_ROJA_S.jpg?v=1773246318"
+                src="../assets/download.jpg"
                 alt="Diseñado para durar"
                 style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover'}}
               />
               <div style={{
                 position: 'absolute', inset: 0,
-                background: 'linear-gradient(to top,  rgba(0, 0, 0, 0.85), rgba(20, 19, 19, 0.25)),',
+                background: 'linear-gradient(to top, rgba(44,24,16,.85), rgba(44,24,16,.05))',
               }}/>
               <div style={{
                 position: 'absolute',
