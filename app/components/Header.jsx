@@ -2,7 +2,6 @@ import {Await, Link, useNavigate} from 'react-router';
 import {useState, useEffect, useRef, useId, Suspense} from 'react';
 import {useAside} from '~/components/Aside';
 import {useCartAnimation, CartBadge} from '~/components/CartAnimation';
-import {IconButton, Button} from '~/components/design-system';
 import logo from '~/assets/logo.png';
 
 const MEGA_MENU = [
@@ -92,17 +91,28 @@ const QUICK_LINKS = [
       </svg>
     ),
   },
-  {
-    label: 'Ayuda',
-    to: '/pages/ayuda',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-        <circle cx="12" cy="12" r="10"/>
-        <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/>
-        <line x1="12" y1="17" x2="12.01" y2="17"/>
-      </svg>
-    ),
-  },
+{
+  label: 'Ayuda',
+  to: '/pages/ayuda',
+  icon: (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M21 15a3 3 0 0 1-3 3H8l-5 4V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3z"/>
+      <circle cx="9" cy="11" r="1"/>
+      <circle cx="12" cy="11" r="1"/>
+      <circle cx="15" cy="11" r="1"/>
+    </svg>
+  ),
+},
   {
     label: 'Tu cuenta',
     to: '/account',
@@ -180,7 +190,7 @@ export function TrustBar() {
                 key={i}
                 onClick={() => restartInterval(i)}
                 aria-label={`Ir a item ${i + 1}`}
-                style={{width: current === i ? '18px' : '6px', height: '6px', borderRadius: '999px', background: current === i ? '#F5A623' : '#444', border: 'none', padding: 0, cursor: 'pointer', transition: 'width 0.3s ease, background 0.3s ease'}}
+                style={{width: current === i ? '18px' : '6px', height: '6px', borderRadius: '999px', background: current === i ? 'var(--brand-cta)' : '#444', border: 'none', padding: 0, cursor: 'pointer', transition: 'width 0.3s ease, background 0.3s ease'}}
               />
             ))}
           </div>
@@ -226,95 +236,23 @@ export function Header({header, cart, isLoggedIn, publicStoreDomain}) {
     flexShrink: 0,
   };
 
-  const SearchBar = ({id}) => {
-    const inputRef = useRef(null);
-    const [focused, setFocused] = useState(false);
-    const [value, setValue] = useState('');
-
-    // Atajo de teclado: Cmd/Ctrl + K enfoca el buscador
-    useEffect(() => {
-      const handler = (e) => {
-        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-          e.preventDefault();
-          inputRef.current?.focus();
-        }
-      };
-      window.addEventListener('keydown', handler);
-      return () => window.removeEventListener('keydown', handler);
-    }, []);
-
-    const clearSearch = () => {
-      setValue('');
-      inputRef.current?.focus();
-    };
-
-    return (
-      <form onSubmit={handleSearchSubmit} role="search" 
-
-      style={{display: 'flex', alignItems: 'center', position: 'relative', width: '100%'     }}>
-        <label htmlFor={id} style={{position: 'absolute', width: 1, height: 1, overflow: 'hidden'}}>Buscar productos</label>
-
-        {/* Ícono lupa a la izquierda */}
-        <span style={{
-          position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)',
-          color: focused ? 'var(--brand-cta)' : 'var(--ink-soft)',
-          display: 'flex', pointerEvents: 'none', transition: 'color 0.15s',
-        }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-        </span>
-
-        <input
-          ref={inputRef}
-          id={id}
-          name="q"
-          type="search"
-          placeholder="Croquetas, juguetes…"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          autoComplete="off"
-          style={{
-            width: '100%',
-            background: '#fff',
-            border: `1.5px solid ${focused ? 'var(--brand-cta)' : 'var(--border-gold)'}`,
-            borderRadius: '999px',
-            padding: '0.75rem 2.75rem 0.75rem 2.75rem',
-            color: 'black',
-            fontSize: '0.9375rem',
-            outline: 'none',
-            boxSizing: 'border-box',
-            boxShadow: focused ? '0 0 0 3px rgba(245,166,35,0.18)' : 'none',
-            transition: 'border-color 0.15s, box-shadow 0.15s',
-          }}
-        />
-
-        {/* Botón limpiar — solo visible con texto */}
-        {value && (
-          <button
-            type="button"
-            onClick={clearSearch}
-            aria-label="Limpiar búsqueda"
-            style={{
-              position: 'absolute', right: '2.75rem', top: '50%', transform: 'translateY(-50%)',
-              width: '20px', height: '20px', borderRadius: '50%',
-              background: 'var(--border)', border: 'none',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer', color: 'var(--ink-soft)', padding: 0,
-            }}
-          >
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          </button>
-        )}
-
-        <button type="submit" aria-label="Buscar" style={{position: 'absolute', right: '0.5rem', top: '50%', transform: 'translateY(-50%)', width: '32px', height: '32px', border: 'none', background: 'transparent', cursor: 'pointer'}} />
-      </form>
-    );
-  };
+  const SearchBar = ({id}) => (
+    <form onSubmit={handleSearchSubmit} role="search" style={{display: 'flex', alignItems: 'center', position: 'relative', width: '100%'}}>
+      <label htmlFor={id} style={{position: 'absolute', width: 1, height: 1, overflow: 'hidden'}}>Buscar productos</label>
+      <input
+        id={id}
+        name="q"
+        type="search"
+        placeholder="Buscar casas, camas, jaulas..."
+        style={{width: '100%', background: '#ffffff', border: '1px solid #ffffff', borderRadius: '0.5rem', padding: '0.625rem 2.75rem 0.625rem 1rem', color: '#0a2a5e', fontSize: '0.875rem', outline: 'none', boxSizing: 'border-box'}}
+      />
+      <button type="submit" aria-label="Buscar" style={{position: 'absolute', right: '0.5rem', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: '#0a2a5e', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0.25rem'}}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+    </form>
+  );
 
   return (
     <header
@@ -337,7 +275,7 @@ export function Header({header, cart, isLoggedIn, publicStoreDomain}) {
       </div>
 
       {/* Barra principal */}
-      <div style={{background: '#f8b32a', padding: '0.75rem 1rem'}}>
+      <div style={{background: 'var(--brand)', padding: '0.75rem 1rem'}}>
         {isMobile ? (
           /* ── MOBILE: solo buscador ── */
           <div style={{display: 'flex', alignItems: 'center'}}>
@@ -370,7 +308,7 @@ export function Header({header, cart, isLoggedIn, publicStoreDomain}) {
                     style={{
                       display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem',
                       padding: '0.375rem 0.625rem', borderRadius: '0.625rem',
-                      textDecoration: 'none', color: '#2C1810',
+                      textDecoration: 'none', color: 'var(--ink)',
                       fontSize: '0.6875rem', fontWeight: 700,
                       minWidth: '64px', textAlign: 'center',
                       transition: 'background 0.15s',
@@ -382,7 +320,7 @@ export function Header({header, cart, isLoggedIn, publicStoreDomain}) {
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       width: '52px', height: '52px', borderRadius: '50%',
                       background: '#fff',
-                      color: '#2C1810', flexShrink: 0,
+                      color: 'var(--ink)', flexShrink: 0,
                       boxShadow: '0 1px 4px rgba(44,24,16,0.12)',
                     }}>
                       {icon}
@@ -396,8 +334,8 @@ export function Header({header, cart, isLoggedIn, publicStoreDomain}) {
                   display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem',
                   padding: '0.375rem 0.625rem',
                 }}>
-                  <CartButton cart={cart} badgeShadow="0 0 0 2px #fff" />
-                  <span style={{fontSize: '0.6875rem', fontWeight: 700, color: '#2C1810'}}>Carrito</span>
+                  <CartButton cart={cart} badgeShadow="0 0 0 2px var(--brand)" />
+                  <span style={{fontSize: '0.6875rem', fontWeight: 700, color: 'var(--ink)'}}>Carrito</span>
                 </div>
               </div>
 
@@ -429,7 +367,7 @@ function CartButton({cart, circleStyle, badgeShadow}) {
         border: 'none',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         cursor: 'pointer',
-        color: '#2C1810',
+        color: 'var(--ink)',
         position: 'relative',
         flexShrink: 0,
         boxShadow: '0 1px 4px rgba(44,24,16,0.12)',
@@ -461,27 +399,24 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
   const {close} = useAside();
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', height: '100%', background: '#f5f7fa'}}>
+    <div style={{display: 'flex', flexDirection: 'column', height: '100%', background: 'var(--surface-cool)'}}>
 
       {/* Header con logo + botón cerrar */}
-      <div style={{background: '#f8b32a', padding: '0.875rem 1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0}}>
+      <div style={{background: 'var(--brand)', padding: '0.875rem 1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0}}>
         <img
           src={logo}
           alt="Roof Roof"
           style={{width: '120px', height: 'auto', filter: 'brightness(0) saturate(100%) invert(9%) sepia(33%) saturate(1200%) hue-rotate(340deg) brightness(0.85)'}}
         />
-        <IconButton
-          variant="outline"
-          size="md"
+        <button
           onClick={close}
           aria-label="Cerrar menú"
-          style={{background: 'rgba(255, 255, 255, 0.57)', border: 'none'}}
-          icon={
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          }
-        />
+          style={{background: 'rgba(255, 255, 255, 0.57)', border: 'none', borderRadius: '50%', width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--ink)', flexShrink: 0}}
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
       </div>
 
       {/* Links scrolleables */}
@@ -494,9 +429,9 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
               key={label}
               to={to}
               onClick={close}
-              style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '1rem 0.5rem', background: '#fff', border: '1px solid #e5e9f0', borderRadius: '0.75rem', textDecoration: 'none', color: '#2C1810', fontSize: '0.8125rem', fontWeight: 600, textAlign: 'center'}}
+              style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '1rem 0.5rem', background: '#fff', border: '1px solid #e5e9f0', borderRadius: '0.75rem', textDecoration: 'none', color: 'var(--ink)', fontSize: '0.8125rem', fontWeight: 600, textAlign: 'center'}}
             >
-              <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '44px', height: '44px', borderRadius: '50%', background: '#fff8ee', color: '#2C1810'}}>
+              <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '44px', height: '44px', borderRadius: '50%', background: 'var(--surface-cream)', color: 'var(--ink)'}}>
                 {icon}
               </span>
               {label}
@@ -505,9 +440,9 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
         </div>
 
         {/* Card de categorías */}
-        <div style={{background: '#fff', border: '1px solid #e8e4dc', borderRadius: '0.75rem', overflow: 'hidden', marginBottom: '0.75rem'}}>
-          <div style={{padding: '0.625rem 1rem', background: '#f5f7fa', borderBottom: '1px solid #e8e4dc'}}>
-            <span style={{fontSize: '0.6875rem', fontWeight: 700, color: '#7a6a62', letterSpacing: '0.8px', textTransform: 'uppercase'}}>
+        <div style={{background: '#fff', border: '1px solid var(--border)', borderRadius: '0.75rem', overflow: 'hidden', marginBottom: '0.75rem'}}>
+          <div style={{padding: '0.625rem 1rem', background: 'var(--surface-cool)', borderBottom: '1px solid var(--border)'}}>
+            <span style={{fontSize: '0.6875rem', fontWeight: 700, color: 'var(--ink-soft)', letterSpacing: '0.8px', textTransform: 'uppercase'}}>
               Categorías
             </span>
           </div>
@@ -516,7 +451,7 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
               key={cat.title}
               to={cat.to}
               onClick={close}
-              style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.875rem 1rem', fontSize: '0.9375rem', fontWeight: 600, color: '#2C1810', textDecoration: 'none', borderTop: idx > 0 ? '1px solid #e8e4dc' : 'none', background: '#fff'}}
+              style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.875rem 1rem', fontSize: '0.9375rem', fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', borderTop: idx > 0 ? '1px solid var(--border)' : 'none', background: '#fff'}}
             >
               {cat.title}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="2.5" aria-hidden="true">
@@ -530,7 +465,7 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
         <Link
           to="/collections/roof-roof"
           onClick={close}
-          style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.875rem 1rem', background: '#fff8ee', border: '1px solid #F5A623', borderRadius: '0.75rem', fontSize: '0.9375rem', fontWeight: 700, color: '#2C1810', textDecoration: 'none'}}
+          style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.875rem 1rem', background: 'var(--surface-cream)', border: '1px solid var(--brand-cta)', borderRadius: '0.75rem', fontSize: '0.9375rem', fontWeight: 700, color: 'var(--ink)', textDecoration: 'none'}}
         >
           <span style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
             <span style={{fontSize: '1rem'}}>🐾</span>
@@ -574,9 +509,9 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
               ],
             },
           ].map((col) => (
-            <div key={col.heading} style={{background: '#fff', border: '1px solid #e8e4dc', borderRadius: '0.75rem', overflow: 'hidden'}}>
-              <div style={{padding: '0.625rem 1rem', background: '#f5f7fa', borderBottom: '1px solid #e8e4dc'}}>
-                <span style={{fontSize: '0.6875rem', fontWeight: 700, color: '#7a6a62', letterSpacing: '0.8px', textTransform: 'uppercase'}}>
+            <div key={col.heading} style={{background: '#fff', border: '1px solid var(--border)', borderRadius: '0.75rem', overflow: 'hidden'}}>
+              <div style={{padding: '0.625rem 1rem', background: 'var(--surface-cool)', borderBottom: '1px solid var(--border)'}}>
+                <span style={{fontSize: '0.6875rem', fontWeight: 700, color: 'var(--ink-soft)', letterSpacing: '0.8px', textTransform: 'uppercase'}}>
                   {col.heading}
                 </span>
               </div>
@@ -588,8 +523,8 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     padding: '0.75rem 1rem',
-                    fontSize: '0.9375rem', color: '#2C1810', textDecoration: 'none',
-                    borderTop: idx > 0 ? '1px solid #f0ece6' : 'none',
+                    fontSize: '0.9375rem', color: 'var(--ink)', textDecoration: 'none',
+                    borderTop: idx > 0 ? '1px solid var(--border-soft)' : 'none',
                     background: '#fff',
                   }}
                 >
@@ -603,8 +538,8 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
           ))}
 
           {/* Social */}
-          <div style={{background: '#2C1810', borderRadius: '0.75rem', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem'}}>
-            <p style={{fontSize: '0.6875rem', fontWeight: 700, color: '#F5A623', letterSpacing: '0.8px', textTransform: 'uppercase', margin: 0}}>
+          <div style={{background: 'var(--ink)', borderRadius: '0.75rem', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem'}}>
+            <p style={{fontSize: '0.6875rem', fontWeight: 700, color: 'var(--brand-cta)', letterSpacing: '0.8px', textTransform: 'uppercase', margin: 0}}>
               Síguenos
             </p>
             <div style={{display: 'flex', gap: '0.75rem'}}>
@@ -624,7 +559,7 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
                     background: 'rgba(255,255,255,0.1)',
                     border: '1px solid rgba(255,255,255,0.15)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: '#e8e4dc', textDecoration: 'none',
+                    color: 'var(--border)', textDecoration: 'none',
                     transition: 'background 0.15s',
                   }}
                 >
@@ -645,20 +580,13 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
       </nav>
 
       {/* Footer sticky */}
-      <div style={{padding: '1rem 1.25rem', background: '#fff', borderTop: '1px solid #e8e4dc', flexShrink: 0}}>
-        <Button
-          variant="ghost"
-          fullWidth
+      <div style={{padding: '1rem 1.25rem', background: '#fff', borderTop: '1px solid var(--border)', flexShrink: 0}}>
+        <button
           onClick={close}
-          style={{
-            background: 'var(--ink)',
-            color: 'var(--brand-cta)',
-            borderRadius: '0.625rem',
-            padding: '0.875rem',
-          }}
+          style={{width: '100%', background: 'var(--ink)', color: 'var(--brand-cta)', border: 'none', borderRadius: '0.625rem', padding: '0.875rem', fontSize: '0.9375rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', letterSpacing: '0.3px'}}
         >
           Cerrar menú
-        </Button>
+        </button>
       </div>
 
     </div>
