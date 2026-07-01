@@ -47,97 +47,29 @@ export function LifeStagesSection() {
     <section style={{background: '#fff', padding: isMobile ? '2rem 0' : '2.5rem 0'}}>
       <div style={{width: '100%'}}>
 
-        {/* ── Banner de marca — ancho 100% ── */}
+        {/* ── Banner imagen full-width ── */}
         <Link
           to="/collections/roof-roof"
           style={{
             display: 'block',
-            position: 'relative',
-            borderRadius: 0,
-            overflow: 'hidden',
-            marginBottom: '2rem',
-            minHeight: isMobile ? '90px' : '110px',
-            border: 'none',
-            textDecoration: 'none',
-            background: 'linear-gradient(90deg, var(--ink) 0%, var(--ink-hover) 55%, var(--ink) 100%)',
             width: '100%',
+            marginBottom: '2rem',
+            textDecoration: 'none',
+            overflow: 'hidden',
+            lineHeight: 0,
           }}
         >
-          {/* Contenido — centrado con maxWidth interior */}
-          <div style={{
-            maxWidth: '1280px',
-            margin: '0 auto',
-            display: 'flex',
-            alignItems: 'center',
-            gap: isMobile ? '0.75rem' : '1.5rem',
-            padding: isMobile ? '1rem' : '1.25rem 2rem',
-            minHeight: isMobile ? '90px' : '110px',
-          }}>
-            {/* Logo badge */}
-            <div style={{
-              width: isMobile ? '44px' : '56px',
-              height: isMobile ? '44px' : '56px',
-              borderRadius: '0.625rem',
-              background: 'var(--brand-cta)',
-              flexShrink: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: isMobile ? '1.25rem' : '1.5rem',
-            }}>
-              🐾
-            </div>
-
-            <div style={{flexShrink: 0, maxWidth: isMobile ? '100px' : '150px'}}>
-              <p style={{
-                fontSize: isMobile ? '0.6875rem' : '0.75rem',
-                fontWeight: 900,
-                color: 'rgba(245,166,35,0.85)',
-                margin: 0,
-                lineHeight: 1.3,
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-              }}>
-                Hecho con amor,<br/>diseñado para durar
-              </p>
-            </div>
-
-            <div style={{flex: 1, minWidth: 0}}>
-              <h3 style={{
-                fontSize: isMobile ? '1rem' : '1.5rem',
-                fontWeight: 800,
-                color: '#fff',
-                margin: 0,
-                lineHeight: 1.2,
-              }}>
-                Espacios pensados para vidas más felices*
-              </h3>
-              {!isMobile && (
-                <p style={{
-                  fontSize: '0.875rem',
-                  color: 'rgba(232,228,220,0.65)',
-                  margin: '0.375rem 0 0',
-                }}>
-                  *Gracias a materiales resistentes y diseño funcional.
-                </p>
-              )}
-            </div>
-
-            {/* Arrow indicator */}
-            {!isMobile && (
-              <div style={{
-                flexShrink: 0,
-                width: '40px', height: '40px',
-                borderRadius: '50%',
-                border: '2px solid rgba(245,166,35,0.4)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="2.5" aria-hidden="true">
-                  <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
-                </svg>
-              </div>
-            )}
-          </div>
+          <img
+            src="https://cdn.shopify.com/s/files/1/0761/8252/0128/files/BANNER_1_1b7f3085-4a14-45c0-b625-e57bd4147fb3.jpg?v=1771959465"
+            alt="Espacios pensados para vidas más felices"
+            style={{
+              width: '100%',
+              height: isMobile ? '140px' : '220px',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              display: 'block',
+            }}
+          />
         </Link>
 
         {/* ── Título ── */}
