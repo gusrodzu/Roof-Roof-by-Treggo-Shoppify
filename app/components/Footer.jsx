@@ -182,24 +182,22 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                     width: '36px',
                     height: '36px',
                     borderRadius: '50%',
-                    border: '1.5px solid rgba(255,255,255,0.2)',
+                    border: 'none',
+                    background: '#ffffff',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'rgb(255, 255, 255)',
+                    color: 'var(--ink, #2C1810)',
                     textDecoration: 'none',
-                    transition:
-                      'border-color 0.15s, color 0.15s, background 0.15s',
+                    transition: 'color 0.15s, transform 0.15s',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--brand-cta)';
                     e.currentTarget.style.color = 'var(--brand-cta)';
-                    e.currentTarget.style.background = 'rgba(245,166,35,0.1)';
+                    e.currentTarget.style.transform = 'scale(1.05)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.75)';
-                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.color = 'var(--ink, #2C1810)';
+                    e.currentTarget.style.transform = 'scale(1)';
                   }}
                 >
                   {icon}
@@ -223,8 +221,9 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                     style={{
                       fontSize: '0.6875rem',
                       fontWeight: 600,
-                      color: 'rgb(255, 255, 255)',
-                      border: '1px solid rgba(255,255,255,0.12)',
+                      color: 'var(--ink, #2C1810)',
+                      background: '#ffffff',
+                      border: 'none',
                       borderRadius: '999px',
                       padding: '3px 10px',
                     }}

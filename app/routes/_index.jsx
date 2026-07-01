@@ -7,6 +7,7 @@ import {AboutSection} from '~/components/AboutSection';
 import {DiscoverSection} from '~/components/DiscoverSection';
 import {PromoBanners} from '~/components/PromoBanners';
 import {LifeStagesSection} from '~/components/LifeStagesSection';
+import { ProductRecommendations } from '~/components/ProductRecommendations';
 import { ProductTrustBar } from '~/components/ProductTrustBar';
 import { InterestLinks } from '~/components/InterestLinks';
 
@@ -29,12 +30,14 @@ async function loadCriticalData({context}) {
     {products: camas},
     {products: jaulas},
     {products: dispensadores},
+    {collection: recommendedCollection},
   ] = await Promise.all([
     context.storefront.query(FEATURED_ROOF_ROOF_QUERY),
     context.storefront.query(CATEGORY_PRODUCTS_QUERY, {variables: {query: "vendor:'ROOF ROOF' AND product_type:'Casas'", first: 1}}),
     context.storefront.query(CATEGORY_PRODUCTS_QUERY, {variables: {query: "vendor:'ROOF ROOF' AND product_type:'Camas'", first: 1}}),
     context.storefront.query(CATEGORY_PRODUCTS_QUERY, {variables: {query: "vendor:'ROOF ROOF' AND product_type:'Jaulas y Corrales'", first: 1}}),
     context.storefront.query(CATEGORY_PRODUCTS_QUERY, {variables: {query: "vendor:'ROOF ROOF' AND product_type:'Dispensadores'", first: 1}}),
+    context.storefront.query(RECOMMENDED_PRODUCTS_QUERY),
   ]);
 
   const collections = [
@@ -44,15 +47,42 @@ async function loadCriticalData({context}) {
     {handle: 'roof-roof-dispensadores', title: 'Dispensadores',     image: dispensadores.nodes[0]?.featuredImage ?? null},
   ];
 
-  return {featuredProducts: products.nodes, collections};
+  const recommendedProducts = (recommendedCollection?.products?.nodes ?? []).map(
+    mapProductToCard,
+  );
+
+  return {featuredProducts: products.nodes, collections, recommendedProducts};
 }
 
 function loadDeferredData({context}) {
   return {};
 }
 
+/** Convierte un producto de la Storefront API a las props que espera <ProductRecommendations> */
+function mapProductToCard(product) {
+  const price = Number(product.priceRange?.minVariantPrice?.amount ?? 0);
+  const compareAt = Number(
+    product.compareAtPriceRange?.minVariantPrice?.amount ?? 0,
+  );
+  const hasDiscount = compareAt > price;
+
+  return {
+    id: product.id,
+    brand: product.vendor,
+    title: product.title,
+    image: product.featuredImage?.url,
+    price,
+    compareAtPrice: hasDiscount ? compareAt : null,
+    discountPercent: hasDiscount
+      ? Math.round((1 - price / compareAt) * 100)
+      : null,
+    rating: 5,
+    url: `/products/${product.handle}`,
+  };
+}
+
 export default function Homepage() {
-  const {featuredProducts, collections} = useLoaderData();
+  const {featuredProducts, collections, recommendedProducts} = useLoaderData();
 
   return (
     <div className="rr-home">
@@ -63,6 +93,10 @@ export default function Homepage() {
       <CategoryTabs collections={collections ?? []} />
       <PromoBanners />
       <LifeStagesSection />
+      <ProductRecommendations
+        title="Recomendados especialmente para ti"
+        products={recommendedProducts ?? []}
+      />
       <InterestLinks/>
       <AboutSection />
       <ProductTrustBar/>
@@ -345,6 +379,32 @@ const CATEGORY_PRODUCTS_QUERY = `#graphql
     products(first: $first, query: $query) {
       nodes {
         featuredImage { id url altText width height }
+      }
+    }
+  }
+`;
+
+/**
+ * Trae los productos de la colección "recomendados".
+ * IMPORTANTE: crea esta colección en el admin de Shopify (Colecciones ->
+ * Crear colección -> handle "recomendados") y agrégale los productos que
+ * quieras mostrar en el carrusel (pueden ser de cualquier vendor: Hill's,
+ * Royal Canin, WholeHearted, etc).
+ */
+const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+  query RecommendedProducts($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    collection(handle: "recomendados") {
+      products(first: 12) {
+        nodes {
+          id
+          title
+          handle
+          vendor
+          featuredImage { id url altText width height }
+          priceRange { minVariantPrice { amount currencyCode } }
+          compareAtPriceRange { minVariantPrice { amount currencyCode } }
+        }
       }
     }
   }
