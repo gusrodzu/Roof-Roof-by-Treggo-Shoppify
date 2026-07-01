@@ -51,10 +51,8 @@ export function DiscoverSection({products = []}) {
   return (
     <section style={{
       paddingTop: '2rem',
-      paddingBottom: isMobile ? '2rem' : '2.5rem',
-      paddingLeft: isMobile ? '0' : '1.5rem',
-      paddingRight: isMobile ? '0' : '1.5rem',
-      overflow: 'hidden',
+      paddingBottom: '2rem',
+      // Sin overflow:hidden — impide el scroll horizontal en mobile
     }}>
 
       {/* Título */}
@@ -62,17 +60,19 @@ export function DiscoverSection({products = []}) {
         fontSize: isMobile ? '1.15rem' : '1.375rem',
         fontWeight: 700,
         color: 'var(--ink)',
-        margin: isMobile ? '0 0 1.25rem 1rem' : '0 0 1.25rem',
+        margin: isMobile ? '0 0 1.25rem 1rem' : '0 0 1.25rem 1.5rem',
       }}>
         Descubre lo nuevo
       </h2>
 
-      {/* ── DESKTOP: grid normal ── */}
+      {/* ── DESKTOP: grid 4 columnas ── */}
       {!isMobile && (
         <div style={{
           display: 'grid',
           gridTemplateColumns: isTablet ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
           gap: '1rem',
+          paddingLeft: '1.5rem',
+          paddingRight: '1.5rem',
         }}>
           {CARDS.map(({emoji, title, cta, to, product}) => (
             <Card key={to} emoji={emoji} title={title} cta={cta} to={to} product={product} isMobile={false} />
@@ -80,25 +80,18 @@ export function DiscoverSection({products = []}) {
         </div>
       )}
 
-      {/* ── MOBILE: slider horizontal con overflow visible ── */}
+      {/* ── MOBILE: grid 2 columnas ── */}
       {isMobile && (
         <div style={{
-          display: 'flex',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
           gap: '0.75rem',
-          overflowX: 'scroll',
-          overflowY: 'visible',
-          scrollSnapType: 'x mandatory',
-          WebkitOverflowScrolling: 'touch',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
           paddingLeft: '1rem',
           paddingRight: '1rem',
-          paddingBottom: '0.5rem',
         }}>
           {CARDS.map(({emoji, title, cta, to, product}) => (
             <Card key={to} emoji={emoji} title={title} cta={cta} to={to} product={product} isMobile={true} />
           ))}
-          <div style={{flexShrink: 0, width: '0.25rem'}} aria-hidden="true" />
         </div>
       )}
     </section>
@@ -110,20 +103,17 @@ function Card({emoji, title, cta, to, product, isMobile}) {
     <div style={{
       borderRadius: '0.875rem',
       display: 'flex',
-      alignItems: 'center',
+      flexDirection: isMobile ? 'column' : 'row',
+      alignItems: isMobile ? 'center' : 'center',
       background: '#fff',
       border: '1px solid var(--border)',
-      minHeight: '140px',
+      minHeight: isMobile ? '160px' : '140px',
       padding: '10px',
-      // Mobile: ancho fijo para el slider
-      flexShrink: isMobile ? 0 : undefined,
-      width: isMobile ? '260px' : 'auto',
-      maxWidth: isMobile ? '260px' : 'none',
-      scrollSnapAlign: isMobile ? 'start' : undefined,
+      width: '100%',
     }}>
       {/* Imagen */}
       <div style={{
-        width: isMobile ? '90px' : '140px',
+        width: isMobile ? '80px' : '140px',
         flexShrink: 0,
         display: 'flex',
         alignItems: 'center',
@@ -132,10 +122,10 @@ function Card({emoji, title, cta, to, product, isMobile}) {
         {product?.featuredImage ? (
           <Image
             data={product.featuredImage}
-            sizes={isMobile ? '80px' : '130px'}
+            sizes={isMobile ? '70px' : '130px'}
             style={{
-              width: isMobile ? '80px' : '130px',
-              height: isMobile ? '80px' : '130px',
+              width: isMobile ? '70px' : '130px',
+              height: isMobile ? '70px' : '130px',
               objectFit: 'contain',
               borderRadius: '50%',
               filter: 'drop-shadow(0 8px 16px rgba(91,88,88,.3))',
@@ -143,7 +133,7 @@ function Card({emoji, title, cta, to, product, isMobile}) {
           />
         ) : (
           <span style={{
-            fontSize: isMobile ? '2.5rem' : '4.5rem',
+            fontSize: isMobile ? '2.25rem' : '4.5rem',
             filter: 'drop-shadow(0 8px 16px rgba(0,0,0,.3))',
           }}>
             {emoji}
@@ -154,14 +144,15 @@ function Card({emoji, title, cta, to, product, isMobile}) {
       {/* Contenido */}
       <div style={{
         flex: 1,
-        padding: isMobile ? '0.75rem' : '1.25rem 1.25rem 1.25rem 0.75rem',
+        padding: isMobile ? '0.625rem' : '1.25rem 1.25rem 1.25rem 0.75rem',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        gap: '0.75rem',
+        gap: '0.625rem',
+        minWidth: 0,
       }}>
         <p style={{
-          fontSize: isMobile ? '0.875rem' : '1rem',
+          fontSize: isMobile ? '0.8125rem' : '1rem',
           fontWeight: 700,
           color: 'var(--ink)',
           margin: 0,
