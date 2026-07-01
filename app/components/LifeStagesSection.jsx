@@ -44,31 +44,34 @@ export function LifeStagesSection() {
   ];
 
   return (
-    <section style={{background: '#fff', padding: isMobile ? '2rem 1rem' : '2.5rem 1.5rem'}}>
-      <div style={{maxWidth: '1100px', margin: '0 auto'}}>
+    <section style={{background: '#fff', padding: isMobile ? '2rem 0' : '2.5rem 0'}}>
+      <div style={{width: '100%'}}>
 
-        {/* ── Banner de marca ── */}
+        {/* ── Banner de marca — ancho 100% ── */}
         <Link
           to="/collections/roof-roof"
           style={{
             display: 'block',
             position: 'relative',
-            borderRadius: '0.875rem',
+            borderRadius: 0,
             overflow: 'hidden',
             marginBottom: '2rem',
-            minHeight: isMobile ? '100px' : '120px',
-            border: '1px solid var(--border-gold)',
+            minHeight: isMobile ? '90px' : '110px',
+            border: 'none',
             textDecoration: 'none',
             background: 'linear-gradient(90deg, var(--ink) 0%, var(--ink-hover) 55%, var(--ink) 100%)',
+            width: '100%',
           }}
         >
-          {/* Contenido */}
+          {/* Contenido — centrado con maxWidth interior */}
           <div style={{
+            maxWidth: '1280px',
+            margin: '0 auto',
             display: 'flex',
             alignItems: 'center',
             gap: isMobile ? '0.75rem' : '1.5rem',
             padding: isMobile ? '1rem' : '1.25rem 2rem',
-            minHeight: isMobile ? '100px' : '120px',
+            minHeight: isMobile ? '90px' : '110px',
           }}>
             {/* Logo badge */}
             <div style={{
@@ -143,6 +146,10 @@ export function LifeStagesSection() {
           fontWeight: 700,
           color: 'var(--ink)',
           margin: '0 0 1.25rem',
+          padding: isMobile ? '0 1rem' : '0 1.5rem',
+          maxWidth: '1280px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
         }}>
           Cuidamos cada etapa de su vida contigo
         </h2>
@@ -152,6 +159,9 @@ export function LifeStagesSection() {
           display: 'grid',
           gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
           gap: isMobile ? '0.75rem' : '1rem',
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: isMobile ? '0 1rem' : '0 1.5rem',
         }}>
           {STAGES.map((stage) => (
             <Link
