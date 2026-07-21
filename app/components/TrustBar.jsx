@@ -67,9 +67,9 @@ export function TrustBar() {
       style={{
         background: '#111',
         borderBottom: '1px solid #222',
-        padding: '0.875rem 1.5rem',
+        padding: '0.875rem 0.875rem',
         borderRadius: '1rem',
-        margin: '1rem 0',
+        margin: '1rem 1rem ',
       }}
     >
       {/* Desktop: todos visibles */}

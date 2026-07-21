@@ -13,7 +13,7 @@ export function PromoBanners() {
 
   const BANNERS = [
     {
-      img: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/Covers_Treggo_7.png?v=1764280862',
+      img: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/IMAGEN_2_1.jpg?v=1784647406',
       badge: 'IMPERDIBLES',
       sub: 'Roof Roof',
       cta: 'Conoce los productos',
@@ -22,7 +22,7 @@ export function PromoBanners() {
 
     },
     {
-      img: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/Covers_Treggo_7.png?v=1764280862',
+      img: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/IMAGEN_4_1.jpg?v=1784647406',
       badge: 'Camas',
       sub: 'Roof Roof',
       cta: 'Conoce los productos',

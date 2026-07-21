@@ -14,31 +14,31 @@ export function LifeStagesSection() {
 
   const STAGES = [
     {
-      img:   'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/ROOF_ROOF_CACHORRO_86f3acf4-4a12-4e1f-a29b-e62343924a4b.png?v=1781896842',
-      line1: 'TIENDA PARA',
-      line2: 'CACHORRO',
-      label: 'Cachorro',
+      img:   'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/LOS_FAVORITOS.jpg?v=1784647406',
+      // line1: '',
+      // line2: 'Favoritos',
+      // label: 'Favoritos',
       to:    '/collections/roof-roof-casas',
     },
     {
-      img:   'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/3_27d9d71d-bd55-43d6-9cd3-9c50b40f2beb.png?v=1781897825',
-      line1: 'TIENDA PARA',
-      line2: 'PERRO SENIOR',
-      label: 'Perro senior',
+      img:   'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/IMAGEN___GATITO_1.jpg?v=1784647406',
+      // line1: 'TIENDA PARA',
+      // line2: 'PERRO SENIOR',
+      // label: 'Perro senior',
       to:    '/collections/roof-roof-camas',
     },
     {
-      img:   'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/4_860540ad-0eef-4207-808c-0100a7045aa1.png?v=1781897825',
-      line1: 'TIENDA PARA',
-      line2: 'GATITO',
-      label: 'Gatito',
+      img:   'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/IMAGEN___PERRITO_1.jpg?v=1784647406',
+      // line1: 'TIENDA PARA',
+      // line2: 'GATITO',
+      // label: 'Gatito',
       to:    '/collections/roof-roof-casas',
     },
     {
-      img:   'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/5_019937a0-b1e7-468e-801b-7a89d46e48fe.png?v=1781897825',
-      line1: 'TIENDA PARA',
-      line2: 'GATO SENIOR',
-      label: 'Gato senior',
+      img:   'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/LO_NUEVO.jpg?v=1784647405',
+      // line1: 'TIENDA PARA',
+      // line2: 'GATO SENIOR',
+      // label: 'Gato senior',
       to:    '/collections/roof-roof-camas',
     },
   ];
@@ -60,7 +60,7 @@ export function LifeStagesSection() {
           }}
         >
           <img
-            src="https://cdn.shopify.com/s/files/1/0761/8252/0128/files/BANNER_1_1b7f3085-4a14-45c0-b625-e57bd4147fb3.jpg?v=1771959465"
+            src="https://cdn.shopify.com/s/files/1/0761/8252/0128/files/IMAGEN_5_BANNER_1.jpg?v=1784647406"
             alt="Espacios pensados para vidas más felices"
             style={{
               width: '100%',
@@ -128,10 +128,10 @@ export function LifeStagesSection() {
               />
 
               {/* Overlay */}
-              <div style={{
+              {/* <div style={{
                 position: 'absolute', inset: 0,
                 background: 'linear-gradient(to top, rgba(44,24,16,0.88) 0%, rgba(44,24,16,0.15) 50%, transparent 75%)',
-              }}/>
+              }}/> */}
 
               {/* Texto */}
               <div style={{

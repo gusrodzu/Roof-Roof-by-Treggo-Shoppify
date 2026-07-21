@@ -5,35 +5,34 @@ import {IconButton} from '~/components/design-system';
 const SLIDES = [
   {
     to: '/collections/roof-roof',
-    image: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/BANNER_1_1b7f3085-4a14-45c0-b625-e57bd4147fb3.jpg?v=1771959465',
+    image: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/IMAGEN_1__1.jpg?v=1784648595',
     alt: '-20% en camas y casas elevadas, válido del 12/06 al 30/06',
   },
-  {
-    to: '/collections/roof-roof',
-    image: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/BANNER_1_1b7f3085-4a14-45c0-b625-e57bd4147fb3.jpg?v=1771959465',
-    alt: '-20% en camas y casas elevadas, válido del 12/06 al 30/06',
-  },
-  {
-    to: '/collections/roof-roof',
-    image: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/BANNER_1_1b7f3085-4a14-45c0-b625-e57bd4147fb3.jpg?v=1771959465',
-    alt: '-20% en camas y casas elevadas, válido del 12/06 al 30/06',
-  },
+  // {
+  //   to: '/collections/roof-roof',
+  //   image: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/IMAGEN_1__1.jpg?v=1784647406',
+  //   alt: '-20% en camas y casas elevadas, válido del 12/06 al 30/06',
+  // },
+  
 ];
 
 const SIDE_CARDS = [
   {
-    bg: 'linear-gradient(to top, rgba(44,24,16,.85), rgba(44,24,16,.1)), url("https://cdn.shopify.com/s/files/1/0761/8252/0128/files/06_GRIS_M.jpg?v=1773175757")',
-    label: 'Para perro senior',
-    title: 'Refugios que cuidan sus articulaciones',
-    labelColor: 'rgba(255,255,255,0.75)',
-    to: '/collections/roof-roof-casas',
+    bg: 'linear-gradient(to top, rgba(7, 7, 7, 0.19), rgba(3, 3, 3, 0.39)), url("https://cdn.shopify.com/s/files/1/0761/8252/0128/files/IMAGEN_4_1.jpg?v=1784647406")',
+     label: 'Materiales premium',
+    title: 'Diseñado para durar',
+     labelColor: 'rgb(255, 255, 255)',
+    to: '/collections/roof-roof',
+    
+  
   },
   {
-    img: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/4_ROJA_S.jpg?v=1773246318',
-    label: 'Materiales premium',
-    title: 'Diseñado para durar',
-    labelColor: 'var(--brand-cta)',
-    to: '/collections/roof-roof',
+    
+    img: 'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/IMAGEN_3_1.jpg?v=1784647406',
+  label: 'Para perro senior',
+    title: 'Refugios que cuidan sus articulaciones',
+    labelColor: 'rgb(255, 255, 255)',
+    to: '/collections/roof-roof-casas',
   },
 ];
 

@@ -60,10 +60,10 @@ export default function Homepage() {
       <TrustBar />
       <HeroBanner />
       <DiscoverSection products={featuredProducts} />
-      <CategoryTabs collections={collections ?? []} />
+      {/* <CategoryTabs collections={collections ?? []} /> */}
       <PromoBanners />
       <LifeStagesSection />
-      <InterestLinks/>
+      {/* <InterestLinks/> */}
       <AboutSection />
       <ProductTrustBar/>
     
