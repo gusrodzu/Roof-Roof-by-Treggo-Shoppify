@@ -66,21 +66,21 @@ export function DiscoverSection({
     },
     {
       emoji: '🍽️',
-      title: '¡Descubre lo mejor en dispensadores!',
+      title: '¡Descubre lo mejor en Camas para mascotas!',
       cta: 'Ver más',
-      to: '/collections/roof-roof-dispensadores',
+      to: '/https://www.treggo.mx/collections/camas-para-mascotas',
       product: products[2] ?? null,
     },
-    {
-      emoji: '🪣',
-      title: '¡Descubre lo mejor en tapetes!',
-      cta: 'Ver más',
-      to: '/collections/roof-roof-tapetes',
-      product: products[3] ?? null,
-    },
+    // {
+    //   emoji: '🪣',
+    //   title: '¡Descubre lo mejor en tapetes!',
+    //   cta: 'Ver más',
+    //   to: '/collections/roof-roof-tapetes',
+    //   product: products[3] ?? null,
+    // },
   ];
 
-  const cols = isMobile ? 2 : isTablet ? 2 : 4;
+  const cols = isMobile ? 2 : isTablet ? 2 : 3;
 
   return (
     <section style={{
