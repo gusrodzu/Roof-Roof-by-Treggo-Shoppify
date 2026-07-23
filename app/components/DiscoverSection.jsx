@@ -61,23 +61,18 @@ export function DiscoverSection({
       emoji: '🛏️',
       title: '¡Aliméntalos como a tu familia!',
       cta: 'Ver más',
-      to: '/collections/roof-roof-camas',
+      
+      to: '/collections/roof-roof-dispensadores',
       product: products[1] ?? null,
     },
     {
       emoji: '🍽️',
-      title: '¡Descubre lo mejor en Camas para mascotas!',
+      title: '¡Descubre lo mejor en camas para mascotas!',
       cta: 'Ver más',
-      to: '/collections/camas-para-mascotas',
+     to: '/collections/roof-roof-camas',
       product: products[2] ?? null,
     },
-    // {
-    //   emoji: '🪣',
-    //   title: '¡Descubre lo mejor en tapetes!',
-    //   cta: 'Ver más',
-    //   to: '/collections/roof-roof-tapetes',
-    //   product: products[3] ?? null,
-    // },
+  
   ];
 
   const cols = isMobile ? 2 : isTablet ? 2 : 3;
