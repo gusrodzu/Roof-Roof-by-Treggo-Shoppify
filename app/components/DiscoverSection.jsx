@@ -68,7 +68,7 @@ export function DiscoverSection({
       emoji: '🍽️',
       title: '¡Descubre lo mejor en Camas para mascotas!',
       cta: 'Ver más',
-      to: '/https://www.treggo.mx/collections/camas-para-mascotas',
+      to: '/collections/camas-para-mascotas',
       product: products[2] ?? null,
     },
     // {
