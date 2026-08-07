@@ -14,24 +14,24 @@ const FOOTER_COLS = [
       {label: 'Ver todo', to: '/collections/roof-roof'},
     ],
   },
-  {
-    heading: 'Ayuda',
-    links: [
-      {label: 'Preguntas frecuentes', to: '/pages/ayuda'},
-      {label: 'Política de envíos', to: '/policies/shipping-policy'},
-      {label: 'Cambios y devoluciones', to: '/policies/refund-policy'},
-      {label: 'Términos y condiciones', to: '/policies/terms-of-service'},
-      {label: 'Privacidad', to: '/policies/privacy-policy'},
-    ],
-  },
-  {
-    heading: 'Empresa',
-    links: [
-      {label: 'Nosotros', to: '/pages/nosotros'},
-      {label: 'Blog', to: '/blogs/news'},
-      {label: 'Contacto', to: '/pages/contacto'},
-    ],
-  },
+  // {
+  //   heading: 'Ayuda',
+  //   links: [
+  //     {label: 'Preguntas frecuentes', to: '/pages/ayuda'},
+  //     {label: 'Política de envíos', to: '/policies/shipping-policy'},
+  //     {label: 'Cambios y devoluciones', to: '/policies/refund-policy'},
+  //     {label: 'Términos y condiciones', to: '/policies/terms-of-service'},
+  //     {label: 'Privacidad', to: '/policies/privacy-policy'},
+  //   ],
+  // },
+  // {
+  //   heading: 'Empresa',
+  //   links: [
+  //     {label: 'Nosotros', to: '/pages/nosotros'},
+  //     {label: 'Blog', to: '/blogs/news'},
+  //     {label: 'Contacto', to: '/pages/contacto'},
+  //   ],
+  // },
 ];
 
 const SOCIAL = [
@@ -286,7 +286,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
           ))}
         </div>
 
-        {/* Bottom row */}
+        {/* Bottom row */}|
         <div
           style={{
             display: 'flex',

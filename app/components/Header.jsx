@@ -80,6 +80,7 @@ const TRUST_ITEMS = [
   },
 ];
 
+// ❌ BOTONES "Ayuda" Y "Tu cuenta" OCULTOS
 const QUICK_LINKS = [
   {
     label: 'Mi tienda',
@@ -91,41 +92,31 @@ const QUICK_LINKS = [
       </svg>
     ),
   },
-{
-  label: 'Ayuda',
-  to: '/pages/ayuda',
-  icon: (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M21 15a3 3 0 0 1-3 3H8l-5 4V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3z"/>
-      <circle cx="9" cy="11" r="1"/>
-      <circle cx="12" cy="11" r="1"/>
-      <circle cx="15" cy="11" r="1"/>
-    </svg>
-  ),
-},
-  {
-    label: 'Tu cuenta',
-    to: '/account',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-        <circle cx="12" cy="7" r="4"/>
-      </svg>
-    ),
-  },
+  // ❌ {
+  //   label: 'Ayuda',
+  //   to: '/pages/ayuda',
+  //   icon: (
+  //     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  //       <path d="M21 15a3 3 0 0 1-3 3H8l-5 4V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3z"/>
+  //       <circle cx="9" cy="11" r="1"/>
+  //       <circle cx="12" cy="11" r="1"/>
+  //       <circle cx="15" cy="11" r="1"/>
+  //     </svg>
+  //   ),
+  // },
+  // ❌ {
+  //   label: 'Tu cuenta',
+  //   to: '/account',
+  //   icon: (
+  //     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+  //       <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+  //       <circle cx="12" cy="7" r="4"/>
+  //     </svg>
+  //   ),
+  // },
 ];
 
-/* ─── TrustBar ─────────────────────────────────────────────────────────────── */
+/* ─── TrustItem ─────────────────────────────────────────────────────────────── */
 
 function TrustItem({label, icon}) {
   return (
@@ -423,7 +414,7 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
       <nav style={{flex: 1, overflowY: 'auto', padding: '1rem'}}>
 
         {/* Accesos rápidos — grid 2x2 */}
-        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.625rem', marginBottom: '1rem'}}>
+        <div style={{display: 'grid', gridTemplateColumns: '1fr', gap: '0.625rem', marginBottom: '1rem'}}>
           {QUICK_LINKS.map(({label, to, icon}) => (
             <Link
               key={label}
@@ -490,6 +481,7 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
                 {label: 'Dispensadores',         to: '/collections/roof-roof-dispensadores'},
               ],
             },
+
             {
               heading: 'Ayuda',
               links: [
@@ -500,6 +492,7 @@ export function HeaderMenu({menu, primaryDomainUrl, viewport, publicStoreDomain}
                 {label: 'Privacidad',              to: '/policies/privacy-policy'},
               ],
             },
+            
             {
               heading: 'Empresa',
               links: [

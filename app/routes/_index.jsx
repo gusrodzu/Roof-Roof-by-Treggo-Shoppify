@@ -65,7 +65,7 @@ export default function Homepage() {
       <LifeStagesSection />
       {/* <InterestLinks/> */}
       <AboutSection />
-      <ProductTrustBar/>
+      {/* <ProductTrustBar/> */}
     
     </div>
   );
