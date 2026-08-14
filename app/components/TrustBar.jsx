@@ -13,7 +13,7 @@ const TRUST_ITEMS = [
     ),
   },
   {
-    label: 'Entrega en 24-72 hrs',
+    label: 'Envíos en menos de 24 hrs',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
         <circle cx="12" cy="12" r="9"/>
@@ -22,7 +22,7 @@ const TRUST_ITEMS = [
     ),
   },
   {
-    label: 'Pagos seguros',
+    label: 'Pago seguros con Mercado Pago',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
         <rect x="2" y="5" width="20" height="14" rx="2"/>
@@ -31,7 +31,7 @@ const TRUST_ITEMS = [
     ),
   },
   {
-    label: 'Garantía incluida',
+    label: 'Garantía Roof Roof',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
         <path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z"/>

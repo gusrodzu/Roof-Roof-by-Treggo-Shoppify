@@ -2,7 +2,11 @@ import {useLoaderData, Link} from 'react-router';
 import {CartForm, Image, Money} from '@shopify/hydrogen';
 import {useState, useEffect} from 'react';
 import {useAside} from '~/components/Aside';
+import {ProductCompareButton} from '~/components/ProductComparison';
 import {Button, Badge, Breadcrumb, QuantityStepper, FilterTag} from '~/components/design-system';
+
+
+
 
 export const meta = ({data}) => [
   {title: `${data?.product?.title ?? 'Producto'} — Roof Roof`},
@@ -228,14 +232,6 @@ export default function ProductRoute() {
             </p>
           </div>
 
-          {/* Descripción */}
-          {product.descriptionHtml && (
-            <div
-              dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
-              style={{fontSize: '0.875rem', color: '#7a6a62', lineHeight: 1.75, marginBottom: '1.5rem'}}
-            />
-          )}
-
           {/* Selector de variantes */}
           {product.options?.map((option) => {
             if (option.values.length <= 1) return null;
@@ -310,6 +306,9 @@ export default function ProductRoute() {
                 </Button>
               )}
             </CartForm>
+
+
+            
           ) : (
             <Button variant="primary" size="lg" fullWidth disabled style={{marginBottom: '0.75rem'}}>
               Agotado
@@ -343,10 +342,30 @@ export default function ProductRoute() {
             </CartForm>
           )}
 
+          {/* Comparador */}
+          <div style={{marginBottom: '1rem'}}>
+            <ProductCompareButton
+              product={product}
+              size="lg"
+              fullWidth
+            />
+          </div>
+
+          
+          {/* Descripción */}
+          {product.descriptionHtml && (
+            <div
+              dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
+              style={{fontSize: '0.875rem', color: '#7a6a62', lineHeight: 1.75, marginBottom: '1.5rem'}}
+            />
+          )}
+
+          
+
           {/* Trust chips inline */}
           <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem'}}>
             {['🚚 Envío gratis +$599', '🛡️ Garantía incluida', '💳 Pagos seguros'].map((t) => (
-              <span key={t} style={{fontSize: '0.75rem', fontWeight: 600, color: '#7a6a62', background: '#fff', border: '1px solid #e8e4dc', borderRadius: '999px', padding: '4px 10px'}}>
+              <span key={t} style={{fontSize: '0.75rem', fontWeight: 600, color: '#ffffff', background: '#020202', border: '1px solid #e8e4dc', borderRadius: '999px', padding: '4px 10px'}}>
                 {t}
               </span>
             ))}
@@ -377,7 +396,7 @@ export default function ProductRoute() {
             <div key={title}>
               <div style={{display: 'flex', justifyContent: 'center', marginBottom: '0.75rem'}}>{icon}</div>
               <h3 style={{fontSize: '0.9375rem', fontWeight: 700, color: '#fff', margin: '0 0 0.375rem'}}>{title}</h3>
-              <p style={{fontSize: '0.8125rem', color: 'rgba(232,228,220,0.7)', margin: 0, lineHeight: 1.6}}>{desc}</p>
+              <p style={{fontSize: '0.8125rem', color: 'rgb(255, 253, 253)', margin: 0, lineHeight: 1.6}}>{desc}</p>
             </div>
           ))}
         </div>
@@ -410,14 +429,12 @@ export default function ProductRoute() {
 
 function RelatedCard({product: p}) {
   const [hovered, setHovered] = useState(false);
+
   return (
-    <Link
-      to={`/products/${p.handle}`}
-      style={{textDecoration: 'none', display: 'block'}}
+    <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-    >
-      <div style={{
+      style={{
         background: '#fff',
         borderRadius: '0.875rem',
         border: `1.5px solid ${hovered ? '#F5A623' : '#e8e4dc'}`,
@@ -425,36 +442,63 @@ function RelatedCard({product: p}) {
         transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
         boxShadow: hovered ? '0 6px 18px rgba(44,24,16,0.1)' : '0 1px 4px rgba(44,24,16,0.04)',
         transform: hovered ? 'translateY(-3px)' : 'none',
-        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         padding: '1rem',
-        gap: '0.75rem', textAlign: 'center',
-      }}>
+        gap: '0.75rem',
+        textAlign: 'center',
+      }}
+    >
+      <Link
+        to={`/products/${p.handle}`}
+        aria-label={`Ver detalles de ${p.title}`}
+        style={{textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', width: '100%'}}
+      >
         <div style={{width: '120px', height: '120px', background: '#f5f7fa', borderRadius: '0.625rem', overflow: 'hidden', border: '1px solid #e8e4dc'}}>
           {p.featuredImage && (
             <Image data={p.featuredImage} sizes="120px" style={{width: '100%', height: '100%', objectFit: 'contain', padding: '4px'}}/>
           )}
         </div>
-        <p style={{fontSize: '0.8125rem', fontWeight: 600, color: '#2C1810', lineHeight: 1.4, margin: 0,
-          overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}
-        >
+
+        <p style={{
+          fontSize: '0.8125rem',
+          fontWeight: 600,
+          color: '#2C1810',
+          lineHeight: 1.4,
+          margin: 0,
+          overflow: 'hidden',
+          display: '-webkit-box',
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: 'vertical',
+        }}>
           {p.title}
         </p>
-        <Button size="sm" iconAfter={
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-            <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
-          </svg>
-        }>
+
+        <Button
+          size="sm"
+          iconAfter={
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+              <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+            </svg>
+          }
+        >
           Ver detalles
         </Button>
-        {p.description && (
-          <p style={{fontSize: '0.75rem', color: '#7a6a62', lineHeight: 1.5, margin: 0}}>
-            {p.description.slice(0, 70)}{p.description.length > 70 ? '...' : ''}
-          </p>
-        )}
-      </div>
-    </Link>
+      </Link>
+
+      {p.description && (
+        <p style={{fontSize: '0.75rem', color: '#7a6a62', lineHeight: 1.5, margin: 0}}>
+          {p.description.slice(0, 70)}{p.description.length > 70 ? '...' : ''}
+        </p>
+      )}
+
+      <ProductCompareButton product={p} size="sm" fullWidth />
+    </div>
   );
 }
+
+
 
 const PRODUCT_QUERY = `#graphql
   query Product($handle: String!, $country: CountryCode, $language: LanguageCode)
@@ -481,9 +525,12 @@ const RELATED_PRODUCTS_QUERY = `#graphql
     @inContext(country: $country, language: $language) {
     products(first: $first, query: $query) {
       nodes {
-        id title handle description
+        id title handle description vendor tags
         featuredImage { url altText width height }
         priceRange { minVariantPrice { amount currencyCode } }
+        variants(first: 1) {
+          nodes { availableForSale }
+        }
       }
     }
   }

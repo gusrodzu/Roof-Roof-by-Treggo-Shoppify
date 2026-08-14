@@ -9,6 +9,7 @@ import {
   ScrollRestoration,
   useRouteLoaderData,
 } from 'react-router';
+
 import favicon from '~/assets/favicon.png';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
@@ -16,6 +17,10 @@ import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import tokens from './styles/roof-roof-tokens.css?url';
 import {PageLayout} from './components/PageLayout';
+
+import {
+  ProductComparisonProvider,
+} from './components/ProductComparison';
 
 export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
   if (formMethod && formMethod !== 'GET') return true;
@@ -33,8 +38,8 @@ export function links() {
 }
 
 export async function loader(args) {
-  const deferredData  = loadDeferredData(args);
-  const criticalData  = await loadCriticalData(args);
+  const deferredData = loadDeferredData(args);
+  const criticalData = await loadCriticalData(args);
   const {storefront, env} = args.context;
 
   return {
@@ -57,17 +62,20 @@ export async function loader(args) {
 
 async function loadCriticalData({context}) {
   const {storefront} = context;
+
   const [header] = await Promise.all([
     storefront.query(HEADER_QUERY, {
       cache: storefront.CacheLong(),
       variables: {headerMenuHandle: 'main-menu'},
     }),
   ]);
+
   return {header};
 }
 
 function loadDeferredData({context}) {
   const {storefront, customerAccount, cart} = context;
+
   const footer = storefront
     .query(FOOTER_QUERY, {
       cache: storefront.CacheLong(),
@@ -77,6 +85,7 @@ function loadDeferredData({context}) {
       console.error(error);
       return null;
     });
+
   return {
     cart: cart.get(),
     isLoggedIn: customerAccount.isLoggedIn(),
@@ -86,25 +95,40 @@ function loadDeferredData({context}) {
 
 export function Layout({children}) {
   const nonce = useNonce();
+
   return (
     <html lang="es">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1"
+        />
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
+
         <link rel="stylesheet" href={tailwindCss} />
         <link rel="stylesheet" href={resetStyles} />
         <link rel="stylesheet" href={appStyles} />
+
         <Meta />
         <Links />
       </head>
+
       <body>
         {children}
+
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
@@ -114,35 +138,47 @@ export function Layout({children}) {
 
 export default function App() {
   const data = useRouteLoaderData('root');
+
   if (!data) return <Outlet />;
+
   return (
     <Analytics.Provider
       cart={data.cart}
       shop={data.shop}
       consent={data.consent}
     >
-      <PageLayout {...data}>
-        <Outlet />
-      </PageLayout>
+      <ProductComparisonProvider>
+        <PageLayout {...data}>
+          <Outlet />
+        </PageLayout>
+      </ProductComparisonProvider>
     </Analytics.Provider>
   );
 }
 
 export function ErrorBoundary() {
   const error = useRouteError();
+
   let errorMessage = 'Unknown error';
-  let errorStatus  = 500;
+  let errorStatus = 500;
+
   if (isRouteErrorResponse(error)) {
     errorMessage = error?.data?.message ?? error.data;
-    errorStatus  = error.status;
+    errorStatus = error.status;
   } else if (error instanceof Error) {
     errorMessage = error.message;
   }
+
   return (
     <div className="route-error">
       <h1>Oops</h1>
       <h2>{errorStatus}</h2>
-      {errorMessage && <fieldset><pre>{errorMessage}</pre></fieldset>}
+
+      {errorMessage && (
+        <fieldset>
+          <pre>{errorMessage}</pre>
+        </fieldset>
+      )}
     </div>
   );
 }
