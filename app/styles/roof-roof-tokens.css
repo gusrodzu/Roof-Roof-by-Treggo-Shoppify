@@ -1,43 +1,105 @@
 /* ============================================================
    Roof Roof — Design Tokens
-   Importar una vez en app/root.jsx:
-   import tokens from './styles/roof-roof-tokens.css?url';
-   export const links = () => [{rel: 'stylesheet', href: tokens}];
+   Paleta Vibrante / Premium
    ============================================================ */
 
 :root {
   /* ── Brand ── */
-  --brand:            #f8b32a;   /* Header, accents */
-  --brand-cta:        #F5A623;   /* Botones primarios, badges */
-  --brand-cta-hover:  #d4891a;   /* Hover de botones primarios */
-  --brand-deep:       #7a5200;   /* Texto sobre fondos crema/dorados (badges de descuento) */
+  --brand:            #ffa600;   /* Amarillo principal, luminoso */
+  --brand-cta:        #FF9F1C;   /* Naranja energético para CTAs */
+  --brand-cta-hover:  #FF7A00;   /* Hover más intenso */
+  --brand-deep:       #6B3F00;   /* Texto sobre amarillos/naranjas */
+
+  /* ── Accent Colors ── */
+  --accent-orange:    #FF6B35;   /* Coral/naranja vibrante */
+  --accent-coral:     #FF4F64;   /* Rojo coral moderno */
+  --accent-pink:      #FF3D81;   /* Rosa eléctrico */
+  --accent-purple:    #7C4DFF;   /* Morado vibrante */
+  --accent-blue:      #3B82F6;   /* Azul eléctrico */
+  --accent-green:     #16C784;   /* Verde fresco */
 
   /* ── Ink / texto ── */
-  --ink:              #2C1810;   /* Texto principal, fondos oscuros */
-  --ink-hover:        #3d2117;   /* Hover sobre fondos oscuros (banners, footer) */
-  --ink-soft:         #7a6a62;   /* Texto secundario */
-  --ink-muted:        #b0a49c;   /* Texto deshabilitado / placeholders */
-  --ink-disabled:     #c8b8b0;   /* Íconos/controles deshabilitados */
+  --ink:              #26130D;   /* Negro cálido */
+  --ink-hover:        #3A1B11;
+  --ink-soft:         #705C52;
+  --ink-muted:        #A99B92;
+  --ink-disabled:     #C9BBB3;
 
   /* ── Surfaces ── */
-  --surface-cream:    #fff8ee;   /* Fondos cálidos / highlights */
-  --surface-cream-2:  #fdf0d5;   /* Segundo tono cálido (gradientes) */
-  --surface-light:    #f5f7fa;   /* Fondo general de página */
-  --surface-ivory:    #e8e4dc;   /* Ivory brand */
-  --surface-cool:     #f5f7fa;   /* Fondo frío neutro (alias de surface-light) */
-  --surface-warm:     #faf9f7;   /* Fondo cálido sutil (inputs, cards internas) */
+  --surface-cream:    #FFF8E7;   /* Crema luminoso */
+  --surface-cream-2:  #FFEFC2;   /* Amarillo crema */
+  --surface-light:    #FAFAF8;   /* Fondo general */
+  --surface-ivory:    #EEE8DF;   /* Ivory */
+  --surface-cool:     #F5F7FB;   /* Fondo ligeramente frío */
+  --surface-warm:     #FFFDF8;   /* Cards / inputs */
+
+  /* ── Vibrant Surfaces ── */
+  --surface-yellow:   #FFF0A8;
+  --surface-orange:   #FFE0C2;
+  --surface-coral:    #FFE0E5;
+  --surface-purple:   #EDE5FF;
+  --surface-blue:     #E4EEFF;
+  --surface-green:    #DDF8EC;
 
   /* ── Borders ── */
-  --border:           #e8e4dc;   /* Bordes generales */
-  --border-soft:      #f0ece6;   /* Bordes más sutiles */
-  --border-gold:      #f0d490;   /* Bordes dorados (banners, badges cálidos) */
+  --border:           #E9E1D8;
+  --border-soft:      #F2ECE5;
+  --border-gold:      #FFD35A;
+
+  /* ── Vibrant Borders ── */
+  --border-orange:    #FFB15C;
+  --border-coral:     #FF9AA8;
+  --border-purple:    #B69AFF;
+  --border-blue:      #91B9FF;
+  --border-green:     #75DDAE;
 
   /* ── Semantic ── */
-  --success:          #2a9d5c;   /* Verde éxito / disponible */
-  --danger:           #c0392b;   /* Rojo error / off badge */
-  --accent:           #acc3fa;   /* Baby purple / links secundarios */
+  --success:          #12B76A;
+  --danger:           #F04438;
+  --warning:          #F79009;
+  --info:             #3B82F6;
+
+  /* ── Accent principal ── */
+  --accent:           #7C4DFF;
+
+  /* ── Gradients ── */
+  --gradient-brand:   linear-gradient(
+    135deg,
+    #FFD93D 0%,
+    #FF9F1C 55%,
+    #FF6B35 100%
+  );
+
+  --gradient-vibrant: linear-gradient(
+    135deg,
+    #FFC928 0%,
+    #FF6B35 45%,
+    #FF3D81 100%
+  );
+
+  --gradient-purple: linear-gradient(
+    135deg,
+    #7C4DFF 0%,
+    #B14EFF 50%,
+    #FF3D81 100%
+  );
+
+  --gradient-fresh: linear-gradient(
+    135deg,
+    #16C784 0%,
+    #3B82F6 100%
+  );
+
+  /* ── Shadows ── */
+  --shadow-sm:       0 2px 8px rgba(38, 19, 13, 0.06);
+  --shadow-md:       0 8px 24px rgba(38, 19, 13, 0.10);
+  --shadow-lg:       0 16px 40px rgba(38, 19, 13, 0.14);
+
+  --shadow-brand:     0 10px 30px rgba(255, 159, 28, 0.25);
+  --shadow-purple:    0 10px 30px rgba(124, 77, 255, 0.20);
+  --shadow-coral:     0 10px 30px rgba(255, 79, 100, 0.20);
 
   /* ── Layout ── */
-  --header-height:    0px;       /* Actualizado via ResizeObserver en Header.jsx */
-  --bottom-nav-height: 64px;     /* Bottom nav mobile */
+  --header-height:    0px;
+  --bottom-nav-height: 64px;
 }
