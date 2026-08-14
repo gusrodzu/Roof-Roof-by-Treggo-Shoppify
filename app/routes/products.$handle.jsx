@@ -165,16 +165,16 @@ export default function ProductRoute() {
         {/* ── COLUMNA DERECHA: info ── */}
         <div>
           {/* Vendor + título */}
-          <p style={{fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: '#F5A623', marginBottom: '0.375rem', margin: '0 0 0.375rem'}}>
+          <p style={{fontSize: '25px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', color: '#000000', marginBottom: '0.375rem', margin: '0 0 0.375rem'}}>
             {product.vendor}
           </p>
-          <h1 style={{fontSize: isMobile ? '1.375rem' : '1.75rem', fontWeight: 800, color: '#2C1810', lineHeight: 1.25, marginBottom: '1rem'}}>
+          <h1 style={{fontSize: isMobile ? '1.375rem' : '1.75rem', fontWeight: 800, color: '#000000', lineHeight: 1.25, marginBottom: '1rem'}}>
             {product.title}
           </h1>
 
           {/* Precio */}
           <div style={{display: 'flex', alignItems: 'baseline', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap'}}>
-            <Money data={variant.price} style={{fontSize: isMobile ? '1.625rem' : '2rem', fontWeight: 800, color: '#2C1810'}}/>
+            <Money data={variant.price} style={{fontSize: isMobile ? '1.625rem' : '2rem', fontWeight: 800, color: '#010101'}}/>
             {hasDiscount && (
               <>
                 <Money data={variant.compareAtPrice} style={{fontSize: '1rem', color: '#b0a49c', textDecoration: 'line-through'}}/>
