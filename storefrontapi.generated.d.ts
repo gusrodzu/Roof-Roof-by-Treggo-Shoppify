@@ -821,7 +821,10 @@ export type RelatedProductsQueryVariables = StorefrontAPI.Exact<{
 export type RelatedProductsQuery = {
   products: {
     nodes: Array<
-      Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle' | 'description'> & {
+      Pick<
+        StorefrontAPI.Product,
+        'id' | 'title' | 'handle' | 'description' | 'vendor' | 'tags'
+      > & {
         featuredImage?: StorefrontAPI.Maybe<
           Pick<StorefrontAPI.Image, 'url' | 'altText' | 'width' | 'height'>
         >;
@@ -830,6 +833,9 @@ export type RelatedProductsQuery = {
             StorefrontAPI.MoneyV2,
             'amount' | 'currencyCode'
           >;
+        };
+        variants: {
+          nodes: Array<Pick<StorefrontAPI.ProductVariant, 'availableForSale'>>;
         };
       }
     >;
@@ -938,7 +944,7 @@ interface GeneratedQueryTypes {
     return: ProductQuery;
     variables: ProductQueryVariables;
   };
-  '#graphql\n  query RelatedProducts($query: String!, $first: Int!, $country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    products(first: $first, query: $query) {\n      nodes {\n        id title handle description\n        featuredImage { url altText width height }\n        priceRange { minVariantPrice { amount currencyCode } }\n      }\n    }\n  }\n': {
+  '#graphql\n  query RelatedProducts($query: String!, $first: Int!, $country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    products(first: $first, query: $query) {\n      nodes {\n        id title handle description vendor tags\n        featuredImage { url altText width height }\n        priceRange { minVariantPrice { amount currencyCode } }\n        variants(first: 1) {\n          nodes { availableForSale }\n        }\n      }\n    }\n  }\n': {
     return: RelatedProductsQuery;
     variables: RelatedProductsQueryVariables;
   };
