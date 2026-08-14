@@ -227,23 +227,118 @@ export function Header({header, cart, isLoggedIn, publicStoreDomain}) {
     flexShrink: 0,
   };
 
-  const SearchBar = ({id}) => (
-    <form onSubmit={handleSearchSubmit} role="search" style={{display: 'flex', alignItems: 'center', position: 'relative', width: '100%'}}>
-      <label htmlFor={id} style={{position: 'absolute', width: 1, height: 1, overflow: 'hidden'}}>Buscar productos</label>
-      <input
-        id={id}
-        name="q"
-        type="search"
-        placeholder="Buscar casas, camas, jaulas..."
-        style={{width: '100%', background: '#ffffff', border: '1px solid #ffffff', borderRadius: '0.5rem', padding: '0.625rem 2.75rem 0.625rem 1rem', color: '#0a2a5e', fontSize: '0.875rem', outline: 'none', boxSizing: 'border-box'}}
-      />
-      <button type="submit" aria-label="Buscar" style={{position: 'absolute', right: '0.5rem', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: '#0a2a5e', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0.25rem'}}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-      </button>
-    </form>
-  );
+const SearchBar = ({id}) => (
+  <form
+    onSubmit={handleSearchSubmit}
+    role="search"
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      width: '100%',
+      maxWidth: 'none',
+      background: '#ffffff',
+      border: '2px solid #FFB000',
+      borderRadius: '999px',
+      padding: '4px',
+      boxSizing: 'border-box',
+      boxShadow: '0 6px 20px rgba(255, 121, 0, 0.12)',
+    }}
+  >
+    <label
+      htmlFor={id}
+      style={{
+        position: 'absolute',
+        width: "10px",
+        height: 1,
+        padding: 1,
+        margin: 1,
+        overflow: 'hidden',
+        clip: 'rect(0, 0, 0, 0)',
+        whiteSpace: 'nowrap',
+        border: 0,
+      }}
+    >
+      Buscar productos
+    </label>
+
+    <input
+      id={id}
+      name="q"
+      type="search"
+      placeholder="Buscar casas, camas, jaulas..."
+      style={{
+        flex: '1 1 auto',
+        minWidth: 0,
+        width: '100%',
+        background: 'transparent',
+        border: 'none',
+        outline: 'none',
+   margin: "5px",
+        padding: '1rem 1rem',
+        color: '#000000',
+        fontSize: '0.9rem',
+        fontWeight: 500,
+        boxSizing: 'border-box',
+      }}
+    />
+
+    <button
+      type="submit"
+      aria-label="Buscar productos"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '0.4rem',
+
+        flex: '0 0 auto',
+
+        background: 'var(--brand-cta)',
+        
+
+        color: '#000000',
+
+        border: 'none',
+        borderRadius: '999px',
+  
+
+        margin: "10px",
+        padding: '0.7rem 1.25rem',
+
+        fontSize: '0.875rem',
+        fontWeight: 800,
+
+        cursor: 'pointer',
+
+        boxShadow:
+          '0 4px 12px rgba(255, 121, 0, 0.22)',
+
+        transition:
+          'transform 0.2s ease, box-shadow 0.2s ease',
+      }}
+    >
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="8" />
+        <line
+          x1="21"
+          y1="21"
+          x2="16.65"
+          y2="16.65"
+        />
+      </svg>
+
+      <span>Buscar</span>
+    </button>
+  </form>
+);
 
   return (
     <header
@@ -286,7 +381,7 @@ export function Header({header, cart, isLoggedIn, publicStoreDomain}) {
               </Link>
 
               {/* Buscador */}
-              <div style={{flex: 1, maxWidth: '560px'}}>
+              <div style={{flex: 1, maxWidth: '100%'}}>
                 <SearchBar id={searchId} />
               </div>
 
