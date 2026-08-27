@@ -577,7 +577,7 @@ export default function CollectionRoute() {
   return (
     <div
       className="rr-collection-page"
-      style={{background: '#f5f7fa', minHeight: '100vh'}}
+      style={{background: 'var(--surface-cream, #fff7e5)', minHeight: '100vh'}}
     >
       {/* Breadcrumb */}
       <div
@@ -646,10 +646,10 @@ export default function CollectionRoute() {
         style={{
           maxWidth: '1280px',
           margin: '0 auto',
-          padding: isMobile ? '1rem' : '1.5rem 2rem',
-          display: isMobile ? 'block' : 'grid',
+          padding: 'clamp(1rem, 2vw, 1.75rem)',
+          display: 'grid',
           gridTemplateColumns: '220px minmax(0, 1fr)',
-          gap: '2rem',
+          gap: 'clamp(1rem, 2vw, 2rem)',
           alignItems: 'start',
         }}
       >
@@ -659,11 +659,11 @@ export default function CollectionRoute() {
             className="rr-filter-sidebar"
             style={{
               position: 'sticky',
-              top: '1.5rem',
+              top: 'calc(var(--header-height, 0px) + 1rem)',
               alignSelf: 'start',
               width: '220px',
               minWidth: 0,
-              overflow: 'hidden',
+              overflow: 'auto',
             }}
           >
             <SidebarContent {...sidebarProps} />
@@ -673,7 +673,7 @@ export default function CollectionRoute() {
         {/* ── ÁREA PRINCIPAL ── */}
         <main
           className="rr-collection-main"
-          style={{minWidth: 0, overflow: 'hidden'}}
+          style={{minWidth: 0, overflow: 'visible'}}
         >
           {/* Header */}
           <div className="rr-collection-toolbar" style={{marginBottom: '1rem'}}>
@@ -1020,10 +1020,9 @@ export default function CollectionRoute() {
               className="rr-products-grid"
               style={{
                 display: 'grid',
-                gridTemplateColumns: isMobile
-                  ? 'repeat(2, 1fr)'
-                  : 'repeat(auto-fill, minmax(180px, 1fr))',
-                gap: isMobile ? '0.625rem' : '1rem',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 320px))',
+                justifyContent: 'start',
+                gap: 'clamp(0.875rem, 1.5vw, 1.25rem)',
               }}
             >
               {filtered.map((p) => (
@@ -1217,7 +1216,7 @@ function QuickViewModal({product, price, compare, discount, onClose}) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            aspectRatio: '1',
+            aspectRatio: '4 / 3',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -1487,8 +1486,8 @@ function ProductCardButtons({variantId, triggerFly, openCart}) {
       className="rr-collection-card__actions"
       style={{
         display: 'flex',
-        flexDirection: 'column',
-        gap: '0.375rem',
+        flexDirection: 'row',
+        gap: '0.5rem',
         marginTop: '0.5rem',
       }}
     >

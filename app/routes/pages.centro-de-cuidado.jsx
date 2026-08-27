@@ -72,8 +72,8 @@ const PRINCIPLES = [
 
 export default function CareCenterPage() {
   return (
-    <div className="rr-brand-page">
-      <section className="rr-brand-hero">
+    <div className="rr-brand-page rr-care-center-page">
+      <section className="rr-brand-hero rr-care-center-hero">
         <div className="rr-brand-hero__grid">
           <div className="rr-brand-hero__copy">
             <span className="rr-kicker">Centro de cuidado</span>

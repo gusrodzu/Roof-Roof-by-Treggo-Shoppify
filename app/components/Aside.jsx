@@ -18,7 +18,7 @@ const ASIDE_CONFIG = {
   cart: {
     heading: 'Tu carrito',
     side: 'right',
-    width: 'min(480px, 100vw)',
+    width: 'min(440px, 100vw)',
     noHeader: false,
     fullScreen: false,
   },

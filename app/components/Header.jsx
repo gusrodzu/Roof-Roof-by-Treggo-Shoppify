@@ -364,6 +364,7 @@ export function Header({cart}) {
         borderRadius: '999px',
         padding: '4px',
         boxSizing: 'border-box',
+        overflow: 'hidden',
         boxShadow: '0 6px 20px rgba(255, 121, 0, 0.12)',
       }}
     >
@@ -393,12 +394,12 @@ export function Header({cart}) {
         style={{
           flex: '1 1 auto',
           minWidth: 0,
-          width: '100%',
+          width: 'auto',
           background: 'transparent',
           border: 'none',
           outline: 'none',
-          margin: '5px',
-          padding: '1rem 1rem',
+          margin: 0,
+          padding: '0.875rem 1rem',
           color: '#000000',
           fontSize: '0.9rem',
           fontWeight: 500,
@@ -425,8 +426,8 @@ export function Header({cart}) {
           border: 'none',
           borderRadius: '999px',
 
-          margin: '10px',
-          padding: '0.7rem 1.25rem',
+          margin: 0,
+          padding: '0.7rem 1.1rem',
 
           fontSize: '0.875rem',
           fontWeight: 800,
@@ -481,7 +482,7 @@ export function Header({cart}) {
       {/* Barra principal */}
       <div
         className="rr-header-main"
-        style={{background: 'var(--brand)', padding: '0.75rem 1rem'}}
+        style={{background: 'var(--brand)', padding: '0.75rem clamp(0.75rem, 2vw, 1.25rem)'}}
       >
         <>
           {/* ── MOBILE ── */}

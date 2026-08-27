@@ -303,7 +303,7 @@ function CartEmpty({hidden = false}) {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '2.5rem 1.5rem',
+        padding: 'clamp(1.5rem, 5vh, 2.5rem) 1.25rem',
         textAlign: 'center',
         gap: '1.25rem',
       }}
@@ -368,8 +368,8 @@ function CartEmpty({hidden = false}) {
 function EmptyBowlIllustration() {
   return (
     <svg
-      width="200"
-      height="160"
+      width="160"
+      height="130"
       viewBox="0 0 160 130"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
