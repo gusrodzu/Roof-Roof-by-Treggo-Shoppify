@@ -1031,3 +1031,182 @@
     border-radius: 1.3rem !important;
   }
 }
+
+/* ========================================================================== 
+   HELP PAGE MOBILE — CATEGORY NAV + HORIZONTAL OVERFLOW FIX
+   ========================================================================== */
+.page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+.content,
+.faqLayout,
+.questions,
+.quickGrid,
+.categories,
+.categoryList {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  .faqLayout {
+    display: block !important;
+  }
+
+  .categories {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 1.25rem !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .categories > p {
+    margin: 0 0 0.65rem !important;
+    padding-inline: 0.15rem !important;
+    color: rgba(75, 58, 50, 0.62) !important;
+    font-size: 0.69rem !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .categoryList {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 0.55rem !important;
+    padding: 0.1rem 0 0.45rem !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x proximity !important;
+    scrollbar-width: none !important;
+    overscroll-behavior-inline: contain !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .categoryList::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .categoryList button {
+    width: auto !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    min-height: 46px !important;
+    flex: 0 0 auto !important;
+    grid-template-columns: auto auto !important;
+    gap: 0.55rem !important;
+    padding: 0.55rem 0.9rem 0.55rem 0.55rem !important;
+    border: 1.5px solid rgba(77, 58, 49, 0.28) !important;
+    border-radius: 999px !important;
+    background: #fffdf8 !important;
+    box-shadow: none !important;
+    color: var(--rr-ui-ink) !important;
+    scroll-snap-align: start !important;
+    white-space: nowrap !important;
+  }
+
+  .categoryList button > span {
+    display: grid !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    place-items: center !important;
+    border: 1.5px solid rgba(77, 58, 49, 0.18) !important;
+    border-radius: 999px !important;
+    background: #f6efe7 !important;
+    color: var(--rr-ui-ink) !important;
+  }
+
+  .categoryList button svg {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  .categoryList button small {
+    display: none !important;
+  }
+
+  .categoryList button:hover,
+  .categoryList .categoryActive {
+    border-color: #ff9f1c !important;
+    background: #fff2cf !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 159, 28, 0.18) !important;
+  }
+
+  .categoryList .categoryActive > span {
+    border-color: #ff9f1c !important;
+    background: #ffb000 !important;
+    color: #18110e !important;
+  }
+
+  .questions {
+    width: 100% !important;
+  }
+
+  .heading {
+    margin: 0 0 1rem !important;
+    padding-inline: 0.1rem !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .content {
+    width: calc(100% - 1rem) !important;
+    max-width: calc(100% - 1rem) !important;
+    margin-inline: auto !important;
+  }
+
+  .categories {
+    margin-bottom: 1rem !important;
+  }
+
+  .categories > p {
+    margin-bottom: 0.55rem !important;
+  }
+
+  .categoryList {
+    margin: 0 !important;
+    padding-bottom: 0.35rem !important;
+  }
+
+  .categoryList button {
+    min-height: 44px !important;
+    padding: 0.5rem 0.82rem 0.5rem 0.5rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  .categoryList button > span {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+  }
+
+  .heading .eyebrowDark {
+    margin-bottom: 0.6rem !important;
+  }
+
+  .heading h2 {
+    margin: 0 !important;
+  }
+
+  .heading p {
+    margin-top: 0.55rem !important;
+  }
+
+  .accordion details {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
