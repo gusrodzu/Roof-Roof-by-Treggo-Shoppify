@@ -1,7 +1,6 @@
 import {Link, useNavigate} from 'react-router';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
-import {useState} from 'react';
 
 /**
  * @param {{
@@ -14,31 +13,49 @@ export function ProductForm({productOptions, selectedVariant}) {
   const {open} = useAside();
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: '1.25rem'}}>
-
+    <div
+      className="rr-product-form"
+      style={{display: 'flex', flexDirection: 'column', gap: '1.25rem'}}
+    >
       {/* Opciones de variante */}
       {productOptions.map((option) => {
         if (option.optionValues.length === 1) return null;
         return (
-          <div key={option.name} style={{display: 'flex', flexDirection: 'column', gap: '0.625rem'}}>
-            <span style={{
-              fontSize: '0.8125rem',
-              fontWeight: 700,
-              color: 'var(--ink)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.8px',
-            }}>
+          <div
+            className="rr-product-option-group"
+            key={option.name}
+            style={{display: 'flex', flexDirection: 'column', gap: '0.625rem'}}
+          >
+            <span
+              style={{
+                fontSize: '0.8125rem',
+                fontWeight: 700,
+                color: 'var(--ink)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.8px',
+              }}
+            >
               {option.name}
             </span>
 
-            <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem'}}>
+            <div
+              className="rr-product-options"
+              style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem'}}
+            >
               {option.optionValues.map((value) => {
                 const {
-                  name, handle, variantUriQuery, selected,
-                  available, exists, isDifferentProduct, swatch,
+                  name,
+                  handle,
+                  variantUriQuery,
+                  selected,
+                  available,
+                  exists,
+                  isDifferentProduct,
+                  swatch,
                 } = value;
 
-                const hasSwatch = swatch?.image?.previewImage?.url || swatch?.color;
+                const hasSwatch =
+                  swatch?.image?.previewImage?.url || swatch?.color;
 
                 const baseStyle = {
                   padding: hasSwatch ? '2px' : '0.5rem 1rem',
@@ -66,14 +83,21 @@ export function ProductForm({productOptions, selectedVariant}) {
                 if (isDifferentProduct) {
                   return (
                     <Link
+                      className={`rr-product-option rr-ui-choice${selected ? ' is-selected' : ''}`}
                       key={option.name + name}
                       prefetch="intent"
                       preventScrollReset
                       replace
                       to={`/products/${handle}?${variantUriQuery}`}
                       style={baseStyle}
-                      onMouseEnter={(e) => { if (!selected) e.currentTarget.style.borderColor = '#acc3fa'; }}
-                      onMouseLeave={(e) => { if (!selected) e.currentTarget.style.borderColor = 'var(--border)'; }}
+                      onMouseEnter={(e) => {
+                        if (!selected)
+                          e.currentTarget.style.borderColor = '#acc3fa';
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!selected)
+                          e.currentTarget.style.borderColor = 'var(--border)';
+                      }}
                     >
                       <ProductOptionSwatch swatch={swatch} name={name} />
                     </Link>
@@ -83,6 +107,7 @@ export function ProductForm({productOptions, selectedVariant}) {
                 return (
                   <button
                     type="button"
+                    className={`rr-product-option rr-ui-choice${selected ? ' is-selected' : ''}`}
                     key={option.name + name}
                     style={baseStyle}
                     disabled={!exists}
@@ -94,8 +119,14 @@ export function ProductForm({productOptions, selectedVariant}) {
                         });
                       }
                     }}
-                    onMouseEnter={(e) => { if (!selected && exists) e.currentTarget.style.borderColor = '#acc3fa'; }}
-                    onMouseLeave={(e) => { if (!selected) e.currentTarget.style.borderColor = 'var(--border)'; }}
+                    onMouseEnter={(e) => {
+                      if (!selected && exists)
+                        e.currentTarget.style.borderColor = '#acc3fa';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!selected)
+                        e.currentTarget.style.borderColor = 'var(--border)';
+                    }}
                   >
                     <ProductOptionSwatch swatch={swatch} name={name} />
                   </button>
@@ -112,34 +143,57 @@ export function ProductForm({productOptions, selectedVariant}) {
         onClick={() => open('cart')}
         lines={
           selectedVariant
-            ? [{merchandiseId: selectedVariant.id, quantity: 1, selectedVariant}]
+            ? [
+                {
+                  merchandiseId: selectedVariant.id,
+                  quantity: 1,
+                  selectedVariant,
+                },
+              ]
             : []
         }
       >
-        <span style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '0.5rem',
-          width: '100%',
-          padding: '1rem 1.5rem',
-          borderRadius: '0.75rem',
-          background: selectedVariant?.availableForSale ? 'var(--brand-cta)' : 'var(--border)',
-          color: selectedVariant?.availableForSale ? 'var(--ink)' : 'var(--ink-muted)',
-          fontWeight: 800,
-          fontSize: '1rem',
-          letterSpacing: '0.2px',
-          cursor: selectedVariant?.availableForSale ? 'pointer' : 'not-allowed',
-          transition: 'background 0.15s',
-          fontFamily: 'inherit',
-          border: 'none',
-        }}>
+        <span
+          className="rr-product-add-content"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            width: '100%',
+            padding: '1rem 1.5rem',
+            borderRadius: '0.75rem',
+            background: selectedVariant?.availableForSale
+              ? 'var(--brand-cta)'
+              : 'var(--border)',
+            color: selectedVariant?.availableForSale
+              ? 'var(--ink)'
+              : 'var(--ink-muted)',
+            fontWeight: 800,
+            fontSize: '1rem',
+            letterSpacing: '0.2px',
+            cursor: selectedVariant?.availableForSale
+              ? 'pointer'
+              : 'not-allowed',
+            transition: 'background 0.15s',
+            fontFamily: 'inherit',
+            border: 'none',
+          }}
+        >
           {selectedVariant?.availableForSale ? (
             <>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <path d="M16 10a4 4 0 01-8 0"/>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                aria-hidden="true"
+              >
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 01-8 0" />
               </svg>
               Agregar al carrito
             </>
@@ -152,6 +206,7 @@ export function ProductForm({productOptions, selectedVariant}) {
       {/* Buy now (optional shortcut) */}
       {selectedVariant?.availableForSale && (
         <Link
+          className="rr-button rr-button--outline rr-product-buy-now"
           to="/cart"
           style={{
             display: 'flex',
@@ -192,6 +247,7 @@ function ProductOptionSwatch({swatch, name}) {
 
   return (
     <div
+      className="rr-product-swatch"
       aria-label={name}
       style={{
         width: '28px',

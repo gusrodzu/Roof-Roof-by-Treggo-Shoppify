@@ -1,6 +1,7 @@
 import {redirect, useLoaderData} from 'react-router';
 import {Money, Image} from '@shopify/hydrogen';
 import {CUSTOMER_ORDER_QUERY} from '~/graphql/customer-account/CustomerOrderQuery';
+import {isAccountEnabled} from '~/lib/featureAvailability';
 
 /**
  * @type {Route.MetaFunction}
@@ -13,6 +14,8 @@ export const meta = ({data}) => {
  * @param {Route.LoaderArgs}
  */
 export async function loader({params, context}) {
+  if (!isAccountEnabled()) return redirect('/account');
+
   const {customerAccount} = context;
   if (!params.id) {
     return redirect('/account/orders');

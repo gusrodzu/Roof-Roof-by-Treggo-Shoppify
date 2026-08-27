@@ -1,0 +1,325 @@
+/* ============================================================
+   Roof Roof — Visual consistency final pass
+   Corrige contraste, quiebres de texto, grids, footer y mobile.
+   Cargado al final de la cascada.
+   ============================================================ */
+
+:root {
+  --rr-final-ink: #17120f;
+  --rr-final-paper: #fffdf8;
+  --rr-final-cream: #fff8e9;
+  --rr-final-orange: #f6a800;
+  --rr-final-border: #3a261e;
+  --rr-final-muted: #75665f;
+}
+
+/* ---------- Texto: nunca partir palabras de marca o botones ---------- */
+body.rr-site :where(h1, h2, h3, h4, h5, h6, button, .rr-button, strong) {
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+
+body.rr-site :where(p, li, small, .rr-product-card__title) {
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  hyphens: none !important;
+}
+
+body.rr-site :where(h1, h2) {
+  font-weight: 800 !important;
+  text-wrap: balance;
+}
+
+body.rr-site :where(h3, h4, h5, h6) {
+  font-weight: 750 !important;
+  text-wrap: balance;
+}
+
+body.rr-site :where(p, li) {
+  font-weight: 400;
+}
+
+body.rr-site :where(.rr-button, button) {
+  font-weight: 750 !important;
+}
+
+/* ---------- Superficies oscuras: contraste garantizado ---------- */
+body.rr-site :where(
+  .rr-account-banner,
+  .rr-footer,
+  .rr-brand-hero,
+  .rr-search-hero,
+  [data-surface='dark']
+) :where(h1, h2, h3, h4, h5, h6) {
+  color: #fffdf8 !important;
+  -webkit-text-fill-color: #fffdf8 !important;
+  background: none !important;
+  text-shadow: none !important;
+}
+
+body.rr-site .rr-account-banner :where(p, span:not(.rr-kicker):not(.rr-coming-soon-badge)) {
+  color: rgba(255, 253, 248, 0.78) !important;
+}
+
+/* ---------- Módulo de orientación ---------- */
+.rr-experience--tools .rr-section-heading--split {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr) !important;
+  align-items: end !important;
+  gap: clamp(2rem, 6vw, 6rem) !important;
+}
+
+.rr-experience--tools .rr-section-heading--split > div,
+.rr-experience--tools .rr-section-heading--split > p {
+  min-width: 0;
+}
+
+.rr-experience--tools .rr-section-heading h2 {
+  max-width: 820px !important;
+  margin: 0 !important;
+  color: var(--rr-final-ink) !important;
+  -webkit-text-fill-color: var(--rr-final-ink) !important;
+  background: none !important;
+  font-size: clamp(2.55rem, 4.8vw, 4.65rem) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.045em !important;
+}
+
+.rr-experience--tools .rr-section-heading--split > p {
+  max-width: 520px;
+  color: var(--rr-final-muted) !important;
+  font-size: clamp(1rem, 1.25vw, 1.12rem) !important;
+  line-height: 1.75 !important;
+}
+
+/* ---------- Cards de checklist / páginas de marca ---------- */
+.rr-brand-grid.rr-brand-grid--2 {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
+  gap: clamp(1rem, 2vw, 1.5rem) !important;
+}
+
+.rr-brand-grid--2 > .rr-brand-card {
+  display: flex !important;
+  min-width: 0 !important;
+  min-height: 100% !important;
+  flex-direction: column !important;
+  padding: clamp(1.25rem, 2.5vw, 1.8rem) !important;
+}
+
+.rr-brand-card .rr-brand-list {
+  flex: 1 1 auto;
+}
+
+.rr-brand-card .rr-text-link {
+  margin-top: auto !important;
+  padding-top: 1rem;
+}
+
+.rr-brand-list li {
+  min-width: 0;
+  line-height: 1.65 !important;
+}
+
+/* ---------- Producto: acciones de card sin compresión ---------- */
+.rr-collection-card__actions {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0.55rem !important;
+  width: 100% !important;
+  margin-top: 0.75rem !important;
+}
+
+.rr-collection-card__actions form,
+.rr-collection-card__actions button {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.rr-collection-card__actions button {
+  min-height: 44px !important;
+  padding: 0.65rem 0.8rem !important;
+  font-size: 0.78rem !important;
+  line-height: 1.2 !important;
+  white-space: normal !important;
+}
+
+.rr-quick-add-label--full {
+  display: inline !important;
+}
+
+.rr-quick-add-label--compact {
+  display: none !important;
+}
+
+/* ---------- Header / navegación secundaria ---------- */
+.rr-commerce-nav {
+  overflow: hidden;
+}
+
+.rr-commerce-nav__inner,
+.rr-commerce-nav nav,
+.rr-commerce-nav > div {
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rr-commerce-nav__inner::-webkit-scrollbar,
+.rr-commerce-nav nav::-webkit-scrollbar,
+.rr-commerce-nav > div::-webkit-scrollbar {
+  display: none;
+}
+
+.rr-commerce-nav a {
+  flex: 0 0 auto;
+  white-space: nowrap !important;
+}
+
+/* ---------- Footer: columnas legibles y títulos visibles ---------- */
+.rr-footer__grid {
+  grid-template-columns: minmax(280px, 1.25fr) repeat(3, minmax(170px, 0.75fr)) !important;
+  align-items: start !important;
+  gap: clamp(2rem, 4vw, 4rem) !important;
+}
+
+.rr-footer__desktop-column {
+  min-width: 0;
+}
+
+body.rr-site .rr-footer__title {
+  max-width: 100% !important;
+  margin: 0 0 1.1rem !important;
+  color: #fffdf8 !important;
+  -webkit-text-fill-color: #fffdf8 !important;
+  background: none !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  white-space: normal !important;
+}
+
+.rr-footer__links,
+.rr-footer__links li,
+.rr-footer__links a,
+.rr-disabled-link {
+  min-width: 0;
+}
+
+.rr-footer__links a,
+.rr-disabled-link {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+  color: rgba(255, 253, 248, 0.78) !important;
+  font-size: 0.92rem !important;
+  line-height: 1.45 !important;
+}
+
+.rr-footer__copy {
+  color: rgba(255, 253, 248, 0.76) !important;
+}
+
+/* ---------- Cuenta futura / banner oscuro ---------- */
+body.rr-site .rr-account-banner__content h2 {
+  color: #fffdf8 !important;
+  -webkit-text-fill-color: #fffdf8 !important;
+  background: none !important;
+  font-size: clamp(2.2rem, 4.4vw, 4rem) !important;
+  line-height: 1 !important;
+}
+
+.rr-account-banner {
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.65fr) !important;
+}
+
+/* ---------- Promos: no quedar detrás de la navegación móvil ---------- */
+.rr-promo-section {
+  scroll-margin-bottom: calc(96px + env(safe-area-inset-bottom));
+}
+
+.rr-promo-card__cta {
+  white-space: normal !important;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 1024px) {
+  .rr-experience--tools .rr-section-heading--split {
+    grid-template-columns: 1fr !important;
+    align-items: start !important;
+    gap: 1.25rem !important;
+  }
+
+  .rr-experience--tools .rr-section-heading--split > p {
+    max-width: 680px;
+  }
+
+  .rr-footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .rr-footer__brand {
+    grid-column: 1 / -1;
+  }
+
+  .rr-account-banner {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .rr-brand-grid.rr-brand-grid--2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .rr-brand-grid--2 > .rr-brand-card {
+    min-height: auto !important;
+  }
+
+  .rr-experience--tools .rr-section-heading h2 {
+    font-size: clamp(2.15rem, 10.5vw, 3.25rem) !important;
+    line-height: 0.98 !important;
+  }
+
+  .rr-experience-tools-grid {
+    grid-auto-columns: min(86vw, 340px) !important;
+  }
+
+  .rr-promo-section {
+    padding-bottom: calc(1.75rem + env(safe-area-inset-bottom)) !important;
+  }
+
+  .rr-promo-section .rr-promo-card {
+    min-height: clamp(280px, 86vw, 380px) !important;
+  }
+
+  .rr-footer__desktop-column {
+    display: none !important;
+  }
+
+  .rr-footer__mobile-columns {
+    display: grid !important;
+  }
+
+  .rr-collection-card__actions button {
+    min-height: 46px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .rr-experience-tools-grid {
+    grid-auto-columns: calc(100vw - 2.5rem) !important;
+  }
+
+  .rr-promo-card__badge {
+    max-width: calc(100% - 1.4rem) !important;
+  }
+}

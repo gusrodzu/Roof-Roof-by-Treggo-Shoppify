@@ -1,49 +1,119 @@
 import {useLoaderData, Link, useNavigate} from 'react-router';
 import {CartForm, Image, Money} from '@shopify/hydrogen';
-import {useState, useMemo, useEffect} from 'react';
+import {useState, useMemo, useEffect, useRef} from 'react';
+import {createPortal} from 'react-dom';
 import {useAside} from '~/components/Aside';
 import {useCartAnimation} from '~/components/CartAnimation';
+import {ExperienceIcon} from '~/components/ExperienceIcon';
+import {useMediaQuery} from '~/hooks/useMediaQuery';
 
 // -----------------------------------------------------------------------
 // MAPA DE CATEGORÍAS
 // -----------------------------------------------------------------------
 const CATEGORY_MAP = {
-  'roof-roof':               {title: 'Todos los productos', query: "vendor:'ROOF ROOF'"},
-  'roof-roof-camas':         {title: 'Camas',               query: "vendor:'ROOF ROOF' AND product_type:'Camas'"},
-  'roof-roof-casas':         {title: 'Casas',               query: "vendor:'ROOF ROOF' AND product_type:'Casas'"},
-  'roof-roof-jaulas':        {title: 'Jaulas y corrales',   query: "vendor:'ROOF ROOF' AND product_type:'Jaulas y Corrales'"},
-  'roof-roof-dispensadores': {title: 'Dispensadores',       query: "vendor:'ROOF ROOF' AND product_type:'Dispensadores'"},
+  'roof-roof': {title: 'Todos los productos', query: "vendor:'ROOF ROOF'"},
+  'roof-roof-camas': {
+    title: 'Camas',
+    query: "vendor:'ROOF ROOF' AND product_type:'Camas'",
+  },
+  'roof-roof-casas': {
+    title: 'Casas',
+    query: "vendor:'ROOF ROOF' AND product_type:'Casas'",
+  },
+  'roof-roof-jaulas': {
+    title: 'Jaulas y corrales',
+    query: "vendor:'ROOF ROOF' AND product_type:'Jaulas y Corrales'",
+  },
+  'roof-roof-dispensadores': {
+    title: 'Dispensadores',
+    query: "vendor:'ROOF ROOF' AND product_type:'Dispensadores'",
+  },
+};
+
+const COLLECTION_GUIDANCE = {
+  'roof-roof': {
+    icon: 'sparkles',
+    title: '¿No sabes por dónde empezar?',
+    copy: 'El selector de Roof Roof combina tamaño, espacio y necesidad para orientarte hacia la categoría más adecuada.',
+  },
+  'roof-roof-camas': {
+    icon: 'moon',
+    title: 'La cama correcta empieza por cómo descansa',
+    copy: 'Mide a tu mascota acostada de lado y agrega margen suficiente para que pueda cambiar de posición cómodamente.',
+  },
+  'roof-roof-casas': {
+    icon: 'home',
+    title: 'Revisa el espacio interior, no sólo el exterior',
+    copy: 'Considera entrada, ventilación, sombra y el área que necesita para entrar, girar y descansar.',
+  },
+  'roof-roof-jaulas': {
+    icon: 'lock',
+    title: 'Una zona segura debe permitir movimiento cómodo',
+    copy: 'Confirma que pueda ponerse de pie, dar la vuelta y acostarse, además de revisar cierres y accesos.',
+  },
+  'roof-roof-dispensadores': {
+    icon: 'bowl',
+    title: 'Capacidad y limpieza importan tanto como el diseño',
+    copy: 'Elige según la rutina, el número de mascotas, la estabilidad de la base y la facilidad para desmontar y lavar.',
+  },
 };
 
 const COLLECTION_FILTERS = {
   'roof-roof': {
     sections: [
       {
-        title: 'Disponibilidad', key: 'availability', type: 'availability',
-        options: [{key: 'in_stock', label: 'En stock'}, {key: 'out_stock', label: 'Agotado'}],
+        title: 'Disponibilidad',
+        key: 'availability',
+        type: 'availability',
+        options: [
+          {key: 'in_stock', label: 'En stock'},
+          {key: 'out_stock', label: 'Agotado'},
+        ],
       },
       {
-        title: 'Destacados', key: 'featured', type: 'tag',
-        options: [{key: '+VENDIDO', label: 'Más vendidos'}, {key: 'TOP10', label: 'Top 10'}],
+        title: 'Destacados',
+        key: 'featured',
+        type: 'tag',
+        options: [
+          {key: '+VENDIDO', label: 'Más vendidos'},
+          {key: 'TOP10', label: 'Top 10'},
+        ],
       },
       {
-        title: 'Para tu mascota', key: 'pet', type: 'tag',
-        options: [{key: 'perro', label: 'Perro'}, {key: 'gato', label: 'Gato'}],
+        title: 'Para tu mascota',
+        key: 'pet',
+        type: 'tag',
+        options: [
+          {key: 'perro', label: 'Perro'},
+          {key: 'gato', label: 'Gato'},
+        ],
       },
     ],
   },
   'roof-roof-casas': {
     sections: [
       {
-        title: 'Disponibilidad', key: 'availability', type: 'availability',
-        options: [{key: 'in_stock', label: 'En stock'}, {key: 'out_stock', label: 'Agotado'}],
+        title: 'Disponibilidad',
+        key: 'availability',
+        type: 'availability',
+        options: [
+          {key: 'in_stock', label: 'En stock'},
+          {key: 'out_stock', label: 'Agotado'},
+        ],
       },
       {
-        title: 'Material', key: 'material', type: 'tag',
-        options: [{key: 'refugio de madera', label: 'Madera'}, {key: 'plástico', label: 'Plástico'}],
+        title: 'Material',
+        key: 'material',
+        type: 'tag',
+        options: [
+          {key: 'refugio de madera', label: 'Madera'},
+          {key: 'plástico', label: 'Plástico'},
+        ],
       },
       {
-        title: 'Características', key: 'features', type: 'tag',
+        title: 'Características',
+        key: 'features',
+        type: 'tag',
         options: [
           {key: 'elevado', label: 'Piso elevado'},
           {key: 'refugio elevado', label: 'Refugio elevado'},
@@ -53,40 +123,70 @@ const COLLECTION_FILTERS = {
         ],
       },
       {
-        title: 'Para tu mascota', key: 'pet', type: 'tag',
-        options: [{key: 'perros', label: 'Perro'}, {key: 'Casa para Gato', label: 'Gato'}],
+        title: 'Para tu mascota',
+        key: 'pet',
+        type: 'tag',
+        options: [
+          {key: 'perros', label: 'Perro'},
+          {key: 'Casa para Gato', label: 'Gato'},
+        ],
       },
     ],
   },
   'roof-roof-camas': {
     sections: [
       {
-        title: 'Disponibilidad', key: 'availability', type: 'availability',
-        options: [{key: 'in_stock', label: 'En stock'}, {key: 'out_stock', label: 'Agotado'}],
+        title: 'Disponibilidad',
+        key: 'availability',
+        type: 'availability',
+        options: [
+          {key: 'in_stock', label: 'En stock'},
+          {key: 'out_stock', label: 'Agotado'},
+        ],
       },
       {
-        title: 'Tipo', key: 'type', type: 'tag',
-        options: [{key: 'cama elevada', label: 'Cama elevada'}, {key: 'protección solar', label: 'Con toldo solar'}],
+        title: 'Tipo',
+        key: 'type',
+        type: 'tag',
+        options: [
+          {key: 'cama elevada', label: 'Cama elevada'},
+          {key: 'protección solar', label: 'Con toldo solar'},
+        ],
       },
     ],
   },
   'roof-roof-jaulas': {
     sections: [
       {
-        title: 'Disponibilidad', key: 'availability', type: 'availability',
-        options: [{key: 'in_stock', label: 'En stock'}, {key: 'out_stock', label: 'Agotado'}],
+        title: 'Disponibilidad',
+        key: 'availability',
+        type: 'availability',
+        options: [
+          {key: 'in_stock', label: 'En stock'},
+          {key: 'out_stock', label: 'Agotado'},
+        ],
       },
       {
-        title: 'Características', key: 'features', type: 'tag',
-        options: [{key: 'ajustable', label: 'Ajustable'}, {key: 'expandible', label: 'Expandible'}],
+        title: 'Características',
+        key: 'features',
+        type: 'tag',
+        options: [
+          {key: 'ajustable', label: 'Ajustable'},
+          {key: 'expandible', label: 'Expandible'},
+        ],
       },
     ],
   },
   'roof-roof-dispensadores': {
     sections: [
       {
-        title: 'Disponibilidad', key: 'availability', type: 'availability',
-        options: [{key: 'in_stock', label: 'En stock'}, {key: 'out_stock', label: 'Agotado'}],
+        title: 'Disponibilidad',
+        key: 'availability',
+        type: 'availability',
+        options: [
+          {key: 'in_stock', label: 'En stock'},
+          {key: 'out_stock', label: 'Agotado'},
+        ],
       },
     ],
   },
@@ -94,7 +194,14 @@ const COLLECTION_FILTERS = {
 
 export const meta = ({params}) => {
   const cat = CATEGORY_MAP[params.handle];
-  return [{title: `${cat?.title ?? 'Colección'} — Roof Roof`}];
+  const title = cat?.title ?? 'Colección';
+  return [
+    {title: `${title} — Roof Roof`},
+    {
+      name: 'description',
+      content: `Descubre ${title.toLowerCase()} para mascotas en Roof Roof. Compra segura, garantía incluida y envío a todo México.`,
+    },
+  ];
 };
 
 const PAGE_SIZE = 12;
@@ -103,15 +210,18 @@ export async function loader({context, params, request}) {
   const cat = CATEGORY_MAP[params.handle];
   if (!cat) throw new Response('Colección no encontrada', {status: 404});
 
-  const url    = new URL(request.url);
+  const url = new URL(request.url);
   const cursor = url.searchParams.get('cursor') ?? undefined;
-  const dir    = url.searchParams.get('dir') ?? 'next'; // 'next' | 'prev'
+  const dir = url.searchParams.get('dir') ?? 'next'; // 'next' | 'prev'
 
-  const variables = dir === 'prev'
-    ? {query: cat.query, last: PAGE_SIZE, before: cursor}
-    : {query: cat.query, first: PAGE_SIZE, after: cursor};
+  const variables =
+    dir === 'prev'
+      ? {query: cat.query, last: PAGE_SIZE, before: cursor}
+      : {query: cat.query, first: PAGE_SIZE, after: cursor};
 
-  const {products} = await context.storefront.query(PRODUCTS_QUERY, {variables});
+  const {products} = await context.storefront.query(PRODUCTS_QUERY, {
+    variables,
+  });
 
   return {
     handle: params.handle,
@@ -124,41 +234,130 @@ export async function loader({context, params, request}) {
 // -----------------------------------------------------------------------
 // SIDEBAR CONTENT
 // -----------------------------------------------------------------------
-function SidebarContent({filterConfig, activeFilters, openSections, setOpenSections, toggleFilter, clearAll, hasActiveFilters}) {
+function SidebarContent({
+  filterConfig,
+  activeFilters,
+  openSections,
+  setOpenSections,
+  toggleFilter,
+  clearAll,
+  hasActiveFilters,
+}) {
   const isActive = (sectionKey, optionKey) =>
     (activeFilters[sectionKey] ?? new Set()).has(optionKey);
 
   return (
-    <div style={{background: '#fff', border: '1px solid #e8e4dc', borderRadius: '0.75rem', overflow: 'hidden'}}>
+    <div
+      style={{
+        background: '#fff',
+        border: '1px solid #e8e4dc',
+        borderRadius: '0.75rem',
+        overflow: 'hidden',
+      }}
+    >
       {/* Header sidebar */}
-      <div style={{padding: '0.875rem 1rem', background: '#ffffff', borderBottom: '1px solid #e8e4dc', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+      <div
+        style={{
+          padding: '0.875rem 1rem',
+          background: '#ffffff',
+          borderBottom: '1px solid #e8e4dc',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2C1810" strokeWidth="2.5" aria-hidden="true">
-            <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#2C1810"
+            strokeWidth="2.5"
+            aria-hidden="true"
+          >
+            <line x1="4" y1="6" x2="20" y2="6" />
+            <line x1="8" y1="12" x2="16" y2="12" />
+            <line x1="11" y1="18" x2="13" y2="18" />
           </svg>
-          <span style={{fontSize: '0.875rem', fontWeight: 700, color: '#2C1810'}}>Filtros</span>
+          <span
+            style={{fontSize: '0.875rem', fontWeight: 700, color: '#2C1810'}}
+          >
+            Filtros
+          </span>
         </div>
         {hasActiveFilters && (
-          <button onClick={clearAll} style={{fontSize: '0.75rem', color: '#F5A623', fontWeight: 700, background: 'none', border: 'none', cursor: 'pointer', padding: 0}}>
+          <button
+            onClick={clearAll}
+            style={{
+              fontSize: '0.75rem',
+              color: '#F5A623',
+              fontWeight: 700,
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0,
+            }}
+          >
             Limpiar
           </button>
         )}
       </div>
 
       {filterConfig.sections.length === 0 ? (
-        <div style={{padding: '1rem', fontSize: '0.8125rem', color: '#7a6a62', textAlign: 'center'}}>Sin filtros disponibles</div>
+        <div
+          style={{
+            padding: '1rem',
+            fontSize: '0.8125rem',
+            color: '#7a6a62',
+            textAlign: 'center',
+          }}
+        >
+          Sin filtros disponibles
+        </div>
       ) : (
         filterConfig.sections.map((section, idx) => {
           const isOpen = openSections[section.key] ?? true;
           return (
-            <div key={section.key} style={{borderTop: idx > 0 ? '1px solid #e8e4dc' : 'none'}}>
+            <div
+              key={section.key}
+              style={{borderTop: idx > 0 ? '1px solid #e8e4dc' : 'none'}}
+            >
               <button
-                onClick={() => setOpenSections((p) => ({...p, [section.key]: !isOpen}))}
-                style={{width: '100%', padding: '0.75rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.875rem', fontWeight: 700, color: '#2C1810', fontFamily: 'inherit'}}
+                onClick={() =>
+                  setOpenSections((p) => ({...p, [section.key]: !isOpen}))
+                }
+                style={{
+                  width: '100%',
+                  padding: '0.75rem 1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#2C1810',
+                  fontFamily: 'inherit',
+                }}
               >
                 {section.title}
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', flexShrink: 0}} aria-hidden="true">
-                  <polyline points="18 15 12 9 6 15"/>
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  style={{
+                    transform: isOpen ? 'rotate(180deg)' : 'none',
+                    transition: 'transform 0.2s',
+                    flexShrink: 0,
+                  }}
+                  aria-hidden="true"
+                >
+                  <polyline points="18 15 12 9 6 15" />
                 </svg>
               </button>
               {isOpen && (
@@ -166,14 +365,34 @@ function SidebarContent({filterConfig, activeFilters, openSections, setOpenSecti
                   {section.options.map((opt) => {
                     const active = isActive(section.key, opt.key);
                     return (
-                      <label key={opt.key} style={{display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.3rem 0', cursor: 'pointer'}}>
+                      <label
+                        key={opt.key}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          padding: '0.3rem 0',
+                          cursor: 'pointer',
+                        }}
+                      >
                         <input
                           type="checkbox"
                           checked={active}
                           onChange={() => toggleFilter(section.key, opt.key)}
-                          style={{accentColor: '#F5A623', width: '14px', height: '14px', flexShrink: 0}}
+                          style={{
+                            accentColor: '#F5A623',
+                            width: '14px',
+                            height: '14px',
+                            flexShrink: 0,
+                          }}
                         />
-                        <span style={{fontSize: '0.8125rem', color: active ? '#2C1810' : '#7a6a62', fontWeight: active ? 600 : 400}}>
+                        <span
+                          style={{
+                            fontSize: '0.8125rem',
+                            color: active ? '#2C1810' : '#7a6a62',
+                            fontWeight: active ? 600 : 400,
+                          }}
+                        >
                           {opt.label}
                         </span>
                       </label>
@@ -193,19 +412,40 @@ function SidebarContent({filterConfig, activeFilters, openSections, setOpenSecti
 // DRAWER MOBILE
 // -----------------------------------------------------------------------
 function FilterDrawer({open, onClose, children}) {
+  const closeButtonRef = useRef(null);
+
   useEffect(() => {
-    if (open) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = '';
-    return () => { document.body.style.overflow = ''; };
-  }, [open]);
+    if (!open) {
+      document.body.style.overflow = '';
+      return undefined;
+    }
+
+    const previousFocus = document.activeElement;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') onClose();
+    };
+
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleKeyDown);
+    requestAnimationFrame(() => closeButtonRef.current?.focus());
+
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleKeyDown);
+      previousFocus?.focus?.();
+    };
+  }, [open, onClose]);
 
   return (
     <>
       {/* Overlay */}
       <div
+        className="rr-mobile-filter-overlay"
         onClick={onClose}
         style={{
-          position: 'fixed', inset: 0, zIndex: 100,
+          position: 'fixed',
+          inset: 0,
+          zIndex: 100,
           background: 'rgba(44,24,16,0.4)',
           opacity: open ? 1 : 0,
           pointerEvents: open ? 'auto' : 'none',
@@ -216,40 +456,111 @@ function FilterDrawer({open, onClose, children}) {
 
       {/* Panel */}
       <div
+        className={`rr-mobile-filter-sheet${open ? ' is-open' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Filtros de productos"
+        aria-hidden={!open}
         style={{
-          position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 101,
-          width: '85vw', maxWidth: '320px',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          zIndex: 101,
+          width: '85vw',
+          maxWidth: '320px',
           background: '#f5f7fa',
           transform: open ? 'translateX(0)' : 'translateX(-100%)',
           transition: 'transform 0.3s ease',
           overflowY: 'auto',
-          display: 'flex', flexDirection: 'column',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
         {/* Header del drawer */}
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', background: '#fff', borderBottom: '1px solid #e8e4dc', position: 'sticky', top: 0, zIndex: 1}}>
-          <span style={{fontSize: '1rem', fontWeight: 700, color: '#2C1810'}}>Filtros</span>
+        <div
+          className="rr-mobile-filter-sheet__header"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '1rem',
+            background: '#fff',
+            borderBottom: '1px solid #e8e4dc',
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
+          }}
+        >
+          <span style={{fontSize: '1rem', fontWeight: 700, color: '#2C1810'}}>
+            Filtros
+          </span>
           <button
+            ref={closeButtonRef}
             onClick={onClose}
             aria-label="Cerrar filtros"
-            style={{background: 'rgba(44,24,16,0.07)', border: 'none', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#2C1810'}}
+            style={{
+              background: 'rgba(44,24,16,0.07)',
+              border: 'none',
+              borderRadius: '50%',
+              width: '36px',
+              height: '36px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              color: '#2C1810',
+            }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              aria-hidden="true"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
         </div>
 
         {/* Contenido */}
-        <div style={{padding: '1rem', flex: 1}}>
+        <div
+          className="rr-mobile-filter-sheet__body"
+          style={{padding: '1rem', flex: 1}}
+        >
           {children}
         </div>
 
         {/* Footer */}
-        <div style={{padding: '1rem', background: '#fff', borderTop: '1px solid #e8e4dc', position: 'sticky', bottom: 0}}>
+        <div
+          className="rr-mobile-filter-sheet__footer"
+          style={{
+            padding: '1rem',
+            background: '#fff',
+            borderTop: '1px solid #e8e4dc',
+            position: 'sticky',
+            bottom: 0,
+          }}
+        >
           <button
+            className="rr-button rr-button--dark rr-mobile-filter-sheet__apply"
             onClick={onClose}
-            style={{width: '100%', background: '#2C1810', color: '#F5A623', border: 'none', borderRadius: '0.625rem', padding: '0.875rem', fontSize: '0.9375rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit'}}
+            style={{
+              width: '100%',
+              background: '#2C1810',
+              color: '#F5A623',
+              border: 'none',
+              borderRadius: '0.625rem',
+              padding: '0.875rem',
+              fontSize: '0.9375rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+            }}
           >
             Ver resultados
           </button>
@@ -264,24 +575,21 @@ function FilterDrawer({open, onClose, children}) {
 // -----------------------------------------------------------------------
 export default function CollectionRoute() {
   const {handle, title, products, pageInfo} = useLoaderData();
-  const [viewMode, setViewMode]   = useState('grid');
-  const [sortKey, setSortKey]     = useState('default');
+  const [viewMode, setViewMode] = useState('grid');
+  const [sortKey, setSortKey] = useState('default');
   const [activeFilters, setActiveFilters] = useState({});
-  const [openSections, setOpenSections]   = useState(
-    () => Object.fromEntries((COLLECTION_FILTERS[handle]?.sections ?? []).map((s) => [s.key, true]))
+  const [openSections, setOpenSections] = useState(() =>
+    Object.fromEntries(
+      (COLLECTION_FILTERS[handle]?.sections ?? []).map((s) => [s.key, true]),
+    ),
   );
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [isMobile, setIsMobile]     = useState(false);
+  const isMobile = useMediaQuery('(max-width: 767px)');
 
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
-    setIsMobile(mq.matches);
-    const handler = (e) => setIsMobile(e.matches);
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
-
-  const filterConfig = COLLECTION_FILTERS[handle] ?? {sections: []};
+  const filterConfig = useMemo(
+    () => COLLECTION_FILTERS[handle] ?? {sections: []},
+    [handle],
+  );
 
   const toggleFilter = (sectionKey, optionKey) => {
     setActiveFilters((prev) => {
@@ -294,7 +602,10 @@ export default function CollectionRoute() {
 
   const clearAll = () => setActiveFilters({});
   const hasActiveFilters = Object.values(activeFilters).some((s) => s.size > 0);
-  const activeFilterCount = Object.values(activeFilters).reduce((acc, s) => acc + s.size, 0);
+  const activeFilterCount = Object.values(activeFilters).reduce(
+    (acc, s) => acc + s.size,
+    0,
+  );
 
   const filtered = useMemo(() => {
     let result = [...products];
@@ -303,8 +614,10 @@ export default function CollectionRoute() {
       if (!selected || selected.size === 0) return;
       result = result.filter((product) => {
         if (section.type === 'availability') {
-          if (selected.has('in_stock') && !selected.has('out_stock')) return product.availableForSale;
-          if (selected.has('out_stock') && !selected.has('in_stock')) return !product.availableForSale;
+          if (selected.has('in_stock') && !selected.has('out_stock'))
+            return product.availableForSale;
+          if (selected.has('out_stock') && !selected.has('in_stock'))
+            return !product.availableForSale;
           return true;
         }
         if (section.type === 'tag') {
@@ -315,45 +628,100 @@ export default function CollectionRoute() {
       });
     });
     return result.sort((a, b) => {
-      if (sortKey === 'price_asc')  return parseFloat(a.priceRange.minVariantPrice.amount) - parseFloat(b.priceRange.minVariantPrice.amount);
-      if (sortKey === 'price_desc') return parseFloat(b.priceRange.minVariantPrice.amount) - parseFloat(a.priceRange.minVariantPrice.amount);
-      if (sortKey === 'title_asc')  return a.title.localeCompare(b.title);
+      if (sortKey === 'price_asc')
+        return (
+          parseFloat(a.priceRange.minVariantPrice.amount) -
+          parseFloat(b.priceRange.minVariantPrice.amount)
+        );
+      if (sortKey === 'price_desc')
+        return (
+          parseFloat(b.priceRange.minVariantPrice.amount) -
+          parseFloat(a.priceRange.minVariantPrice.amount)
+        );
+      if (sortKey === 'title_asc') return a.title.localeCompare(b.title);
       return 0;
     });
   }, [products, activeFilters, sortKey, filterConfig]);
 
-  const sidebarProps = {filterConfig, activeFilters, openSections, setOpenSections, toggleFilter, clearAll, hasActiveFilters};
+  const sidebarProps = {
+    filterConfig,
+    activeFilters,
+    openSections,
+    setOpenSections,
+    toggleFilter,
+    clearAll,
+    hasActiveFilters,
+  };
 
   return (
-    <div style={{background: '#f5f7fa', minHeight: '100vh'}}>
-
+    <div
+      className="rr-collection-page"
+      style={{background: '#f5f7fa', minHeight: '100vh'}}
+    >
       {/* Breadcrumb */}
-      <div style={{background: '#fff', borderBottom: '1px solid #e8e4dc', padding: '0.625rem 1rem'}}>
-        <div style={{maxWidth: '1280px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem', color: '#7a6a62', flexWrap: 'wrap'}}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-            <polyline points="9 22 9 12 15 12 15 22"/>
+      <div
+        className="rr-breadcrumb-shell"
+        style={{
+          background: '#fff',
+          borderBottom: '1px solid #e8e4dc',
+          padding: '0.625rem 1rem',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '1280px',
+            margin: '0 auto',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            fontSize: '0.8125rem',
+            color: '#7a6a62',
+            flexWrap: 'wrap',
+          }}
+        >
+          <svg
+            width="13"
+            height="13"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            aria-hidden="true"
+          >
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
           </svg>
-          <Link to="/" style={{color: '#7a6a62', textDecoration: 'none'}}
+          <Link
+            to="/"
+            style={{color: '#7a6a62', textDecoration: 'none'}}
             onMouseEnter={(e) => (e.currentTarget.style.color = '#F5A623')}
             onMouseLeave={(e) => (e.currentTarget.style.color = '#7a6a62')}
-          >Inicio</Link>
+          >
+            Inicio
+          </Link>
           <span>/</span>
           {handle !== 'roof-roof' && (
             <>
-              <Link to="/collections/roof-roof" style={{color: '#7a6a62', textDecoration: 'none'}}
+              <Link
+                to="/collections/roof-roof"
+                style={{color: '#7a6a62', textDecoration: 'none'}}
                 onMouseEnter={(e) => (e.currentTarget.style.color = '#F5A623')}
                 onMouseLeave={(e) => (e.currentTarget.style.color = '#7a6a62')}
-              >Todos</Link>
+              >
+                Todos
+              </Link>
               <span>/</span>
             </>
           )}
-          <span style={{color: '#2C1810', fontWeight: 600}}>{title.toUpperCase()}</span>
+          <span style={{color: '#2C1810', fontWeight: 600}}>
+            {title.toUpperCase()}
+          </span>
         </div>
       </div>
 
       {/* Layout */}
       <div
+        className="rr-collection-layout"
         style={{
           maxWidth: '1280px',
           margin: '0 auto',
@@ -366,95 +734,248 @@ export default function CollectionRoute() {
       >
         {/* ── SIDEBAR DESKTOP ── */}
         {!isMobile && (
-          <aside style={{position: 'sticky', top: '1.5rem', alignSelf: 'start', width: '220px', minWidth: 0, overflow: 'hidden'}}>
+          <aside
+            className="rr-filter-sidebar"
+            style={{
+              position: 'sticky',
+              top: '1.5rem',
+              alignSelf: 'start',
+              width: '220px',
+              minWidth: 0,
+              overflow: 'hidden',
+            }}
+          >
             <SidebarContent {...sidebarProps} />
           </aside>
         )}
 
         {/* ── ÁREA PRINCIPAL ── */}
-        <main style={{minWidth: 0, overflow: 'hidden'}}>
-
+        <main
+          className="rr-collection-main"
+          style={{minWidth: 0, overflow: 'hidden'}}
+        >
           {/* Header */}
-          <div style={{marginBottom: '1rem'}}>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', flexWrap: 'wrap'}}>
-              <div>
-                <h1 style={{fontSize: isMobile ? '1.125rem' : '1.375rem', fontWeight: 700, color: '#2C1810', margin: '0 0 0.2rem', textTransform: 'uppercase', letterSpacing: '0.5px'}}>
+          <div className="rr-collection-toolbar" style={{marginBottom: '1rem'}}>
+            <div
+              className="rr-collection-toolbar__row"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '0.75rem',
+                flexWrap: 'wrap',
+              }}
+            >
+              <div className="rr-collection-toolbar__title">
+                <h1
+                  style={{
+                    fontSize: isMobile ? '1.125rem' : '1.375rem',
+                    fontWeight: 700,
+                    color: '#2C1810',
+                    margin: '0 0 0.2rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                  }}
+                >
                   {title}
                 </h1>
                 <p style={{fontSize: '0.8125rem', color: '#7a6a62', margin: 0}}>
                   {filtered.length} resultado{filtered.length !== 1 ? 's' : ''}
                   {hasActiveFilters && (
-                    <span style={{color: '#F5A623', marginLeft: '0.5rem', fontWeight: 600}}>• filtros activos</span>
+                    <span
+                      style={{
+                        color: '#F5A623',
+                        marginLeft: '0.5rem',
+                        fontWeight: 600,
+                      }}
+                    >
+                      • filtros activos
+                    </span>
                   )}
                 </p>
               </div>
 
-              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+              <div
+                className="rr-collection-toolbar__controls"
+                style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}
+              >
                 {/* Botón filtros mobile */}
-                {isMobile && (
-                  <button
-                    onClick={() => setDrawerOpen(true)}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: '0.375rem',
-                      background: hasActiveFilters ? '#2C1810' : '#fff',
-                      color: hasActiveFilters ? '#F5A623' : '#2C1810',
-                      border: '1.5px solid #e8e4dc',
-                      borderRadius: '0.5rem',
-                      padding: '0.5rem 0.875rem',
-                      fontSize: '0.8125rem', fontWeight: 700,
-                      cursor: 'pointer', fontFamily: 'inherit',
-                    }}
+                <button
+                  className="rr-mobile-filter-trigger"
+                  onClick={() => setDrawerOpen(true)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.375rem',
+                    background: hasActiveFilters ? '#2C1810' : '#fff',
+                    color: hasActiveFilters ? '#F5A623' : '#2C1810',
+                    border: '1.5px solid #e8e4dc',
+                    borderRadius: '0.5rem',
+                    padding: '0.5rem 0.875rem',
+                    fontSize: '0.8125rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    fontFamily: 'inherit',
+                  }}
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    aria-hidden="true"
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                      <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
-                    </svg>
-                    Filtros
-                    {activeFilterCount > 0 && (
-                      <span style={{background: '#F5A623', color: '#2C1810', borderRadius: '999px', fontSize: '10px', fontWeight: 800, padding: '1px 6px', lineHeight: 1.4}}>
-                        {activeFilterCount}
-                      </span>
-                    )}
-                  </button>
-                )}
+                    <line x1="4" y1="6" x2="20" y2="6" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                    <line x1="11" y1="18" x2="13" y2="18" />
+                  </svg>
+                  Filtros
+                  {activeFilterCount > 0 && (
+                    <span
+                      style={{
+                        background: '#F5A623',
+                        color: '#2C1810',
+                        borderRadius: '999px',
+                        fontSize: '10px',
+                        fontWeight: 800,
+                        padding: '1px 6px',
+                        lineHeight: 1.4,
+                      }}
+                    >
+                      {activeFilterCount}
+                    </span>
+                  )}
+                </button>
 
                 {/* Toggle grid/lista */}
-                <div style={{display: 'flex', border: '1.5px solid #e8e4dc', borderRadius: '0.5rem', overflow: 'hidden', background: '#fff'}}>
+                <div
+                  className="rr-view-toggle"
+                  style={{
+                    display: 'flex',
+                    border: '1.5px solid #e8e4dc',
+                    borderRadius: '0.5rem',
+                    overflow: 'hidden',
+                    background: '#fff',
+                  }}
+                >
                   <button
                     onClick={() => setViewMode('grid')}
                     aria-label="Vista cuadrícula"
-                    style={{width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: viewMode === 'grid' ? '#2C1810' : 'transparent', color: viewMode === 'grid' ? '#F5A623' : '#7a6a62', cursor: 'pointer'}}
+                    style={{
+                      width: '36px',
+                      height: '36px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: 'none',
+                      background:
+                        viewMode === 'grid' ? '#2C1810' : 'transparent',
+                      color: viewMode === 'grid' ? '#F5A623' : '#7a6a62',
+                      cursor: 'pointer',
+                    }}
                   >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-                      <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <rect x="3" y="3" width="7" height="7" rx="1" />
+                      <rect x="14" y="3" width="7" height="7" rx="1" />
+                      <rect x="3" y="14" width="7" height="7" rx="1" />
+                      <rect x="14" y="14" width="7" height="7" rx="1" />
                     </svg>
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
                     aria-label="Vista lista"
-                    style={{width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: viewMode === 'list' ? '#2C1810' : 'transparent', color: viewMode === 'list' ? '#F5A623' : '#7a6a62', cursor: 'pointer'}}
+                    style={{
+                      width: '36px',
+                      height: '36px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: 'none',
+                      background:
+                        viewMode === 'list' ? '#2C1810' : 'transparent',
+                      color: viewMode === 'list' ? '#F5A623' : '#7a6a62',
+                      cursor: 'pointer',
+                    }}
                   >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                      <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
-                      <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      aria-hidden="true"
+                    >
+                      <line x1="8" y1="6" x2="21" y2="6" />
+                      <line x1="8" y1="12" x2="21" y2="12" />
+                      <line x1="8" y1="18" x2="21" y2="18" />
+                      <line x1="3" y1="6" x2="3.01" y2="6" />
+                      <line x1="3" y1="12" x2="3.01" y2="12" />
+                      <line x1="3" y1="18" x2="3.01" y2="18" />
                     </svg>
                   </button>
                 </div>
 
                 {/* Ordenamiento */}
-                <div style={{position: 'relative'}}>
+                <div className="rr-sort-shell" style={{position: 'relative'}}>
                   <select
+                    className="rr-sort-control"
                     value={sortKey}
                     onChange={(e) => setSortKey(e.target.value)}
-                    style={{appearance: 'none', background: '#fff', border: '1.5px solid #e8e4dc', borderRadius: '0.5rem', padding: '0.5rem 2rem 0.5rem 0.625rem', fontSize: '0.8125rem', color: '#2C1810', fontWeight: 500, cursor: 'pointer', outline: 'none', minWidth: isMobile ? '120px' : '170px', maxWidth: isMobile ? '140px' : 'none', fontFamily: 'inherit'}}
+                    style={{
+                      appearance: 'none',
+                      background: '#fff',
+                      border: '1.5px solid #e8e4dc',
+                      borderRadius: '0.5rem',
+                      padding: '0.5rem 2rem 0.5rem 0.625rem',
+                      fontSize: '0.8125rem',
+                      color: '#2C1810',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      outline: 'none',
+                      minWidth: isMobile ? '120px' : '170px',
+                      maxWidth: isMobile ? '140px' : 'none',
+                      fontFamily: 'inherit',
+                    }}
                   >
-                    <option value="default">{isMobile ? 'Relevancia' : 'Lo Más Vendido'}</option>
-                    <option value="price_asc">{isMobile ? 'Precio ↑' : 'Precio: Menor a Mayor'}</option>
-                    <option value="price_desc">{isMobile ? 'Precio ↓' : 'Precio: Mayor a Menor'}</option>
-                    <option value="title_asc">{isMobile ? 'A–Z' : 'Nombre A–Z'}</option>
+                    <option value="default">
+                      {isMobile ? 'Relevancia' : 'Lo Más Vendido'}
+                    </option>
+                    <option value="price_asc">
+                      {isMobile ? 'Precio ↑' : 'Precio: Menor a Mayor'}
+                    </option>
+                    <option value="price_desc">
+                      {isMobile ? 'Precio ↓' : 'Precio: Mayor a Menor'}
+                    </option>
+                    <option value="title_asc">
+                      {isMobile ? 'A–Z' : 'Nombre A–Z'}
+                    </option>
                   </select>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2C1810" strokeWidth="2.5" style={{position: 'absolute', right: '0.4rem', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none'}} aria-hidden="true">
-                    <polyline points="6 9 12 15 18 9"/>
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#2C1810"
+                    strokeWidth="2.5"
+                    style={{
+                      position: 'absolute',
+                      right: '0.4rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      pointerEvents: 'none',
+                    }}
+                    aria-hidden="true"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
                   </svg>
                 </div>
               </div>
@@ -462,21 +983,63 @@ export default function CollectionRoute() {
 
             {/* Pills filtros activos */}
             {hasActiveFilters && (
-              <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.75rem'}}>
+              <div
+                className="rr-active-filter-list"
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '0.5rem',
+                  marginTop: '0.75rem',
+                }}
+              >
                 {filterConfig.sections.map((section) =>
                   [...(activeFilters[section.key] ?? [])].map((key) => {
                     const opt = section.options.find((o) => o.key === key);
                     return (
-                      <span key={`${section.key}-${key}`} style={{display: 'flex', alignItems: 'center', gap: '0.375rem', background: '#fff8ee', border: '1px solid #f0d490', borderRadius: '999px', padding: '0.25rem 0.75rem', fontSize: '0.75rem', color: '#2C1810', fontWeight: 600}}>
+                      <span
+                        key={`${section.key}-${key}`}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.375rem',
+                          background: '#fff8ee',
+                          border: '1px solid #f0d490',
+                          borderRadius: '999px',
+                          padding: '0.25rem 0.75rem',
+                          fontSize: '0.75rem',
+                          color: '#2C1810',
+                          fontWeight: 600,
+                        }}
+                      >
                         {opt?.label ?? key}
-                        <button onClick={() => toggleFilter(section.key, key)} style={{background: 'none', border: 'none', cursor: 'pointer', color: '#b0a49c', padding: 0, display: 'flex', alignItems: 'center'}}>
-                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                        <button
+                          onClick={() => toggleFilter(section.key, key)}
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            color: '#b0a49c',
+                            padding: 0,
+                            display: 'flex',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <svg
+                            width="11"
+                            height="11"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            aria-hidden="true"
+                          >
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
                           </svg>
                         </button>
                       </span>
                     );
-                  })
+                  }),
                 )}
               </div>
             )}
@@ -484,45 +1047,133 @@ export default function CollectionRoute() {
 
           {/* Grid / Lista */}
           {filtered.length === 0 ? (
-            <div style={{background: '#fff', borderRadius: '0.875rem', padding: '3rem 1.5rem', textAlign: 'center', border: '1.5px solid #e8e4dc'}}>
+            <div
+              className="rr-empty-state"
+              style={{
+                background: '#fff',
+                borderRadius: '0.875rem',
+                padding: '3rem 1.5rem',
+                textAlign: 'center',
+                border: '1.5px solid #e8e4dc',
+              }}
+            >
               <p style={{fontSize: '2.5rem', marginBottom: '1rem'}}>🔍</p>
-              <p style={{fontSize: '1.125rem', fontWeight: 700, color: '#2C1810', marginBottom: '0.5rem'}}>Sin resultados</p>
-              <p style={{fontSize: '0.875rem', color: '#7a6a62', marginBottom: '1.5rem'}}>Intenta quitar algunos filtros.</p>
+              <p
+                style={{
+                  fontSize: '1.125rem',
+                  fontWeight: 700,
+                  color: '#2C1810',
+                  marginBottom: '0.5rem',
+                }}
+              >
+                Sin resultados
+              </p>
+              <p
+                style={{
+                  fontSize: '0.875rem',
+                  color: '#7a6a62',
+                  marginBottom: '1.5rem',
+                }}
+              >
+                Intenta quitar algunos filtros.
+              </p>
               <button
                 onClick={clearAll}
-                style={{background: '#F5A623', color: '#2C1810', fontWeight: 700, fontSize: '0.875rem', padding: '0.75rem 1.5rem', borderRadius: '999px', border: 'none', cursor: 'pointer', fontFamily: 'inherit'}}
+                style={{
+                  background: '#F5A623',
+                  color: '#2C1810',
+                  fontWeight: 700,
+                  fontSize: '0.875rem',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '999px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                }}
               >
                 Limpiar filtros
               </button>
             </div>
           ) : viewMode === 'grid' ? (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fill, minmax(180px, 1fr))',
-              gap: isMobile ? '0.625rem' : '1rem',
-            }}>
-              {filtered.map((p) => <ProductCard key={p.id} product={p} isMobile={isMobile} />)}
+            <div
+              className="rr-products-grid"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile
+                  ? 'repeat(2, 1fr)'
+                  : 'repeat(auto-fill, minmax(180px, 1fr))',
+                gap: isMobile ? '0.625rem' : '1rem',
+              }}
+            >
+              {filtered.map((p) => (
+                <ProductCard key={p.id} product={p} isMobile={isMobile} />
+              ))}
             </div>
           ) : (
-            <div style={{display: 'flex', flexDirection: 'column', gap: '0.75rem'}}>
-              {filtered.map((p) => <ProductRow key={p.id} product={p} isMobile={isMobile} />)}
+            <div
+              className="rr-products-list"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.75rem',
+              }}
+            >
+              {filtered.map((p) => (
+                <ProductRow key={p.id} product={p} isMobile={isMobile} />
+              ))}
             </div>
           )}
 
           {/* ── Paginador ── */}
-          {!hasActiveFilters && (pageInfo?.hasPreviousPage || pageInfo?.hasNextPage) && (
-            <Paginator pageInfo={pageInfo} handle={handle} />
-          )}
+          {!hasActiveFilters &&
+            (pageInfo?.hasPreviousPage || pageInfo?.hasNextPage) && (
+              <Paginator pageInfo={pageInfo} handle={handle} />
+            )}
+
+          <CollectionGuidance handle={handle} />
         </main>
       </div>
 
       {/* Drawer filtros mobile */}
-      {isMobile && (
-        <FilterDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-          <SidebarContent {...sidebarProps} />
-        </FilterDrawer>
-      )}
+      <FilterDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <SidebarContent {...sidebarProps} />
+      </FilterDrawer>
     </div>
+  );
+}
+
+function CollectionGuidance({handle}) {
+  const guidance =
+    COLLECTION_GUIDANCE[handle] ?? COLLECTION_GUIDANCE['roof-roof'];
+
+  return (
+    <section
+      className="rr-collection-guidance"
+      aria-labelledby="rr-collection-guidance-title"
+    >
+      <span className="rr-collection-guidance__icon">
+        <ExperienceIcon name={guidance.icon} size={28} />
+      </span>
+      <div>
+        <span className="rr-kicker">Compra guiada</span>
+        <h2 id="rr-collection-guidance-title">{guidance.title}</h2>
+        <p>{guidance.copy}</p>
+        <div className="rr-collection-guidance__actions">
+          <Link
+            className="rr-button rr-button--dark"
+            to="/pages/selector-de-productos"
+          >
+            Usar selector
+          </Link>
+          <Link
+            className="rr-button rr-button--outline"
+            to="/pages/guia-de-tallas"
+          >
+            Ver guía de medidas
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -538,11 +1189,9 @@ function AddToCartButton({variantId, children, onFly}) {
       inputs={{lines: [{merchandiseId: variantId, quantity: 1}]}}
       onSubmit={() => open('cart')}
     >
-      {(fetcher) => (
-        typeof children === 'function'
-          ? children(fetcher, onFly)
-          : children
-      )}
+      {(fetcher) =>
+        typeof children === 'function' ? children(fetcher, onFly) : children
+      }
     </CartForm>
   );
 }
@@ -551,11 +1200,11 @@ function AddToCartButton({variantId, children, onFly}) {
 // QUICK VIEW MODAL
 // -----------------------------------------------------------------------
 function QuickViewModal({product, price, compare, discount, onClose}) {
-  const {open} = useAside();
-
   // Cerrar con Escape
   useEffect(() => {
-    const handler = (e) => { if (e.key === 'Escape') onClose(); };
+    const handler = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
     document.addEventListener('keydown', handler);
     document.body.style.overflow = 'hidden';
     return () => {
@@ -564,13 +1213,16 @@ function QuickViewModal({product, price, compare, discount, onClose}) {
     };
   }, [onClose]);
 
-  return (
+  return createPortal(
     <>
       {/* Overlay */}
       <div
+        className="rr-quick-view-overlay"
         onClick={onClose}
         style={{
-          position: 'fixed', inset: 0, zIndex: 200,
+          position: 'fixed',
+          inset: 0,
+          zIndex: 200,
           background: 'rgba(44,24,16,0.55)',
           backdropFilter: 'blur(2px)',
         }}
@@ -579,11 +1231,14 @@ function QuickViewModal({product, price, compare, discount, onClose}) {
 
       {/* Panel */}
       <div
+        className="rr-quick-view-modal rr-ui-card"
         role="dialog"
         aria-modal="true"
         aria-label={`Vista rápida: ${product.title}`}
         style={{
-          position: 'fixed', top: '50%', left: '50%',
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
           transform: 'translate(-50%, -50%)',
           zIndex: 201,
           background: '#fff',
@@ -598,25 +1253,68 @@ function QuickViewModal({product, price, compare, discount, onClose}) {
       >
         {/* Botón cerrar */}
         <button
+          className="rr-quick-view-modal__close rr-icon-button"
           onClick={onClose}
           aria-label="Cerrar"
           style={{
-            position: 'absolute', top: '0.875rem', right: '0.875rem', zIndex: 1,
-            background: '#f5f7fa', border: '1px solid #e8e4dc',
-            borderRadius: '50%', width: '32px', height: '32px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', color: '#2C1810',
+            position: 'absolute',
+            top: '0.875rem',
+            right: '0.875rem',
+            zIndex: 1,
+            background: '#f5f7fa',
+            border: '1px solid #e8e4dc',
+            borderRadius: '50%',
+            width: '32px',
+            height: '32px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            color: '#2C1810',
           }}
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            aria-hidden="true"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
 
         {/* Imagen */}
-        <div style={{background: '#f5f7fa', borderRadius: '1rem 0 0 1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', aspectRatio: '1', position: 'relative', overflow: 'hidden'}}>
+        <div
+          className="rr-quick-view-modal__media"
+          style={{
+            background: '#f5f7fa',
+            borderRadius: '1rem 0 0 1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            aspectRatio: '1',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
           {discount && (
-            <span style={{position: 'absolute', top: '0.875rem', left: '0.875rem', background: '#c0392b', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '3px 10px', borderRadius: '999px'}}>
+            <span
+              style={{
+                position: 'absolute',
+                top: '0.875rem',
+                left: '0.875rem',
+                background: '#c0392b',
+                color: '#fff',
+                fontSize: '11px',
+                fontWeight: 700,
+                padding: '3px 10px',
+                borderRadius: '999px',
+              }}
+            >
               {discount}% OFF
             </span>
           )}
@@ -624,7 +1322,12 @@ function QuickViewModal({product, price, compare, discount, onClose}) {
             <Image
               data={product.featuredImage}
               sizes="340px"
-              style={{width: '100%', height: '100%', objectFit: 'contain', padding: '1.5rem'}}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                padding: '1.5rem',
+              }}
             />
           ) : (
             <span style={{fontSize: '4rem'}}>🐾</span>
@@ -632,57 +1335,150 @@ function QuickViewModal({product, price, compare, discount, onClose}) {
         </div>
 
         {/* Info */}
-        <div style={{padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem'}}>
-          <p style={{fontSize: '0.6875rem', fontWeight: 700, color: '#F5A623', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px'}}>
+        <div
+          className="rr-quick-view-modal__content"
+          style={{
+            padding: '1.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.75rem',
+          }}
+        >
+          <p
+            style={{
+              fontSize: '0.6875rem',
+              fontWeight: 700,
+              color: '#F5A623',
+              margin: 0,
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px',
+            }}
+          >
             Roof Roof
           </p>
-          <h2 style={{fontSize: '1.0625rem', fontWeight: 700, color: '#2C1810', margin: 0, lineHeight: 1.3}}>
+          <h2
+            style={{
+              fontSize: '1.0625rem',
+              fontWeight: 700,
+              color: '#2C1810',
+              margin: 0,
+              lineHeight: 1.3,
+            }}
+          >
             {product.title}
           </h2>
 
           {/* Precio */}
-          <div style={{display: 'flex', alignItems: 'baseline', gap: '0.5rem', flexWrap: 'wrap'}}>
-            <Money data={price} style={{fontSize: '1.25rem', fontWeight: 800, color: '#2C1810'}}/>
-            {compare && parseFloat(compare.amount) > parseFloat(price.amount) && (
-              <Money data={compare} style={{fontSize: '0.875rem', color: '#b0a49c', textDecoration: 'line-through'}}/>
-            )}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'baseline',
+              gap: '0.5rem',
+              flexWrap: 'wrap',
+            }}
+          >
+            <Money
+              data={price}
+              style={{fontSize: '1.25rem', fontWeight: 800, color: '#2C1810'}}
+            />
+            {compare &&
+              parseFloat(compare.amount) > parseFloat(price.amount) && (
+                <Money
+                  data={compare}
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#b0a49c',
+                    textDecoration: 'line-through',
+                  }}
+                />
+              )}
           </div>
 
           {/* Disponibilidad */}
           <div style={{display: 'flex', alignItems: 'center', gap: '0.375rem'}}>
-            <span style={{width: '7px', height: '7px', borderRadius: '50%', background: product.availableForSale ? '#1aad6d' : '#c0392b', flexShrink: 0}}/>
-            <span style={{fontSize: '0.8125rem', color: '#7a6a62', fontWeight: 500}}>
-              {product.availableForSale ? 'En stock — listo para envío' : 'Agotado'}
+            <span
+              style={{
+                width: '7px',
+                height: '7px',
+                borderRadius: '50%',
+                background: product.availableForSale ? '#1aad6d' : '#c0392b',
+                flexShrink: 0,
+              }}
+            />
+            <span
+              style={{
+                fontSize: '0.8125rem',
+                color: '#7a6a62',
+                fontWeight: 500,
+              }}
+            >
+              {product.availableForSale
+                ? 'En stock — listo para envío'
+                : 'Agotado'}
             </span>
           </div>
 
           {/* Botones */}
           {product.availableForSale && product.variants?.nodes?.[0]?.id && (
-            <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.25rem'}}>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.5rem',
+                marginTop: '0.25rem',
+              }}
+            >
               <AddToCartButton variantId={product.variants.nodes[0].id}>
                 {(fetcher) => (
                   <button
                     type="submit"
                     disabled={fetcher.state !== 'idle'}
                     style={{
-                      width: '100%', padding: '0.75rem',
-                      borderRadius: '0.625rem', border: '1.5px solid #2C1810',
-                      background: '#fff', color: '#2C1810',
-                      fontSize: '0.875rem', fontWeight: 700,
-                      cursor: fetcher.state !== 'idle' ? 'not-allowed' : 'pointer',
-                      fontFamily: 'inherit', transition: 'background 0.15s, color 0.15s',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
+                      width: '100%',
+                      padding: '0.75rem',
+                      borderRadius: '0.625rem',
+                      border: '1.5px solid #2C1810',
+                      background: '#fff',
+                      color: '#2C1810',
+                      fontSize: '0.875rem',
+                      fontWeight: 700,
+                      cursor:
+                        fetcher.state !== 'idle' ? 'not-allowed' : 'pointer',
+                      fontFamily: 'inherit',
+                      transition: 'background 0.15s, color 0.15s',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.4rem',
                       opacity: fetcher.state !== 'idle' ? 0.6 : 1,
                     }}
-                    onMouseEnter={(e) => { if (fetcher.state === 'idle') { e.currentTarget.style.background = '#2C1810'; e.currentTarget.style.color = '#F5A623'; }}}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#2C1810'; }}
+                    onMouseEnter={(e) => {
+                      if (fetcher.state === 'idle') {
+                        e.currentTarget.style.background = '#2C1810';
+                        e.currentTarget.style.color = '#F5A623';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = '#fff';
+                      e.currentTarget.style.color = '#2C1810';
+                    }}
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                      <line x1="3" y1="6" x2="21" y2="6"/>
-                      <path d="M16 10a4 4 0 01-8 0"/>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      aria-hidden="true"
+                    >
+                      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                      <line x1="3" y1="6" x2="21" y2="6" />
+                      <path d="M16 10a4 4 0 01-8 0" />
                     </svg>
-                    {fetcher.state !== 'idle' ? 'Agregando...' : 'Agregar al carrito'}
+                    {fetcher.state !== 'idle'
+                      ? 'Agregando...'
+                      : 'Agregar al carrito'}
                   </button>
                 )}
               </AddToCartButton>
@@ -691,18 +1487,38 @@ function QuickViewModal({product, price, compare, discount, onClose}) {
                 to={`/products/${product.handle}`}
                 onClick={onClose}
                 style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem',
-                  padding: '0.75rem', borderRadius: '0.625rem',
-                  background: '#F5A623', color: '#2C1810',
-                  fontSize: '0.875rem', fontWeight: 700,
-                  textDecoration: 'none', transition: 'background 0.15s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.375rem',
+                  padding: '0.75rem',
+                  borderRadius: '0.625rem',
+                  background: '#F5A623',
+                  color: '#2C1810',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                  transition: 'background 0.15s',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = '#d4891a')}
-                onMouseLeave={(e) => (e.currentTarget.style.background = '#F5A623')}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = '#d4891a')
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = '#F5A623')
+                }
               >
                 Ver producto completo
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                  <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M12 5l7 7-7 7" />
                 </svg>
               </Link>
             </div>
@@ -710,9 +1526,26 @@ function QuickViewModal({product, price, compare, discount, onClose}) {
 
           {/* Tags */}
           {product.tags?.length > 0 && (
-            <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.375rem', marginTop: '0.25rem'}}>
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '0.375rem',
+                marginTop: '0.25rem',
+              }}
+            >
               {product.tags.slice(0, 4).map((tag) => (
-                <span key={tag} style={{fontSize: '0.6875rem', color: '#7a6a62', background: '#f5f7fa', border: '1px solid #e8e4dc', borderRadius: '999px', padding: '2px 8px'}}>
+                <span
+                  key={tag}
+                  style={{
+                    fontSize: '0.6875rem',
+                    color: '#7a6a62',
+                    background: '#f5f7fa',
+                    border: '1px solid #e8e4dc',
+                    borderRadius: '999px',
+                    padding: '2px 8px',
+                  }}
+                >
                   {tag}
                 </span>
               ))}
@@ -720,25 +1553,41 @@ function QuickViewModal({product, price, compare, discount, onClose}) {
           )}
         </div>
       </div>
-    </>
+    </>,
+    document.body,
   );
 }
-
 // -----------------------------------------------------------------------
 // BOTONES DE CARD — componente separado para evitar problemas de cierre
 // -----------------------------------------------------------------------
 function ProductCardButtons({variantId, triggerFly, openCart}) {
   return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: '0.375rem', marginTop: '0.5rem'}}>
-
+    <div
+      className="rr-collection-card__actions"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.375rem',
+        marginTop: '0.5rem',
+      }}
+    >
       {/* Agregar al carrito */}
       <CartForm
         route="/cart"
         action={CartForm.ACTIONS.LinesAdd}
-        inputs={{lines: [{merchandiseId: variantId, quantity: 1, selectedVariantId: variantId}]}}
+        inputs={{
+          lines: [
+            {
+              merchandiseId: variantId,
+              quantity: 1,
+              selectedVariantId: variantId,
+            },
+          ],
+        }}
       >
         {(fetcher) => (
           <button
+            className="rr-collection-card__add"
             type="submit"
             onClick={(e) => {
               e.stopPropagation();
@@ -747,26 +1596,57 @@ function ProductCardButtons({variantId, triggerFly, openCart}) {
             }}
             disabled={fetcher.state !== 'idle'}
             style={{
-              width: '100%', padding: '0.5rem',
-              borderRadius: '0.5rem', border: '1.5px solid #2C1810',
-              background: '#fff', color: '#2C1810',
-              fontSize: '0.6875rem', fontWeight: 700,
+              width: '100%',
+              padding: '0.5rem',
+              borderRadius: '0.5rem',
+              border: '1.5px solid #2C1810',
+              background: '#fff',
+              color: '#2C1810',
+              fontSize: '0.6875rem',
+              fontWeight: 700,
               cursor: fetcher.state !== 'idle' ? 'not-allowed' : 'pointer',
-              fontFamily: 'inherit', transition: 'background 0.15s, color 0.15s',
+              fontFamily: 'inherit',
+              transition: 'background 0.15s, color 0.15s',
               opacity: fetcher.state !== 'idle' ? 0.6 : 1,
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.3rem',
             }}
-            onMouseEnter={(e) => { if (fetcher.state === 'idle') { e.currentTarget.style.background = '#2C1810'; e.currentTarget.style.color = '#F5A623'; }}}
-            onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#2C1810'; }}
+            onMouseEnter={(e) => {
+              if (fetcher.state === 'idle') {
+                e.currentTarget.style.background = '#2C1810';
+                e.currentTarget.style.color = '#F5A623';
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = '#fff';
+              e.currentTarget.style.color = '#2C1810';
+            }}
           >
-            {fetcher.state !== 'idle' ? '...' : (
+            {fetcher.state !== 'idle' ? (
+              '...'
+            ) : (
               <>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                  <line x1="3" y1="6" x2="21" y2="6"/>
-                  <path d="M16 10a4 4 0 01-8 0"/>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  aria-hidden="true"
+                >
+                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <path d="M16 10a4 4 0 01-8 0" />
                 </svg>
-                Agregar al carrito
+                <span className="rr-quick-add-label rr-quick-add-label--full">
+                  Agregar al carrito
+                </span>
+                <span className="rr-quick-add-label rr-quick-add-label--compact">
+                  Agregar
+                </span>
               </>
             )}
           </button>
@@ -777,26 +1657,59 @@ function ProductCardButtons({variantId, triggerFly, openCart}) {
       <CartForm
         route="/cart"
         action={CartForm.ACTIONS.LinesAdd}
-        inputs={{lines: [{merchandiseId: variantId, quantity: 1, selectedVariantId: variantId}], redirectTo: '/checkout'}}
+        inputs={{
+          lines: [
+            {
+              merchandiseId: variantId,
+              quantity: 1,
+              selectedVariantId: variantId,
+            },
+          ],
+          redirectTo: '/checkout',
+        }}
       >
         {(fetcher) => (
           <button
+            className="rr-collection-card__buy"
             type="submit"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
             disabled={fetcher.state !== 'idle'}
             style={{
-              width: '100%', padding: '0.5rem',
-              borderRadius: '0.5rem', border: '1.5px solid #F5A623',
-              background: '#F5A623', color: '#2C1810',
-              fontSize: '0.6875rem', fontWeight: 700,
+              width: '100%',
+              padding: '0.5rem',
+              borderRadius: '0.5rem',
+              border: '1.5px solid #F5A623',
+              background: '#F5A623',
+              color: '#2C1810',
+              fontSize: '0.6875rem',
+              fontWeight: 700,
               cursor: fetcher.state !== 'idle' ? 'not-allowed' : 'pointer',
-              fontFamily: 'inherit', transition: 'background 0.15s',
+              fontFamily: 'inherit',
+              transition: 'background 0.15s',
               opacity: fetcher.state !== 'idle' ? 0.6 : 1,
             }}
-            onMouseEnter={(e) => { if (fetcher.state === 'idle') e.currentTarget.style.background = '#d4891a'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = '#F5A623'; }}
+            onMouseEnter={(e) => {
+              if (fetcher.state === 'idle')
+                e.currentTarget.style.background = '#d4891a';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = '#F5A623';
+            }}
           >
-            {fetcher.state !== 'idle' ? '...' : 'Comprar ahora'}
+            {fetcher.state !== 'idle' ? (
+              '...'
+            ) : (
+              <>
+                <span className="rr-quick-add-label rr-quick-add-label--full">
+                  Comprar ahora
+                </span>
+                <span className="rr-quick-add-label rr-quick-add-label--compact">
+                  Comprar
+                </span>
+              </>
+            )}
           </button>
         )}
       </CartForm>
@@ -808,16 +1721,22 @@ function ProductCardButtons({variantId, triggerFly, openCart}) {
 // TARJETA GRID
 // -----------------------------------------------------------------------
 function ProductCard({product, isMobile}) {
+  const navigate = useNavigate();
   const [quickViewOpen, setQuickViewOpen] = useState(false);
-  const [imgHovered, setImgHovered]       = useState(false);
+  const [imgHovered, setImgHovered] = useState(false);
   const {triggerFly} = useCartAnimation();
   const {open} = useAside();
 
-  const price   = product.priceRange.minVariantPrice;
+  const price = product.priceRange.minVariantPrice;
   const compare = product.compareAtPriceRange?.minVariantPrice;
-  const discount = compare && parseFloat(compare.amount) > parseFloat(price.amount)
-    ? Math.round(((parseFloat(compare.amount) - parseFloat(price.amount)) / parseFloat(compare.amount)) * 100)
-    : null;
+  const discount =
+    compare && parseFloat(compare.amount) > parseFloat(price.amount)
+      ? Math.round(
+          ((parseFloat(compare.amount) - parseFloat(price.amount)) /
+            parseFloat(compare.amount)) *
+            100,
+        )
+      : null;
 
   return (
     <>
@@ -832,11 +1751,29 @@ function ProductCard({product, isMobile}) {
         />
       )}
 
-      <Link
-        to={`/products/${product.handle}`}
-        style={{display: 'flex', flexDirection: 'column', background: '#fff', border: '1.5px solid #e8e4dc', borderRadius: '0.875rem', overflow: 'hidden', textDecoration: 'none', position: 'relative', transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s'}}
-        onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 6px 20px rgba(44,24,16,0.10)'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.borderColor = '#F5A623'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = '#e8e4dc'; }}
+      <article
+        className="rr-collection-card"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          background: '#fff',
+          border: '1.5px solid #e8e4dc',
+          borderRadius: '0.875rem',
+          overflow: 'hidden',
+          textDecoration: 'none',
+          position: 'relative',
+          transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.boxShadow = '0 6px 20px rgba(44,24,16,0.10)';
+          e.currentTarget.style.transform = 'translateY(-2px)';
+          e.currentTarget.style.borderColor = '#F5A623';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.boxShadow = 'none';
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.borderColor = '#e8e4dc';
+        }}
       >
         {/* Favorito */}
         {/* <button
@@ -851,7 +1788,23 @@ function ProductCard({product, isMobile}) {
 
         {/* Imagen */}
         <div
-          style={{aspectRatio: '1',  overflow: 'hidden', position: 'relative', flexShrink: 0}}
+          className="rr-collection-card__media"
+          role="link"
+          tabIndex={0}
+          aria-label={`Ver ${product.title}`}
+          onClick={() => navigate(`/products/${product.handle}`)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              navigate(`/products/${product.handle}`);
+            }
+          }}
+          style={{
+            aspectRatio: '1',
+            overflow: 'hidden',
+            position: 'relative',
+            flexShrink: 0,
+          }}
           onMouseEnter={() => setImgHovered(true)}
           onMouseLeave={() => setImgHovered(false)}
         >
@@ -861,23 +1814,64 @@ function ProductCard({product, isMobile}) {
               data={product.featuredImage}
               sizes="(min-width: 45em) 20vw, 50vw"
               style={{
-                width: '100%', height: '100%', objectFit: 'contain', padding: '0.5rem',
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                padding: '0.5rem',
                 transition: 'transform 0.35s ease',
                 transform: imgHovered ? 'scale(1.07)' : 'scale(1)',
               }}
             />
           ) : (
-            <div style={{width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', color: '#c8b8b0'}}>🐾</div>
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '2rem',
+                color: '#c8b8b0',
+              }}
+            >
+              🐾
+            </div>
           )}
 
           {/* Badge — top-left */}
           {discount && product.availableForSale && (
-            <span style={{position: 'absolute', top: '0.5rem', left: '0.5rem', zIndex: 2, background: '#c0392b', color: '#fff', fontSize: '10px', fontWeight: 800, padding: '2px 8px', borderRadius: '999px'}}>
+            <span
+              style={{
+                position: 'absolute',
+                top: '0.5rem',
+                left: '0.5rem',
+                zIndex: 2,
+                background: '#c0392b',
+                color: '#fff',
+                fontSize: '10px',
+                fontWeight: 800,
+                padding: '2px 8px',
+                borderRadius: '999px',
+              }}
+            >
               {discount}% OFF
             </span>
           )}
           {!product.availableForSale && (
-            <span style={{position: 'absolute', top: '0.5rem', left: '0.5rem', zIndex: 2, background: '#b0a49c', color: '#fff', fontSize: '10px', fontWeight: 800, padding: '2px 8px', borderRadius: '999px'}}>
+            <span
+              style={{
+                position: 'absolute',
+                top: '0.5rem',
+                left: '0.5rem',
+                zIndex: 2,
+                background: '#b0a49c',
+                color: '#fff',
+                fontSize: '10px',
+                fontWeight: 800,
+                padding: '2px 8px',
+                borderRadius: '999px',
+              }}
+            >
               Agotado
             </span>
           )}
@@ -885,29 +1879,55 @@ function ProductCard({product, isMobile}) {
           {/* Overlay Vista rápida — cubre toda la imagen, solo desktop */}
           {!isMobile && (
             <button
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setQuickViewOpen(true); }}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setQuickViewOpen(true);
+              }}
               aria-label="Vista rápida"
               style={{
-                position: 'absolute', inset: 0, zIndex: 1,
-                background: imgHovered ? 'rgba(44,24,16,0.48)' : 'rgba(44,24,16,0)',
-                border: 'none', cursor: 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                position: 'absolute',
+                inset: 0,
+                zIndex: 1,
+                background: imgHovered
+                  ? 'rgba(44,24,16,0.48)'
+                  : 'rgba(44,24,16,0)',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 opacity: imgHovered ? 1 : 0,
                 transition: 'opacity 0.22s ease, background 0.22s ease',
               }}
             >
-              <span style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.375rem',
-                background: 'rgba(44,24,16,0.9)',
-                color: '#fff', fontSize: '0.75rem', fontWeight: 700,
-                padding: '0.4rem 0.875rem', borderRadius: '999px',
-                letterSpacing: '0.2px',
-                transform: imgHovered ? 'translateY(0)' : 'translateY(6px)',
-                transition: 'transform 0.22s ease',
-              }}>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <circle cx="12" cy="12" r="3"/>
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.375rem',
+                  background: 'rgba(44,24,16,0.9)',
+                  color: '#fff',
+                  fontSize: '0.75rem',
+                  fontWeight: 700,
+                  padding: '0.4rem 0.875rem',
+                  borderRadius: '999px',
+                  letterSpacing: '0.2px',
+                  transform: imgHovered ? 'translateY(0)' : 'translateY(6px)',
+                  transition: 'transform 0.22s ease',
+                }}
+              >
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  aria-hidden="true"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
                 </svg>
                 Vista rápida
               </span>
@@ -916,32 +1936,101 @@ function ProductCard({product, isMobile}) {
         </div>
 
         {/* Info */}
-        <div style={{padding: isMobile ? '0.625rem' : '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.2rem', flex: 1}}>
-          <p style={{fontSize: '0.6875rem', fontWeight: 700, color: '#F5A623', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px'}}>Roof Roof</p>
+        <div
+          className="rr-collection-card__body"
+          style={{
+            padding: isMobile ? '0.625rem' : '0.75rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.2rem',
+            flex: 1,
+          }}
+        >
+          <p
+            style={{
+              fontSize: '0.6875rem',
+              fontWeight: 700,
+              color: '#F5A623',
+              margin: 0,
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px',
+            }}
+          >
+            Roof Roof
+          </p>
 
-          <p style={{fontSize: isMobile ? '0.75rem' : '0.8125rem', color: '#2C1810', lineHeight: 1.4, margin: 0, flex: 1,
-            overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}
+          <p
+            style={{
+              fontSize: isMobile ? '0.75rem' : '0.8125rem',
+              color: '#2C1810',
+              lineHeight: 1.4,
+              margin: 0,
+              flex: 1,
+              overflow: 'hidden',
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+            }}
           >
             {product.title}
           </p>
 
           {/* Rating */}
           {product.rating && (
-            <div style={{display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.125rem'}}>
-              <span style={{color: '#F5A623', fontSize: '0.6875rem', letterSpacing: '-0.5px'}}>
-                {'★'.repeat(Math.round(product.rating))}{'☆'.repeat(5 - Math.round(product.rating))}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+                marginTop: '0.125rem',
+              }}
+            >
+              <span
+                style={{
+                  color: '#F5A623',
+                  fontSize: '0.6875rem',
+                  letterSpacing: '-0.5px',
+                }}
+              >
+                {'★'.repeat(Math.round(product.rating))}
+                {'☆'.repeat(5 - Math.round(product.rating))}
               </span>
               {product.reviewCount > 0 && (
-                <span style={{fontSize: '0.6875rem', color: '#b0a49c'}}>({product.reviewCount})</span>
+                <span style={{fontSize: '0.6875rem', color: '#b0a49c'}}>
+                  ({product.reviewCount})
+                </span>
               )}
             </div>
           )}
 
-          <div style={{display: 'flex', alignItems: 'baseline', gap: '0.3rem', marginTop: '0.3rem', flexWrap: 'wrap'}}>
-            <Money data={price} style={{fontSize: isMobile ? '0.9rem' : '1rem', fontWeight: 800, color: '#2C1810'}}/>
-            {compare && parseFloat(compare.amount) > parseFloat(price.amount) && (
-              <Money data={compare} style={{fontSize: '0.6875rem', color: '#b0a49c', textDecoration: 'line-through'}}/>
-            )}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'baseline',
+              gap: '0.3rem',
+              marginTop: '0.3rem',
+              flexWrap: 'wrap',
+            }}
+          >
+            <Money
+              data={price}
+              style={{
+                fontSize: isMobile ? '0.9rem' : '1rem',
+                fontWeight: 800,
+                color: '#2C1810',
+              }}
+            />
+            {compare &&
+              parseFloat(compare.amount) > parseFloat(price.amount) && (
+                <Money
+                  data={compare}
+                  style={{
+                    fontSize: '0.6875rem',
+                    color: '#b0a49c',
+                    textDecoration: 'line-through',
+                  }}
+                />
+              )}
           </div>
 
           {product.availableForSale && product.variants?.nodes?.[0]?.id && (
@@ -952,7 +2041,7 @@ function ProductCard({product, isMobile}) {
             />
           )}
         </div>
-      </Link>
+      </article>
     </>
   );
 }
@@ -961,49 +2050,162 @@ function ProductCard({product, isMobile}) {
 // FILA LISTA
 // -----------------------------------------------------------------------
 function ProductRow({product, isMobile}) {
-  const price   = product.priceRange.minVariantPrice;
+  const price = product.priceRange.minVariantPrice;
   const compare = product.compareAtPriceRange?.minVariantPrice;
-  const discount = compare && parseFloat(compare.amount) > parseFloat(price.amount)
-    ? Math.round(((parseFloat(compare.amount) - parseFloat(price.amount)) / parseFloat(compare.amount)) * 100)
-    : null;
+  const discount =
+    compare && parseFloat(compare.amount) > parseFloat(price.amount)
+      ? Math.round(
+          ((parseFloat(compare.amount) - parseFloat(price.amount)) /
+            parseFloat(compare.amount)) *
+            100,
+        )
+      : null;
 
   return (
     <Link
       to={`/products/${product.handle}`}
-      style={{display: 'flex', gap: isMobile ? '0.75rem' : '1rem', background: '#fff', border: '1.5px solid #e8e4dc', borderRadius: '0.875rem', textDecoration: 'none', alignItems: 'center', padding: isMobile ? '0.625rem' : '0.875rem', transition: 'box-shadow 0.2s, border-color 0.2s'}}
-      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 4px 16px rgba(44,24,16,0.08)'; e.currentTarget.style.borderColor = '#F5A623'; }}
-      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e8e4dc'; }}
+      style={{
+        display: 'flex',
+        gap: isMobile ? '0.75rem' : '1rem',
+        background: '#fff',
+        border: '1.5px solid #e8e4dc',
+        borderRadius: '0.875rem',
+        textDecoration: 'none',
+        alignItems: 'center',
+        padding: isMobile ? '0.625rem' : '0.875rem',
+        transition: 'box-shadow 0.2s, border-color 0.2s',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = '0 4px 16px rgba(44,24,16,0.08)';
+        e.currentTarget.style.borderColor = '#F5A623';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = 'none';
+        e.currentTarget.style.borderColor = '#e8e4dc';
+      }}
     >
-      <div style={{width: isMobile ? '70px' : '90px', height: isMobile ? '70px' : '90px', background: '#f5f7fa', borderRadius: '0.625rem', overflow: 'hidden', flexShrink: 0, border: '1px solid #e8e4dc'}}>
+      <div
+        style={{
+          width: isMobile ? '70px' : '90px',
+          height: isMobile ? '70px' : '90px',
+          background: '#f5f7fa',
+          borderRadius: '0.625rem',
+          overflow: 'hidden',
+          flexShrink: 0,
+          border: '1px solid #e8e4dc',
+        }}
+      >
         {product.featuredImage && (
-          <Image data={product.featuredImage} sizes="90px" style={{width: '100%', height: '100%', objectFit: 'contain', padding: '0.25rem'}}/>
+          <Image
+            data={product.featuredImage}
+            sizes="90px"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              padding: '0.25rem',
+            }}
+          />
         )}
       </div>
 
       <div style={{flex: 1, minWidth: 0}}>
-        <p style={{fontSize: '0.6875rem', fontWeight: 700, color: '#F5A623', margin: '0 0 0.2rem', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Roof Roof</p>
-        <p style={{fontSize: isMobile ? '0.8125rem' : '0.9375rem', color: '#2C1810', fontWeight: 600, margin: '0 0 0.375rem', lineHeight: 1.4,
-          overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}
+        <p
+          style={{
+            fontSize: '0.6875rem',
+            fontWeight: 700,
+            color: '#F5A623',
+            margin: '0 0 0.2rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+          }}
+        >
+          Roof Roof
+        </p>
+        <p
+          style={{
+            fontSize: isMobile ? '0.8125rem' : '0.9375rem',
+            color: '#2C1810',
+            fontWeight: 600,
+            margin: '0 0 0.375rem',
+            lineHeight: 1.4,
+            overflow: 'hidden',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+          }}
         >
           {product.title}
         </p>
-        <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap'}}>
-          <Money data={price} style={{fontSize: isMobile ? '0.9rem' : '1rem', fontWeight: 800, color: '#2C1810'}}/>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            flexWrap: 'wrap',
+          }}
+        >
+          <Money
+            data={price}
+            style={{
+              fontSize: isMobile ? '0.9rem' : '1rem',
+              fontWeight: 800,
+              color: '#2C1810',
+            }}
+          />
           {compare && parseFloat(compare.amount) > parseFloat(price.amount) && (
-            <Money data={compare} style={{fontSize: '0.75rem', color: '#b0a49c', textDecoration: 'line-through'}}/>
+            <Money
+              data={compare}
+              style={{
+                fontSize: '0.75rem',
+                color: '#b0a49c',
+                textDecoration: 'line-through',
+              }}
+            />
           )}
           {discount && (
-            <span style={{background: '#c0392b', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '2px 6px', borderRadius: '999px'}}>
+            <span
+              style={{
+                background: '#c0392b',
+                color: '#fff',
+                fontSize: '10px',
+                fontWeight: 700,
+                padding: '2px 6px',
+                borderRadius: '999px',
+              }}
+            >
               {discount}% OFF
             </span>
           )}
         </div>
       </div>
 
-      <span style={{display: 'inline-flex', alignItems: 'center', gap: '0.25rem', background: '#F5A623', color: '#2C1810', fontWeight: 700, fontSize: isMobile ? '0.75rem' : '0.8125rem', padding: isMobile ? '0.4rem 0.75rem' : '0.5rem 1rem', borderRadius: '999px', flexShrink: 0}}>
+      <span
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '0.25rem',
+          background: '#F5A623',
+          color: '#2C1810',
+          fontWeight: 700,
+          fontSize: isMobile ? '0.75rem' : '0.8125rem',
+          padding: isMobile ? '0.4rem 0.75rem' : '0.5rem 1rem',
+          borderRadius: '999px',
+          flexShrink: 0,
+        }}
+      >
         Ver
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-          <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14" />
+          <path d="M12 5l7 7-7 7" />
         </svg>
       </span>
     </Link>
@@ -1025,31 +2227,55 @@ function Paginator({pageInfo, handle}) {
   };
 
   return (
-    <div style={{
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      gap: '0.75rem', marginTop: '2rem', paddingTop: '1.5rem',
-      borderTop: '1px solid #e8e4dc',
-    }}>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '0.75rem',
+        marginTop: '2rem',
+        paddingTop: '1.5rem',
+        borderTop: '1px solid #e8e4dc',
+      }}
+    >
       {/* Anterior */}
       <button
         onClick={() => goTo(pageInfo.startCursor, 'prev')}
         disabled={!pageInfo.hasPreviousPage}
         style={{
-          display: 'flex', alignItems: 'center', gap: '0.5rem',
-          padding: '0.625rem 1.25rem', borderRadius: '999px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          padding: '0.625rem 1.25rem',
+          borderRadius: '999px',
           border: `1.5px solid ${hovPrev && pageInfo.hasPreviousPage ? '#2C1810' : '#e8e4dc'}`,
           background: hovPrev && pageInfo.hasPreviousPage ? '#2C1810' : '#fff',
-          color: !pageInfo.hasPreviousPage ? '#c8b8b0' : hovPrev ? '#F5A623' : '#2C1810',
-          fontSize: '0.875rem', fontWeight: 700,
+          color: !pageInfo.hasPreviousPage
+            ? '#c8b8b0'
+            : hovPrev
+              ? '#F5A623'
+              : '#2C1810',
+          fontSize: '0.875rem',
+          fontWeight: 700,
           cursor: pageInfo.hasPreviousPage ? 'pointer' : 'not-allowed',
-          fontFamily: 'inherit', transition: 'all 0.15s',
+          fontFamily: 'inherit',
+          transition: 'all 0.15s',
           opacity: pageInfo.hasPreviousPage ? 1 : 0.4,
         }}
         onMouseEnter={() => setHovPrev(true)}
         onMouseLeave={() => setHovPrev(false)}
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-          <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          aria-hidden="true"
+        >
+          <path d="M19 12H5" />
+          <path d="M12 19l-7-7 7-7" />
         </svg>
         Anterior
       </button>
@@ -1059,22 +2285,40 @@ function Paginator({pageInfo, handle}) {
         onClick={() => goTo(pageInfo.endCursor, 'next')}
         disabled={!pageInfo.hasNextPage}
         style={{
-          display: 'flex', alignItems: 'center', gap: '0.5rem',
-          padding: '0.625rem 1.25rem', borderRadius: '999px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          padding: '0.625rem 1.25rem',
+          borderRadius: '999px',
           border: `1.5px solid ${hovNext && pageInfo.hasNextPage ? '#F5A623' : '#e8e4dc'}`,
           background: hovNext && pageInfo.hasNextPage ? '#F5A623' : '#fff',
-          color: !pageInfo.hasNextPage ? '#c8b8b0' : hovNext ? '#2C1810' : '#2C1810',
-          fontSize: '0.875rem', fontWeight: 700,
+          color: !pageInfo.hasNextPage
+            ? '#c8b8b0'
+            : hovNext
+              ? '#2C1810'
+              : '#2C1810',
+          fontSize: '0.875rem',
+          fontWeight: 700,
           cursor: pageInfo.hasNextPage ? 'pointer' : 'not-allowed',
-          fontFamily: 'inherit', transition: 'all 0.15s',
+          fontFamily: 'inherit',
+          transition: 'all 0.15s',
           opacity: pageInfo.hasNextPage ? 1 : 0.4,
         }}
         onMouseEnter={() => setHovNext(true)}
         onMouseLeave={() => setHovNext(false)}
       >
         Siguiente
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-          <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14" />
+          <path d="M12 5l7 7-7 7" />
         </svg>
       </button>
     </div>

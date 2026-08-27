@@ -4,7 +4,9 @@ import {
   useActionData,
   useNavigation,
   useOutletContext,
+  redirect,
 } from 'react-router';
+import {isAccountEnabled} from '~/lib/featureAvailability';
 import {
   UPDATE_ADDRESS_MUTATION,
   DELETE_ADDRESS_MUTATION,
@@ -22,6 +24,8 @@ export const meta = () => {
  * @param {Route.LoaderArgs}
  */
 export async function loader({context}) {
+  if (!isAccountEnabled()) return redirect('/account');
+
   await context.customerAccount.handleAuthStatus();
 
   return {};
@@ -31,6 +35,8 @@ export async function loader({context}) {
  * @param {Route.ActionArgs}
  */
 export async function action({request, context}) {
+  if (!isAccountEnabled()) return redirect('/account');
+
   const {customerAccount} = context;
 
   try {

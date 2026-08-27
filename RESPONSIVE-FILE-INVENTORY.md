@@ -1,0 +1,178 @@
+# Inventario de archivos revisados
+
+Total: **178 archivos**.
+
+- `.cursor/rules/hydrogen-react-router.mdc` — Archivo revisado dentro del inventario general.
+- `.env.example` — Archivo revisado dentro del inventario general.
+- `.github/workflows/oxygen-deployment-1000147404.yml` — Configuración revisada para compatibilidad del proyecto.
+- `.gitignore` — Archivo revisado dentro del inventario general.
+- `.graphqlrc.js` — Configuración revisada para compatibilidad del proyecto.
+- `.shopify/project.json` — Configuración revisada para compatibilidad del proyecto.
+- `app/assets/1x/favicon.png` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `app/assets/1x/LogoRoofRoof.png` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `app/assets/download.jpg` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `app/assets/favicon.png` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `app/assets/favicon.svg` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `app/assets/logo.png` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `app/assets/LogoRoofRoof.png` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `app/assets/mercadopago.BK20nVmQ.svg` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `app/assets/pngtree-four-adorable-pets-including-two-cats-and-dogs-peeking-over-a-png-image_16815574.webp` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `app/components/AboutSection.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/AddToCartButton.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/Aside.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/BottomNav.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/CartAnimation.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/CartLineItem.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/CartMain.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/CartSummary.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/CategoryTabs.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/design-system/Badge.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/design-system/Button.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/design-system/FormControls.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/design-system/IconButton.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/design-system/index.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/design-system/ProductCard.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/design-system/Rating.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/design-system/Tabs.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/design-system/WeeklyDeals.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/DiscoverSection.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/ExperienceIcon.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/Footer.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/Header.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/HeroBanner.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/IconButton.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/InterestLinks.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/LifeStagesSection.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/MockShopNotice.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/PageLayout.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/PaginatedResourceSection.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/PolicyOverviewPage.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/ProductComparison.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/ProductForm.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/ProductImage.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/ProductItem.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/ProductPrice.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/ProductRecommendations.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/ProductTrustBar.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/PromoBanners.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/RetailExperience.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/SearchForm.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/SearchFormPredictive.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/SearchResults.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/SearchResultsPredictive.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/TrustBar.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/components/UnavailablePage.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/dog.png` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `app/entry.client.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/entry.server.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/graphql/customer-account/CustomerAddressMutations.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/graphql/customer-account/CustomerDetailsQuery.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/graphql/customer-account/CustomerOrderQuery.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/graphql/customer-account/CustomerOrdersQuery.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/graphql/customer-account/CustomerUpdateMutation.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/hooks/useMediaQuery.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/lib/context.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/lib/featureAvailability.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/lib/fragments.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/lib/orderFilters.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/lib/redirect.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/lib/search.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/lib/session.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/lib/variants.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/localhost_3000_(Nest Hub Max).png` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `app/root.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes.js` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/$.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/[robots.txt].jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/[sitemap.xml].jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/_index.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/_indexback.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/account.$.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/account._index.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/account.addresses.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/account.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/account.orders.$id.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/account.orders._index.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/account.profile.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/account_.authorize.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/account_.login.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/account_.logout.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/blogs.$blogHandle.$articleHandle.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/blogs.$blogHandle._index.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/blogs._index.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/cart.$lines.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/cart.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/collections.$handle.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/collections._index.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/collections.all.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/discount.$code.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/pages.$handle.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/pages.ayuda.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/pages.beneficios-roof.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/pages.centro-de-cuidado.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/pages.contacto.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/pages.guia-de-tallas.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/pages.nueva-mascota.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/pages.selector-de-productos.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/policies.$handle.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/policies._index.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/products.$handle.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/search.jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/routes/sitemap.$type.$page[.xml].jsx` — Código revisado: estructura, clases, estados y adaptación responsive.
+- `app/styles/AboutSection.module.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/app.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/cartoon-premium.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/experience.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/FaqPage.module.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/icon-title-system.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/mobile-alignment-fixes.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/mobile-app-shell.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/mobile-experience.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/reset.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/responsive-coverage.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/responsive-system.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/roof-roof-tokens.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/SearchPage.module.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/selector-system.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/storefront.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/tailwind.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `app/styles/UnavailablePage.module.css` — Estilos revisados: breakpoints, grids, overflow, tamaños y cascada.
+- `BENEFICIOS-ROOF-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `BLACK-TITLES-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `CARTOON-40S-PREMIUM-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `CARTOON-PREMIUM-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `CARTOON-PREMIUM-PULIDO-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `COMPETITIVE-UX-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `customer-accountapi.generated.d.ts` — Configuración revisada para compatibilidad del proyecto.
+- `env.d.ts` — Configuración revisada para compatibilidad del proyecto.
+- `eslint.config.js` — Configuración revisada para compatibilidad del proyecto.
+- `FAQ-BLOCKED-SECTIONS-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `GLOBAL-SELECTOR-DESIGN-SYSTEM-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `guides/predictiveSearch/predictiveSearch.jpg` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `guides/predictiveSearch/predictiveSearch.md` — Archivo revisado dentro del inventario general.
+- `guides/search/search.jpg` — Asset revisado: uso, escalado y comportamiento dentro de contenedores fluidos.
+- `guides/search/search.md` — Archivo revisado dentro del inventario general.
+- `ICON-TITLE-UNIFICATION-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `jsconfig.json` — Configuración revisada para compatibilidad del proyecto.
+- `MOBILE-APP-EXPERIENCE-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `MOBILE-CARDS-QUICKVIEW-FIX-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `MOBILE-MENU-CART-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `MOBILE-UX-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `NEEDS-CARDS-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `package-lock.json` — Configuración revisada para compatibilidad del proyecto.
+- `package.json` — Configuración revisada para compatibilidad del proyecto.
+- `PHILOSOPHY-PRO-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `public/.gitkeep` — Archivo revisado dentro del inventario general.
+- `react-router.config.js` — Configuración revisada para compatibilidad del proyecto.
+- `README.md` — Archivo revisado dentro del inventario general.
+- `REFERENCE-IMAGE-REMOVAL.md` — Archivo revisado dentro del inventario general.
+- `RESPONSIVE-SYSTEM-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `SEARCH-EXPERIENCE-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `SEARCH-HERO-WHITE-FIX.md` — Archivo revisado dentro del inventario general.
+- `SEARCH-WHITE-TITLES-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `SELECTOR-DESIGN-SYSTEM-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `server.js` — Configuración revisada para compatibilidad del proyecto.
+- `storefrontapi.generated.d.ts` — Configuración revisada para compatibilidad del proyecto.
+- `UX-UI-CHANGELOG.md` — Archivo revisado dentro del inventario general.
+- `vite.config.js` — Configuración revisada para compatibilidad del proyecto.

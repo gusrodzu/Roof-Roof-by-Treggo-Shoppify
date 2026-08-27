@@ -1,5 +1,5 @@
 import {useFetcher, useNavigate} from 'react-router';
-import React, {useRef, useEffect} from 'react';
+import {useRef, useEffect} from 'react';
 import {useAside} from './Aside';
 
 export const SEARCH_ENDPOINT = '/search';
@@ -9,10 +9,10 @@ export const SEARCH_ENDPOINT = '/search';
  * @param {SearchFormPredictiveProps}
  */
 export function SearchFormPredictive({children, ...props}) {
-  const fetcher  = useFetcher({key: 'search'});
+  const fetcher = useFetcher({key: 'search'});
   const inputRef = useRef(null);
   const navigate = useNavigate();
-  const aside    = useAside();
+  const aside = useAside();
 
   function resetInput(event) {
     event.preventDefault();
@@ -22,7 +22,9 @@ export function SearchFormPredictive({children, ...props}) {
 
   function goToSearch() {
     const term = inputRef?.current?.value;
-    void navigate(SEARCH_ENDPOINT + (term ? `?q=${encodeURIComponent(term)}` : ''));
+    void navigate(
+      SEARCH_ENDPOINT + (term ? `?q=${encodeURIComponent(term)}` : ''),
+    );
     aside.close();
   }
 

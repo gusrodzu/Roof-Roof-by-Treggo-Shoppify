@@ -1,0 +1,378 @@
+/* ============================================================
+   Roof Roof — targeted visual corrections
+   Fixes reported through storefront screenshots.
+   Loaded last so legacy responsive layers cannot override them.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Quick view: true viewport centering on every breakpoint
+   ------------------------------------------------------------ */
+.rr-quick-view-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1200 !important;
+  display: block !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+}
+
+.rr-quick-view-modal {
+  position: fixed !important;
+  inset: 50% auto auto 50% !important;
+  top: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: 50% !important;
+  z-index: 1201 !important;
+  width: min(820px, calc(100vw - 2rem)) !important;
+  max-width: calc(100vw - 2rem) !important;
+  max-height: min(86dvh, 760px) !important;
+  margin: 0 !important;
+  transform: translate(-50%, -50%) !important;
+  transform-origin: center !important;
+  overflow: hidden !important;
+}
+
+.rr-quick-view-modal__content {
+  min-width: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.rr-quick-view-modal :where(h1, h2, h3, p, span, a, button) {
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+/* ------------------------------------------------------------
+   Cart aside: stable item layout and readable amounts
+   ------------------------------------------------------------ */
+.rr-aside--cart {
+  width: min(500px, 100vw) !important;
+  max-width: 100vw !important;
+}
+
+.rr-aside--cart .rr-aside__content {
+  min-width: 0 !important;
+}
+
+.rr-drawer-cart--aside .rr-cart-line-item,
+.rr-cart-line-item {
+  display: flex !important;
+  grid-template-columns: none !important;
+  min-width: 0 !important;
+  flex-direction: column !important;
+}
+
+.rr-cart-line-item__main {
+  display: grid !important;
+  grid-template-columns: 82px minmax(0, 1fr) !important;
+  align-items: start !important;
+  gap: 0.9rem !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.rr-cart-line-item__info {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.rr-cart-line-item__media {
+  width: 82px !important;
+  height: 82px !important;
+  min-width: 82px !important;
+}
+
+.rr-cart-line-item__title {
+  display: -webkit-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  color: #17120f !important;
+  font-size: 0.88rem !important;
+  line-height: 1.35 !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+}
+
+.rr-cart-line-item__brand,
+.rr-cart-line-item__price,
+.rr-cart-line-item__price :where(span, div),
+.rr-cart-summary-panel :where([data-currency-code], .money, strong) {
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+}
+
+.rr-cart-line-item__price {
+  display: block !important;
+  min-width: 0 !important;
+  color: #17120f !important;
+  white-space: nowrap !important;
+}
+
+.rr-cart-line-item__actions {
+  display: flex !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.rr-cart-line-item__actions form {
+  flex: 0 0 auto;
+}
+
+.rr-drawer-cart--aside .rr-drawer-cart__items > div:first-child {
+  min-width: 0 !important;
+  padding-inline: 0.65rem !important;
+}
+
+.rr-drawer-cart--aside .rr-cart-summary-panel {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.rr-cart-summary-panel :where(span, p, a, button) {
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+/* ------------------------------------------------------------
+   Trust strip: static, clean and without distorted pagination dots
+   ------------------------------------------------------------ */
+.trust-bar {
+  width: min(1200px, calc(100% - 2rem));
+  margin: 1rem auto;
+  overflow: hidden;
+  border: 2px solid rgba(43, 23, 15, 0.84);
+  border-radius: 1.25rem;
+  background: #15110f;
+  box-shadow: 4px 5px 0 rgba(43, 23, 15, 0.12);
+}
+
+.trust-bar-inner {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 0;
+  min-height: 76px;
+  padding: 0.65rem;
+}
+
+.trust-item {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.75rem;
+  color: #fffdf8;
+  text-align: center;
+}
+
+.trust-item + .trust-item {
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.trust-icon {
+  display: grid !important;
+  width: 22px !important;
+  height: 22px !important;
+  flex: 0 0 22px !important;
+  place-items: center !important;
+  color: #ffd84d !important;
+}
+
+.trust-icon svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.trust-label {
+  min-width: 0;
+  color: #fffdf8 !important;
+  font-size: 0.84rem;
+  font-weight: 750;
+  line-height: 1.3;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+/* ------------------------------------------------------------
+   Account future block: correct contrast and responsive tracks
+   ------------------------------------------------------------ */
+.rr-account-banner {
+  width: min(calc(100% - 2rem), 1240px) !important;
+  max-width: 1240px !important;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr) !important;
+  margin-inline: auto !important;
+  overflow: hidden !important;
+}
+
+.rr-account-banner__content,
+.rr-account-banner__features,
+.rr-account-banner__features > div {
+  min-width: 0 !important;
+}
+
+body.rr-site .rr-account-banner :where(h1, h2, h3, h4, strong) {
+  background: none !important;
+  background-image: none !important;
+  color: #fffdf8 !important;
+  -webkit-text-fill-color: #fffdf8 !important;
+  text-shadow: none !important;
+}
+
+body.rr-site .rr-account-banner p,
+body.rr-site .rr-account-banner__features span {
+  color: rgba(255, 253, 248, 0.78) !important;
+  -webkit-text-fill-color: rgba(255, 253, 248, 0.78) !important;
+}
+
+.rr-account-banner__content h2 {
+  max-width: 720px !important;
+  font-size: clamp(2rem, 4vw, 3.65rem) !important;
+  line-height: 1.02 !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.rr-account-banner__features {
+  width: 100% !important;
+  border-left-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.rr-account-banner__features > div {
+  width: 100% !important;
+}
+
+/* ------------------------------------------------------------
+   Responsive refinements
+   ------------------------------------------------------------ */
+@media (max-width: 1100px) {
+  .rr-account-banner {
+    grid-template-columns: 1fr !important;
+  }
+
+  .rr-account-banner__features {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
+    border-left: 0 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .rr-quick-view-modal {
+    inset: 50% auto auto 50% !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: calc(100vw - 1rem) !important;
+    max-width: calc(100vw - 1rem) !important;
+    max-height: calc(
+      100dvh - 1rem - env(safe-area-inset-top, 0px) -
+        env(safe-area-inset-bottom, 0px)
+    ) !important;
+    grid-template-columns: 1fr !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .rr-quick-view-modal__media {
+    min-height: 180px !important;
+    height: clamp(180px, 30dvh, 245px) !important;
+  }
+
+  .rr-quick-view-modal__content {
+    max-height: 53dvh !important;
+  }
+
+  .rr-aside--cart {
+    width: 100vw !important;
+  }
+
+  .rr-cart-line-item__main {
+    grid-template-columns: 72px minmax(0, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .rr-cart-line-item__media {
+    width: 72px !important;
+    height: 72px !important;
+    min-width: 72px !important;
+  }
+
+  .trust-bar {
+    width: calc(100% - 1.25rem);
+    margin-block: 0.75rem;
+    border-radius: 1rem;
+  }
+
+  .trust-bar-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: 0;
+    padding: 0.35rem;
+  }
+
+  .trust-item {
+    min-height: 52px;
+    padding: 0.55rem 0.4rem;
+  }
+
+  .trust-item + .trust-item {
+    border-left: 0;
+  }
+
+  .trust-item:nth-child(even) {
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .trust-item:nth-child(n + 3) {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .trust-icon {
+    width: 18px !important;
+    height: 18px !important;
+    flex-basis: 18px !important;
+  }
+
+  .trust-label {
+    font-size: 0.72rem;
+  }
+
+  .rr-experience--account {
+    display: none !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .rr-cart-line-item__main {
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+  }
+
+  .rr-cart-line-item__media {
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+  }
+
+  .trust-label {
+    font-size: 0.67rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .rr-drawer-cart--page .rr-cart-line-item__main {
+    grid-template-columns: 112px minmax(0, 1fr) !important;
+  }
+
+  .rr-drawer-cart--page .rr-cart-line-item__media {
+    width: 112px !important;
+    height: 112px !important;
+    min-width: 112px !important;
+  }
+}

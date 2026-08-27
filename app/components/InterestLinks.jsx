@@ -1,5 +1,6 @@
 import {Link} from 'react-router';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
+import {useMediaQuery} from '~/hooks/useMediaQuery';
 
 /**
  * InterestLinks — "Enlaces de interés" al estilo Petco, adaptado a Roof Roof
@@ -11,37 +12,40 @@ import {useState, useEffect} from 'react';
 
 const DEFAULT_LINKS = [
   {
-    label:       'App exclusiva',
-    to:          '/collections/roof-roof',
-    headline:    '10% de descuento',
-    sub:         'en tu primera compra',
-    imgSrc:      'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/dog.png?v=1781818470',
-    imgAlt:      'Descuento primera compra',
+    label: 'App exclusiva',
+    to: '/collections/roof-roof',
+    headline: '10% de descuento',
+    sub: 'en tu primera compra',
+    imgSrc:
+      'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/dog.png?v=1781818470',
+    imgAlt: 'Descuento primera compra',
     accentColor: '#000000',
-    bg:          'linear-gradient(135deg, var(--surface-cream) 0%, #fdf0d5 100%)',
-    badge:       '🐾 Roof Roof',
+    bg: 'linear-gradient(135deg, var(--surface-cream) 0%, #fdf0d5 100%)',
+    badge: '🐾 Roof Roof',
   },
   {
-    label:       '¡Últimas piezas!',
-    to:          '/collections/roof-roof',
-    headline:    'Outlet',
-    sub:         'Todo para tu mascota a los mejores precios',
-    imgSrc:      'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/PORTADACOVAGRISCHICA.jpg?v=1752704348',
-    imgAlt:      'Outlet Roof Roof',
+    label: '¡Últimas piezas!',
+    to: '/collections/roof-roof',
+    headline: 'Outlet',
+    sub: 'Todo para tu mascota a los mejores precios',
+    imgSrc:
+      'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/PORTADACOVAGRISCHICA.jpg?v=1752704348',
+    imgAlt: 'Outlet Roof Roof',
     accentColor: '#000000',
-    bg:          'linear-gradient(135deg, #fdf0ee 0%, #fde8e8 100%)',
-    badge:       '🏷️ Outlet',
+    bg: 'linear-gradient(135deg, #fdf0ee 0%, #fde8e8 100%)',
+    badge: '🏷️ Outlet',
   },
   {
-    label:       'Guías y consejos',
-    to:          '/blogs/news',
-    headline:    'Aprende con\nRoof Roof',
-    sub:         'Consulta nuestros consejos para tu mascota',
-    imgSrc:      'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/ROOF_ROOF_CACHORRO_86f3acf4-4a12-4e1f-a29b-e62343924a4b.png?v=1781896842',
-    imgAlt:      'Blog Roof Roof',
+    label: 'Centro de cuidado',
+    to: '/pages/centro-de-cuidado',
+    headline: 'Aprende con\nRoof Roof',
+    sub: 'Consulta guías prácticas para tu mascota',
+    imgSrc:
+      'https://cdn.shopify.com/s/files/1/0761/8252/0128/files/ROOF_ROOF_CACHORRO_86f3acf4-4a12-4e1f-a29b-e62343924a4b.png?v=1781896842',
+    imgAlt: 'Centro de cuidado Roof Roof',
     accentColor: '#000000',
-    bg:          'linear-gradient(135deg, #f0f3fd 0%, #e4eafc 100%)',
-    badge:       '📚 Blog',
+    bg: 'linear-gradient(135deg, #f0f3fd 0%, #e4eafc 100%)',
+    badge: '📚 Guías',
   },
 ];
 
@@ -49,39 +53,45 @@ export function InterestLinks({
   title = 'Enlaces de interés',
   links = DEFAULT_LINKS,
 }) {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
-    setIsMobile(mq.matches);
-    const h = (e) => setIsMobile(e.matches);
-    mq.addEventListener('change', h);
-    return () => mq.removeEventListener('change', h);
-  }, []);
+  const isMobile = useMediaQuery('(max-width: 767px)');
 
   return (
-    <section style={{padding: isMobile ? '1.5rem 1rem' : '2rem 1.5rem', background: '#fff'}}>
-      <div style={{maxWidth: '1100px', margin: '0 auto'}}>
-
+    <section
+      className="rr-interest-section"
+      style={{
+        padding: isMobile ? '1.5rem 1rem' : '2rem 1.5rem',
+        background: '#fff',
+      }}
+    >
+      <div
+        className="rr-interest-section__inner"
+        style={{maxWidth: '1100px', margin: '0 auto'}}
+      >
         {/* Título */}
-        <h2 style={{
-          fontSize: '1rem',
-          fontWeight: 700,
-          color: '#000000',
-          margin: '0 0 1rem',
-          letterSpacing: '0.2px',
-        }}>
+        <h2
+          className="rr-interest-section__title"
+          style={{
+            fontSize: '1rem',
+            fontWeight: 700,
+            color: '#000000',
+            margin: '0 0 1rem',
+            letterSpacing: '0.2px',
+          }}
+        >
           {title}
         </h2>
 
         {/* Grid de cards */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: isMobile
-            ? 'repeat(2, 1fr)'
-            : `repeat(${links.length}, 1fr)`,
-          gap: isMobile ? '0.75rem' : '1rem',
-        }}>
+        <div
+          className="rr-interest-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile
+              ? 'repeat(2, 1fr)'
+              : `repeat(${links.length}, 1fr)`,
+            gap: isMobile ? '0.75rem' : '1rem',
+          }}
+        >
           {links.map((link) => (
             <InterestCard key={link.to + link.label} link={link} />
           ))}
@@ -93,10 +103,14 @@ export function InterestLinks({
 
 function InterestCard({link}) {
   const [hovered, setHovered] = useState(false);
-  const {label, to, headline, sub, imgSrc, imgAlt, accentColor, bg, badge} = link;
+  const {label, to, headline, sub, imgSrc, imgAlt, accentColor, bg, badge} =
+    link;
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+    <div
+      className="rr-interest-card-wrap"
+      style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}
+    >
       <Link
         to={to}
         style={{textDecoration: 'none', display: 'block'}}
@@ -104,89 +118,114 @@ function InterestCard({link}) {
         onMouseLeave={() => setHovered(false)}
       >
         {/* Card */}
-        <div style={{
-          background: bg,
-          borderRadius: '0.875rem',
-          overflow: 'hidden',
-          position: 'relative',
-          height: '180px',
-        
-          transition: 'border-color 0.2s, box-shadow 0.2s',
-          boxShadow: hovered ? `0 8px 24px ${accentColor}30` : '0 2px 8px rgba(44,24,16,0.06)',
-          display: 'flex',
-          alignItems: 'stretch',
-        }}>
+        <div
+          className="rr-interest-card rr-ui-card rr-ui-card--interactive"
+          style={{
+            background: bg,
+            borderRadius: '0.875rem',
+            overflow: 'hidden',
+            position: 'relative',
+            height: '180px',
 
+            transition: 'border-color 0.2s, box-shadow 0.2s',
+            boxShadow: hovered
+              ? `0 8px 24px ${accentColor}30`
+              : '0 2px 8px rgba(44,24,16,0.06)',
+            display: 'flex',
+            alignItems: 'stretch',
+          }}
+        >
           {/* Blob decorativo top-left */}
-          <div style={{
-            position: 'absolute', top: '-18px', left: '-18px',
-            width: '72px', height: '72px',
-            borderRadius: '50%',
-            background: `${accentColor}22`,
-            pointerEvents: 'none',
-          }}/>
+          <div
+            style={{
+              position: 'absolute',
+              top: '-18px',
+              left: '-18px',
+              width: '72px',
+              height: '72px',
+              borderRadius: '50%',
+              background: `${accentColor}22`,
+              pointerEvents: 'none',
+            }}
+          />
 
           {/* Blob decorativo bottom-right */}
-          <div style={{
-            position: 'absolute', bottom: '-20px', right: '-20px',
-            width: '90px', height: '90px',
-            borderRadius: '50%',
-            background: `${accentColor}14`,
-            pointerEvents: 'none',
-          }}/>
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '-20px',
+              right: '-20px',
+              width: '90px',
+              height: '90px',
+              borderRadius: '50%',
+              background: `${accentColor}14`,
+              pointerEvents: 'none',
+            }}
+          />
 
           {/* Contenido izquierdo */}
-          <div style={{
-            flex: 1,
-            padding: '1.125rem 0 1.125rem 1.125rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            gap: '0.25rem',
-            zIndex: 1,
-            minWidth: 0,
-          }}>
+          <div
+            style={{
+              flex: 1,
+              padding: '1.125rem 0 1.125rem 1.125rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              gap: '0.25rem',
+              zIndex: 1,
+              minWidth: 0,
+            }}
+          >
             {/* Badge */}
-            <span style={{
-              fontSize: '0.6875rem',
-              fontWeight: 800,
-              color: accentColor,
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-            }}>
+            <span
+              className="rr-badge rr-interest-card__badge"
+              style={{
+                fontSize: '0.6875rem',
+                fontWeight: 800,
+                color: accentColor,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+              }}
+            >
               {badge}
             </span>
 
             {/* Headline */}
-            <p style={{
-              fontSize: '1.0625rem',
-              fontWeight: 800,
-              color: 'var(--ink)',
-              margin: 0,
-              lineHeight: 1.25,
-              whiteSpace: 'pre-line',
-            }}>
+            <p
+              style={{
+                fontSize: '1.0625rem',
+                fontWeight: 800,
+                color: 'var(--ink)',
+                margin: 0,
+                lineHeight: 1.25,
+                whiteSpace: 'pre-line',
+              }}
+            >
               {headline}
             </p>
 
             {/* Sub */}
-            <p style={{
-              fontSize: '0.8125rem',
-              color: 'var(--ink-soft)',
-              margin: 0,
-              lineHeight: 1.45,
-            }}>
+            <p
+              style={{
+                fontSize: '0.8125rem',
+                color: 'var(--ink-soft)',
+                margin: 0,
+                lineHeight: 1.45,
+              }}
+            >
               {sub}
             </p>
           </div>
 
           {/* Imagen derecha */}
-          <div style={{
-            width: '44%',
-            flexShrink: 0,
-            position: 'relative',
-            overflow: 'hidden',
-          }}>
+          <div
+            style={{
+              width: '44%',
+              flexShrink: 0,
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
             <img
               src={imgSrc}
               alt={imgAlt}
@@ -207,6 +246,7 @@ function InterestCard({link}) {
 
       {/* Label debajo de la card — igual que Petco */}
       <Link
+        className="rr-text-link rr-interest-card__link"
         to={to}
         style={{
           fontSize: '0.8125rem',

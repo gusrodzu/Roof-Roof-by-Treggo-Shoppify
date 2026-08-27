@@ -3,7 +3,9 @@ import {
   useLoaderData,
   useNavigation,
   useSearchParams,
+  redirect,
 } from 'react-router';
+import {isAccountEnabled} from '~/lib/featureAvailability';
 import {useRef} from 'react';
 import {
   Money,
@@ -29,6 +31,8 @@ export const meta = () => {
  * @param {Route.LoaderArgs}
  */
 export async function loader({request, context}) {
+  if (!isAccountEnabled()) return redirect('/account');
+
   const {customerAccount} = context;
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 20,
@@ -121,7 +125,7 @@ function EmptyOrders({hasFilters = false}) {
  * }}
  */
 function OrderSearchForm({currentFilters}) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const navigation = useNavigation();
   const isSearching =
     navigation.state !== 'idle' &&

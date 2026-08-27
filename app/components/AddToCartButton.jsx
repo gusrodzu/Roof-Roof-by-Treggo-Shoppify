@@ -11,18 +11,28 @@ import {Button} from '~/components/design-system';
  *   onClick?: () => void;
  * }}
  */
-export function AddToCartButton({analytics, children, disabled, lines, onClick}) {
+export function AddToCartButton({
+  analytics,
+  children,
+  disabled,
+  lines,
+  onClick,
+}) {
   const {triggerFly} = useCartAnimation();
 
   return (
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
       {(fetcher) => {
-        const isLoading  = fetcher.state !== 'idle';
+        const isLoading = fetcher.state !== 'idle';
         const isDisabled = disabled ?? isLoading;
 
         return (
           <>
-            <input name="analytics" type="hidden" value={JSON.stringify(analytics)} />
+            <input
+              name="analytics"
+              type="hidden"
+              value={JSON.stringify(analytics)}
+            />
             <Button
               type="submit"
               variant="primary"
@@ -34,7 +44,7 @@ export function AddToCartButton({analytics, children, disabled, lines, onClick})
                 if (!isDisabled) triggerFly(e.currentTarget);
                 onClick?.();
               }}
-              style={{borderRadius: '0.75rem'}}
+              className="rr-product-add-button"
             >
               {isLoading ? 'Agregando...' : children}
             </Button>

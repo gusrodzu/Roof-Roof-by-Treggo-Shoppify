@@ -1,0 +1,854 @@
+/* ============================================================
+   Roof Roof — Cartoon Premium Brand Layer
+   Expresivo y amable, sin perder claridad de retail.
+   ============================================================ */
+
+:root {
+  --rr-display: "Concert One", "Baloo 2", "Inter", system-ui, sans-serif;
+  --rr-ink-outline: #2b170f;
+  --rr-cartoon-yellow: #ffd84d;
+  --rr-cartoon-orange: #ff8a34;
+  --rr-cartoon-coral: #ff626d;
+  --rr-cartoon-purple: #8c65e8;
+  --rr-cartoon-blue: #56a7e8;
+  --rr-cartoon-mint: #74d8b2;
+  --rr-cartoon-cream: #fff8e8;
+  --rr-cartoon-paper: #fffdf8;
+  --rr-cartoon-line: 2px solid rgba(43, 23, 15, 0.88);
+  --rr-cartoon-shadow: 5px 6px 0 rgba(43, 23, 15, 0.14);
+  --rr-cartoon-shadow-strong: 7px 8px 0 rgba(43, 23, 15, 0.18);
+}
+
+body.rr-site {
+  background-color: var(--rr-cartoon-cream);
+  background-image:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(255, 216, 77, 0.24),
+      transparent 20rem
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(116, 216, 178, 0.18),
+      transparent 24rem
+    ),
+    radial-gradient(
+      circle at 15% 75%,
+      rgba(140, 101, 232, 0.1),
+      transparent 22rem
+    );
+}
+
+body.rr-site h1,
+body.rr-site h2,
+body.rr-site h3,
+body.rr-site .rr-product-card__title,
+body.rr-site .rr-footer__title {
+  font-family: var(--rr-display);
+  letter-spacing: -0.025em;
+}
+
+/* Huellas discretas de marca en el fondo */
+.rr-page-main::before,
+.rr-page-main::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  width: 82px;
+  height: 82px;
+  opacity: 0.055;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 62%, var(--ink) 0 20%, transparent 21%),
+    radial-gradient(circle at 24% 28%, var(--ink) 0 10%, transparent 11%),
+    radial-gradient(circle at 44% 16%, var(--ink) 0 10%, transparent 11%),
+    radial-gradient(circle at 66% 22%, var(--ink) 0 10%, transparent 11%),
+    radial-gradient(circle at 78% 43%, var(--ink) 0 10%, transparent 11%);
+  transform: rotate(-16deg);
+}
+
+.rr-page-main::before {
+  left: 2vw;
+  top: 24vh;
+}
+.rr-page-main::after {
+  right: 2vw;
+  bottom: 15vh;
+  transform: rotate(18deg) scale(0.75);
+}
+
+/* Header: retail sólido + carácter de marca */
+.rr-site-header {
+  filter: drop-shadow(0 7px 0 rgba(43, 23, 15, 0.08));
+}
+
+.rr-header-main {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    #ffd944 0%,
+    #ffab2f 58%,
+    #ff8a34 100%
+  ) !important;
+  border-bottom: 2px solid rgba(43, 23, 15, 0.8) !important;
+}
+
+.rr-header-main::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -7px;
+  height: 8px;
+  opacity: 0.2;
+  background: radial-gradient(
+      circle at 8px -1px,
+      var(--rr-ink-outline) 7px,
+      transparent 8px
+    )
+    0 0 / 20px 10px repeat-x;
+  pointer-events: none;
+}
+
+.rr-header-search-form {
+  border: 2px solid var(--rr-ink-outline) !important;
+  border-radius: 999px !important;
+  box-shadow: 4px 5px 0 rgba(43, 23, 15, 0.14) !important;
+  background: var(--rr-cartoon-paper) !important;
+}
+
+.rr-header-search-form button {
+  border: 2px solid var(--rr-ink-outline) !important;
+  border-radius: 999px !important;
+  box-shadow: 2px 3px 0 rgba(43, 23, 15, 0.16);
+}
+
+.rr-commerce-nav {
+  background: #fffdf8 !important;
+  border-bottom: 2px solid rgba(43, 23, 15, 0.12) !important;
+}
+
+.rr-commerce-nav a {
+  border-radius: 999px;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.rr-commerce-nav a:hover {
+  background: var(--surface-yellow);
+  transform: translateY(-1px) rotate(-0.5deg);
+}
+
+/* Badges tipo sticker */
+.rr-coming-soon-badge,
+.rr-product-card__badge,
+.rr-kicker {
+  border: 1.5px solid var(--rr-ink-outline) !important;
+  box-shadow: 2px 3px 0 rgba(43, 23, 15, 0.14);
+  transform: rotate(-1.5deg);
+}
+
+.rr-coming-soon-badge {
+  background: #e92535 !important;
+  color: #fff !important;
+}
+
+/* Botones: volumen amable, interacción confiable */
+.rr-button,
+body.rr-site button:not(.close):not([class*="pagination"]) {
+  border-radius: 999px !important;
+}
+
+.rr-button:not(.rr-button--ghost-light),
+.rr-button--brand,
+.rr-button--dark,
+.rr-button--light,
+.rr-button--outline {
+  border-width: 2px !important;
+  border-color: var(--rr-ink-outline) !important;
+  box-shadow: 4px 5px 0 rgba(43, 23, 15, 0.16) !important;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease !important;
+}
+
+.rr-button:hover:not([aria-disabled="true"]),
+.rr-button:focus-visible:not([aria-disabled="true"]) {
+  transform: translate(-1px, -2px) rotate(-0.35deg) !important;
+  box-shadow: 6px 7px 0 rgba(43, 23, 15, 0.18) !important;
+  filter: saturate(1.05);
+}
+
+.rr-button:active:not([aria-disabled="true"]) {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0 rgba(43, 23, 15, 0.16) !important;
+}
+
+/* Hero y banners: siluetas orgánicas */
+.rr-brand-hero,
+.rr-account-banner,
+.discover-banner{
+  border: var(--rr-cartoon-line) !important;
+  border-radius: clamp(1.6rem, 4vw, 3rem) !important;
+  box-shadow: var(--rr-cartoon-shadow-strong) !important;
+  overflow: hidden;
+}
+
+.rr-brand-hero,
+.rr-account-banner{
+  position: relative;
+}
+
+.rr-brand-hero::before,
+.rr-account-banner::before{
+  content: "";
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  right: -26px;
+  top: -32px;
+  border: 2px solid rgba(255, 255, 255, 0.42);
+  border-radius: 42% 58% 61% 39% / 54% 42% 58% 46%;
+  transform: rotate(18deg);
+  pointer-events: none;
+}
+
+.rr-brand-hero h1,
+.discover-title,
+.rr-section-heading h2 {
+  text-wrap: balance;
+}
+
+/* Secciones y tarjetas */
+.rr-brand-card,
+.rr-experience-tool,
+.rr-need-card,
+.rr-selector-card,
+.rr-product-assurance-card,
+.rr-product-guidance,
+.rr-collection-guidance,
+.rr-account-dashboard__card,
+.rr-cart-lines-card,
+.rr-cart-summary-card,
+.rr-filter-sidebar {
+  border: 2px solid rgba(43, 23, 15, 0.82) !important;
+  border-radius: 1.5rem !important;
+  box-shadow: var(--rr-cartoon-shadow) !important;
+  background: var(--rr-cartoon-paper) !important;
+}
+
+.rr-brand-card,
+.rr-experience-tool,
+.rr-need-card,
+.rr-selector-card {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease !important;
+}
+
+.rr-brand-card:hover,
+.rr-experience-tool:hover,
+.rr-need-card:hover,
+.rr-selector-card:hover {
+  transform: translateY(-4px) rotate(-0.35deg);
+  box-shadow: 7px 9px 0 rgba(43, 23, 15, 0.16) !important;
+}
+
+.rr-brand-icon,
+.rr-experience-tool__icon,
+.rr-need-card__icon,
+.rr-collection-guidance__icon,
+.rr-product-guidance__icon{
+  border: 2px solid var(--rr-ink-outline) !important;
+  border-radius: 38% 62% 55% 45% / 46% 44% 56% 54% !important;
+  box-shadow: 3px 4px 0 rgba(43, 23, 15, 0.13);
+  transform: rotate(-3deg);
+}
+
+/* Producto: card tipo empaque/sticker */
+.rr-product-card {
+  border: 2px solid rgba(43, 23, 15, 0.78) !important;
+  border-radius: 1.65rem !important;
+  box-shadow: 4px 5px 0 rgba(43, 23, 15, 0.11) !important;
+  background: var(--rr-cartoon-paper) !important;
+}
+
+.rr-product-card-link:nth-child(3n + 2) .rr-product-card {
+  transform: rotate(0.35deg);
+}
+.rr-product-card-link:nth-child(3n + 3) .rr-product-card {
+  transform: rotate(-0.35deg);
+}
+
+.rr-product-card-link:hover .rr-product-card {
+  transform: translateY(-7px) rotate(-0.55deg) !important;
+  box-shadow: 8px 10px 0 rgba(43, 23, 15, 0.16) !important;
+}
+
+.rr-product-card__media {
+  background:
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(255, 216, 77, 0.36),
+      transparent 45%
+    ),
+    #fffaf0 !important;
+  border-bottom: 2px dashed rgba(43, 23, 15, 0.17);
+}
+
+.rr-product-card__media::after {
+  content: "♡";
+  position: absolute;
+  right: 0.85rem;
+  bottom: 0.65rem;
+  color: var(--accent-coral);
+  font-family: var(--rr-display);
+  font-size: 1.55rem;
+  font-weight: 800;
+  transform: rotate(10deg);
+  opacity: 0.72;
+}
+
+.rr-product-card__cta {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--rr-ink-outline) !important;
+  border-radius: 50%;
+  background: var(--rr-cartoon-yellow) !important;
+  box-shadow: 2px 3px 0 rgba(43, 23, 15, 0.15);
+}
+
+/* Grid de colecciones */
+.rr-collection-card {
+  border: 2px solid rgba(43, 23, 15, 0.8) !important;
+  border-radius: 1.75rem !important;
+  box-shadow: var(--rr-cartoon-shadow) !important;
+  overflow: hidden;
+}
+
+.rr-collection-card:nth-child(even) {
+  transform: rotate(0.35deg);
+}
+.rr-collection-card:nth-child(odd) {
+  transform: rotate(-0.25deg);
+}
+
+/* Campos: amigables pero serios */
+body.rr-site input,
+body.rr-site select,
+body.rr-site textarea {
+  border-radius: 1rem !important;
+}
+
+.rr-selector-option,
+.rr-product-thumbnail {
+  border-width: 2px !important;
+  border-radius: 1.1rem !important;
+}
+
+/* Paginación estilo fichas */
+.rr-pagination__link {
+  border: 2px solid var(--rr-ink-outline) !important;
+  border-radius: 999px !important;
+  box-shadow: 3px 4px 0 rgba(43, 23, 15, 0.12);
+  background: #fff !important;
+}
+
+.rr-pagination__link:hover {
+  transform: translateY(-2px);
+  background: var(--surface-yellow) !important;
+}
+
+/* Footer con borde ondulado */
+.rr-footer {
+  position: relative;
+  margin-top: 4rem;
+  border-top: 2px solid var(--rr-ink-outline) !important;
+}
+
+.rr-footer::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -17px;
+  height: 18px;
+  background: radial-gradient(
+      circle at 18px 18px,
+      transparent 17px,
+      var(--ink) 18px
+    )
+    0 0 / 36px 18px repeat-x;
+  opacity: 0.98;
+}
+
+.rr-footer__logo {
+  filter: drop-shadow(3px 4px 0 rgba(255, 255, 255, 0.12));
+}
+
+.rr-footer__social a {
+  border: 1.5px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow: 2px 3px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* FAQ */
+.faq-accordion,
+.faq-category,
+[class*="FaqPage_module__faqItem"] {
+  border-radius: 1.25rem !important;
+}
+
+/* Movimiento responsable */
+@media (prefers-reduced-motion: no-preference) {
+  .rr-product-card__badge,
+  .rr-coming-soon-badge {
+    animation: rr-sticker-float 4s ease-in-out infinite;
+  }
+
+  @keyframes rr-sticker-float {
+    0%,
+    100% {
+      transform: rotate(-1.5deg) translateY(0);
+    }
+    50% {
+      transform: rotate(1deg) translateY(-2px);
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --rr-cartoon-shadow: 3px 4px 0 rgba(43, 23, 15, 0.13);
+    --rr-cartoon-shadow-strong: 4px 5px 0 rgba(43, 23, 15, 0.16);
+  }
+
+  .rr-page-main::before,
+  .rr-page-main::after {
+    display: none;
+  }
+
+  .rr-product-card-link:nth-child(n) .rr-product-card,
+  .rr-collection-card:nth-child(n) {
+    transform: none;
+  }
+
+  .rr-brand-hero,
+.rr-account-banner,
+.discover-banner{
+    border-radius: 1.5rem !important;
+  }
+}
+
+/* ============================================================
+   Cartoon Premium — Refinamiento editorial
+   Más color en títulos y jerarquías con mejor balance premium.
+   ============================================================ */
+
+:root {
+  --rr-title-orange: #e56722;
+  --rr-title-coral: #d94f62;
+  --rr-title-purple: #6f4ddd;
+  --rr-title-blue: #357dd8;
+  --rr-title-green: #2f9b72;
+}
+
+/* Kicker stickers con mejor lectura y color contextual */
+.rr-kicker {
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: #fff2be !important;
+  color: var(--rr-ink-outline) !important;
+  line-height: 1;
+}
+
+.rr-section-heading,
+.rr-account-banner__content{
+  position: relative;
+}
+
+.rr-section-heading h2,
+.rr-account-banner__content h2,
+.rr-brand-hero h1,
+.discover-title{
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .rr-experience--tools .rr-section-heading h2 {
+    background: linear-gradient(
+      135deg,
+      var(--rr-title-orange) 0%,
+      #f49c25 55%,
+      var(--rr-title-coral) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .rr-experience--needs .rr-section-heading h2 {
+    background: linear-gradient(
+      135deg,
+      var(--rr-title-coral) 0%,
+      var(--rr-title-purple) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .rr-experience--account .rr-account-banner__content h2 {
+    background: linear-gradient(135deg, #ffffff 0%, #f5ecff 36%, #c7f7eb 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .rr-brand-hero h1,
+.discover-title{
+    background: linear-gradient(
+      135deg,
+      var(--rr-title-purple) 0%,
+      var(--rr-title-blue) 52%,
+      var(--rr-title-green) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.rr-experience--tools .rr-kicker {
+  background: #ffe5c3 !important;
+}
+.rr-experience--needs .rr-kicker {
+  background: #ffd7de !important;
+}
+.rr-experience--account .rr-kicker {
+  background: #dff4ff !important;
+}
+
+
+/* Subrayado tipo marcador para reforzar el concepto Cartoon Premium */
+.rr-section-heading h2::after,
+.rr-account-banner__content h2::after,
+.discover-title::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.2rem;
+  width: min(180px, 42%);
+  height: 0.58rem;
+  border-radius: 999px;
+  opacity: 0.18;
+  z-index: -1;
+}
+
+.rr-experience--tools .rr-section-heading h2::after {
+  background: linear-gradient(90deg, #ffca61, #ff8a34);
+}
+.rr-experience--needs .rr-section-heading h2::after {
+  background: linear-gradient(90deg, #ff8ca2, #9b78ff);
+}
+.discover-title::after{
+  background: linear-gradient(90deg, #7b68ee, #56a7e8);
+}
+
+/* Tarjetas con más intención visual y menos sensación genérica */
+.rr-experience-tool,
+.rr-need-card,
+.rr-selector-card,
+.rr-brand-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.rr-experience-tool::before,
+.rr-need-card::before,
+.rr-selector-card::before,
+.rr-brand-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.65),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.rr-experience-tool > *,
+.rr-need-card > *,
+.rr-selector-card > *,
+.rr-brand-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.rr-needs-grid .rr-need-card:nth-child(4n + 1) {
+  background: linear-gradient(180deg, #fff8ec 0%, #fffdf8 100%) !important;
+}
+.rr-needs-grid .rr-need-card:nth-child(4n + 2) {
+  background: linear-gradient(180deg, #fff1f4 0%, #fffdf8 100%) !important;
+}
+.rr-needs-grid .rr-need-card:nth-child(4n + 3) {
+  background: linear-gradient(180deg, #f5f0ff 0%, #fffdf8 100%) !important;
+}
+.rr-needs-grid .rr-need-card:nth-child(4n + 4) {
+  background: linear-gradient(180deg, #effaf6 0%, #fffdf8 100%) !important;
+}
+
+.rr-needs-grid .rr-need-card:nth-child(4n + 1) .rr-need-card__icon {
+  background: #ffe7b7 !important;
+}
+.rr-needs-grid .rr-need-card:nth-child(4n + 2) .rr-need-card__icon {
+  background: #ffd8df !important;
+}
+.rr-needs-grid .rr-need-card:nth-child(4n + 3) .rr-need-card__icon {
+  background: #e6dcff !important;
+}
+.rr-needs-grid .rr-need-card:nth-child(4n + 4) .rr-need-card__icon {
+  background: #d8f4e8 !important;
+}
+
+.rr-need-card strong,
+.rr-experience-tool strong,
+.rr-brand-card__title,
+.rr-selector-card h3 {
+  font-size: 1.08rem;
+}
+
+/* Header y navegación con acentos de marca más finos */
+.rr-commerce-nav a[aria-current="page"],
+.rr-commerce-nav a.active {
+  background: #fff0bc !important;
+  border: 2px solid rgba(43, 23, 15, 0.5);
+  box-shadow: 2px 3px 0 rgba(43, 23, 15, 0.12);
+}
+
+/* Producto y categorías: equilibrio entre juguetón y premium */
+.rr-product-card__title {
+  color: var(--rr-ink-outline);
+}
+
+.rr-product-card__badge {
+  background: #fff0bc !important;
+  color: var(--rr-ink-outline) !important;
+}
+
+.rr-collection-card__content h3,
+.rr-product-card__title,
+.rr-footer__title {
+  text-wrap: balance;
+}
+
+/* Reducimos un poco las rotaciones en desktop para que se vea más premium */
+.rr-product-card-link:nth-child(3n + 2) .rr-product-card {
+  transform: rotate(0.22deg);
+}
+.rr-product-card-link:nth-child(3n + 3) .rr-product-card {
+  transform: rotate(-0.22deg);
+}
+.rr-collection-card:nth-child(even) {
+  transform: rotate(0.22deg);
+}
+.rr-collection-card:nth-child(odd) {
+  transform: rotate(-0.16deg);
+}
+
+/* Secciones con separaciones de color más definidas */
+.rr-experience--needs {
+  background:
+    radial-gradient(
+      circle at 92% 18%,
+      rgba(255, 98, 109, 0.12),
+      transparent 18rem
+    ),
+    linear-gradient(180deg, #fffdf8 0%, #fff8fb 100%);
+}
+
+.rr-experience--tools {
+  background:
+    radial-gradient(
+      circle at 12% 10%,
+      rgba(255, 166, 0, 0.18),
+      transparent 18rem
+    ),
+    radial-gradient(
+      circle at 88% 18%,
+      rgba(140, 101, 232, 0.08),
+      transparent 16rem
+    ),
+    linear-gradient(180deg, #fffdf8 0%, #fff8ef 100%);
+}
+
+@media (max-width: 767px) {
+  .rr-kicker {
+    padding: 0.38rem 0.72rem;
+    transform: rotate(-0.75deg);
+  }
+
+  .rr-section-heading h2::after,
+.rr-account-banner__content h2::after,
+.discover-title::after{
+    width: 42%;
+    height: 0.45rem;
+  }
+}
+
+/* ============================================================
+   40s Cartoon refinement
+   Rubber-hose influence with cleaner retail restraint.
+   ============================================================ */
+
+body.rr-site h1,
+body.rr-site h2,
+body.rr-site h3,
+body.rr-site .rr-product-card__title,
+body.rr-site .rr-footer__title {
+  text-rendering: geometricPrecision;
+}
+
+.rr-section-heading h2,
+.rr-brand-hero h1,
+.discover-title {
+  letter-spacing: -0.03em;
+}
+
+@supports (-webkit-text-stroke: 1px black) {
+  .rr-section-heading h2,
+  .rr-brand-hero h1,
+  .discover-title,
+  .rr-product-card__title {
+    -webkit-text-stroke: 0.6px rgba(43, 23, 15, 0.16);
+  }
+}
+
+/* Más vibra clásica: crema, naranja, negro y acentos coral */
+.rr-brand-hero,
+.rr-account-banner{
+  box-shadow: 8px 10px 0 rgba(43, 23, 15, 0.18) !important;
+}
+
+.rr-experience-tool,
+.rr-need-card,
+.rr-brand-card,
+.rr-selector-card,
+.rr-product-card,
+.rr-collection-card,
+.rr-filter-sidebar,
+.rr-cart-lines-card,
+.rr-cart-summary-card {
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.78),
+    rgba(255, 255, 255, 0.96)
+  ) !important;
+}
+
+/* Títulos secundarios con personalidad más clara */
+.rr-need-card strong,
+.rr-experience-tool strong,
+.rr-brand-card h3,
+.rr-selector-card h2,
+.rr-product-assurance-card h3,
+.rr-product-guidance h3,
+.rr-collection-guidance h3 {
+  color: var(--rr-ink-outline);
+}
+
+.rr-needs-grid .rr-need-card:nth-child(4n + 1) strong {
+  color: #cf6219;
+}
+.rr-needs-grid .rr-need-card:nth-child(4n + 2) strong {
+  color: #cf4c63;
+}
+.rr-needs-grid .rr-need-card:nth-child(4n + 3) strong {
+  color: #6a4be0;
+}
+.rr-needs-grid .rr-need-card:nth-child(4n + 4) strong {
+  color: #2c9a71;
+}
+
+/* Contornos más clásicos y suaves */
+.rr-brand-hero::before,
+.rr-account-banner::before{
+  border-style: dashed;
+  opacity: 0.5;
+}
+
+.rr-site-header,
+.rr-footer,
+.rr-brand-hero,
+.rr-account-banner,
+.rr-product-card,
+.rr-collection-card{
+  image-rendering: auto;
+}
+
+/* Navegación y botones más “toon retail” */
+.rr-header-search-form,
+.rr-button,
+.rr-pagination__link,
+.rr-commerce-nav a {
+  position: relative;
+}
+
+.rr-button::after,
+.rr-pagination__link::after,
+.rr-commerce-nav a::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: inherit;
+  border: 1px dashed rgba(43, 23, 15, 0.12);
+  pointer-events: none;
+}
+
+/* Home / filosofía con más aire de póster clásico */
+.rr-experience--tools,
+.rr-experience--needs {
+  position: relative;
+}
+
+.rr-experience--tools::after,
+.rr-experience--needs::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 14px;
+  opacity: 0.32;
+  background: radial-gradient(
+      circle at 7px 7px,
+      rgba(43, 23, 15, 0.55) 6px,
+      transparent 7px
+    )
+    0 0 / 18px 14px repeat-x;
+  pointer-events: none;
+}
+
+/* Móvil: mantenemos claridad y bajamos excesos */
+@media (max-width: 767px) {
+  .rr-brand-hero,
+.rr-account-banner,
+.rr-product-card,
+.rr-collection-card,
+.rr-experience-tool,
+.rr-need-card{
+    box-shadow: 5px 6px 0 rgba(43, 23, 15, 0.14) !important;
+  }
+
+  .rr-button::after,
+  .rr-pagination__link::after,
+  .rr-commerce-nav a::after {
+    inset: 4px;
+  }
+}

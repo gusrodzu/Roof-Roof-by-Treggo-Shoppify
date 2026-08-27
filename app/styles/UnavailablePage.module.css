@@ -1,0 +1,140 @@
+.page {
+  position: relative;
+  display: grid;
+  min-height: min(760px, calc(100vh - var(--header-height, 160px)));
+  place-items: center;
+  overflow: hidden;
+  padding: clamp(3rem, 8vw, 7rem) 1rem;
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(214, 38, 38, 0.08),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(245, 166, 35, 0.12),
+      transparent 32%
+    ),
+    var(--surface-light);
+}
+
+.glow {
+  position: absolute;
+  width: min(42rem, 85vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.78);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 760px);
+  padding: clamp(2rem, 6vw, 4.5rem);
+  border: 1px solid var(--border);
+  border-radius: clamp(1.4rem, 4vw, 2.4rem);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 28px 80px rgba(44, 24, 16, 0.12);
+  text-align: center;
+  backdrop-filter: blur(18px);
+}
+
+.icon {
+  display: grid;
+  width: 74px;
+  height: 74px;
+  margin: 1.5rem auto 1.1rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface-cream);
+  color: var(--brand-deep);
+}
+
+.icon svg {
+  width: 36px;
+  height: 36px;
+}
+
+.kicker {
+  margin: 0 0 0.6rem;
+  color: var(--brand-deep);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card h1 {
+  max-width: 620px;
+  margin: 0 auto;
+  color: var(--ink);
+  font-size: clamp(2rem, 6vw, 4.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.description {
+  max-width: 590px;
+  margin: 1.25rem auto 0;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.75;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.note {
+  margin: 1.5rem 0 0;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 560px) {
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .actions a {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+/* Selector Design System alignment */
+.page {
+  background: transparent;
+}
+
+.card {
+  border: 2px solid var(--rr-ui-border);
+  border-radius: var(--rr-ui-radius-xl);
+  background: var(--rr-ui-surface);
+  box-shadow: var(--rr-ui-shadow);
+}
+
+.icon {
+  border: 1.5px solid var(--rr-ui-border);
+  border-radius: 14px;
+  background: var(--rr-ui-surface-selected);
+  color: var(--rr-ui-ink);
+  box-shadow: 2px 3px 0 rgba(43, 23, 15, 0.1);
+}
+
+.kicker {
+  padding: 0.42rem 0.72rem;
+  border: 1.5px solid var(--rr-ui-border);
+  border-radius: 999px;
+  background: #fff0b9;
+  color: var(--rr-ui-ink);
+  box-shadow: 2px 3px 0 rgba(43, 23, 15, 0.1);
+}

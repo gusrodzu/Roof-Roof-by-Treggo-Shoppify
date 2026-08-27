@@ -6,6 +6,12 @@ export {Button} from './Button';
 export {IconButton} from './IconButton';
 export {Badge, FilterTag} from './Badge';
 export {Rating} from './Rating';
-export {TextInput, Checkbox, Radio, Switch, QuantityStepper} from './FormControls';
+export {
+  TextInput,
+  Checkbox,
+  Radio,
+  Switch,
+  QuantityStepper,
+} from './FormControls';
 export {Tabs, Breadcrumb} from './Tabs';
 export {ProductCard} from './ProductCard';

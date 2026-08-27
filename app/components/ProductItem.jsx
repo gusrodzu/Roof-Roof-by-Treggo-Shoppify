@@ -1,145 +1,67 @@
 import {Link} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
-import {useState} from 'react';
 
 /**
- * @param {{
- *   product: CollectionItemFragment | ProductItemFragment | RecommendedProductFragment;
- *   loading?: 'eager' | 'lazy';
- * }}
+ * Tarjeta de producto reutilizable para colecciones, búsqueda y recomendaciones.
  */
 export function ProductItem({product, loading}) {
   const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;
-  const [hovered, setHovered] = useState(false);
-
-  const compareAt = product.priceRange?.maxVariantPrice ?? null;
-  const minPrice   = product.priceRange?.minVariantPrice ?? null;
-  const hasDiscount =
-    compareAt && minPrice && parseFloat(compareAt.amount) > parseFloat(minPrice.amount);
+  const minPrice = product.priceRange?.minVariantPrice ?? null;
+  const maxPrice = product.priceRange?.maxVariantPrice ?? null;
+  const hasPriceRange =
+    minPrice && maxPrice && Number(maxPrice.amount) > Number(minPrice.amount);
 
   return (
     <Link
-      key={product.id}
+      className="rr-product-card-link"
       prefetch="intent"
       to={variantUrl}
-      style={{textDecoration: 'none', display: 'block'}}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      aria-label={`Ver ${product.title}`}
     >
-      <article
-        style={{
-          background: '#fff',
-          borderRadius: '0.875rem',
-          border: `1.5px solid ${hovered ? 'var(--brand-cta)' : 'var(--border)'}`,
-          overflow: 'hidden',
-          transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
-          boxShadow: hovered
-            ? '0 8px 24px rgba(44,24,16,0.10)'
-            : '0 2px 6px rgba(44,24,16,0.04)',
-          transform: hovered ? 'translateY(-3px)' : 'translateY(0)',
-        }}
-      >
-        {/* Imagen */}
-        <div style={{
-          position: 'relative',
-          background: '#ffffff',
-          aspectRatio: '1 / 1',
-          overflow: 'hidden',
-        }}>
+      <article className="rr-product-card">
+        <div className="rr-product-card__media">
           {image ? (
             <Image
               alt={image.altText || product.title}
               aspectRatio="1/1"
               data={image}
               loading={loading}
-              sizes="(min-width: 45em) 400px, 100vw"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-                padding: '8px',
-                transition: 'transform 0.3s',
-                transform: hovered ? 'scale(1.04)' : 'scale(1)',
-              }}
+              sizes="(min-width: 75em) 300px, (min-width: 45em) 33vw, 50vw"
             />
           ) : (
-            <div style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '3rem',
-              background: '#ffffff',
-            }}>
+            <div className="rr-product-card__placeholder" aria-hidden="true">
               🐾
             </div>
           )}
-
-          {/* Descuento badge */}
-          {hasDiscount && (
-            <span style={{
-              position: 'absolute',
-              top: '0.625rem',
-              left: '0.625rem',
-              background: 'var(--danger)',
-              color: '#fff',
-              fontSize: '0.6875rem',
-              fontWeight: 800,
-              padding: '3px 8px',
-              borderRadius: '999px',
-              letterSpacing: '0.3px',
-            }}>
-              OFERTA
-            </span>
-          )}
+          <span className="rr-product-card__badge">Compra protegida</span>
         </div>
 
-        {/* Info */}
-        <div style={{padding: '0.875rem'}}>
-          {/* Brand */}
-          <p style={{
-            fontSize: '10px',
-            fontWeight: 700,
-            textTransform: 'uppercase',
-            letterSpacing: '1px',
-            color: 'var(--brand-cta)',
-            margin: '0 0 0.25rem',
-          }}>
-            Roof Roof
-          </p>
-
-          {/* Title */}
-          <h4 style={{
-            fontSize: '0.875rem',
-            fontWeight: 600,
-            color: 'var(--ink)',
-            margin: '0 0 0.625rem',
-            lineHeight: 1.4,
-            overflow: 'hidden',
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-          }}>
-            {product.title}
-          </h4>
-
-          {/* Price */}
-          <div style={{display: 'flex', alignItems: 'baseline', gap: '0.5rem', flexWrap: 'wrap'}}>
-            {minPrice && (
-              <Money
-                data={minPrice}
-                style={{fontSize: '1rem', fontWeight: 800, color: 'var(--ink)'}}
-              />
-            )}
-            {hasDiscount && (
-              <Money
-                data={compareAt}
-                style={{fontSize: '0.8125rem', fontWeight: 500, color: 'var(--ink-muted)', textDecoration: 'line-through'}}
-              />
-            )}
+        <div className="rr-product-card__body">
+          <p className="rr-product-card__eyebrow">Roof Roof</p>
+          <h3 className="rr-product-card__title">{product.title}</h3>
+          <div className="rr-product-card__footer">
+            <div>
+              {hasPriceRange && (
+                <span className="rr-product-card__price-label">Desde </span>
+              )}
+              {minPrice && <Money data={minPrice} />}
+            </div>
+            <span className="rr-product-card__cta">
+              <span className="sr-only">Ver producto</span>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+              >
+                <path d="M5 12h14" />
+                <path d="m13 6 6 6-6 6" />
+              </svg>
+            </span>
           </div>
         </div>
       </article>

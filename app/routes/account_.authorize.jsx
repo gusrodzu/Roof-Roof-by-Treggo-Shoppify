@@ -1,9 +1,5 @@
-/**
- * @param {Route.LoaderArgs}
- */
-export async function loader({context}) {
-  return context.customerAccount.authorize();
-}
+import {redirect} from 'react-router';
 
-/** @typedef {import('./+types/account_.authorize').Route} Route */
-/** @typedef {ReturnType<typeof useLoaderData<typeof loader>>} LoaderReturnData */
+export function loader() {
+  return redirect('/account');
+}

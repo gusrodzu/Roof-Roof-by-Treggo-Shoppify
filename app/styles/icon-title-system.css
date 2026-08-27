@@ -1,0 +1,100 @@
+/* ============================================================
+   Roof Roof — Icon & Title Consistency Layer
+   ============================================================ */
+
+:root {
+  --rr-title-solid: #17120f;
+  --rr-title-solid-inverse: #fffdf8;
+}
+
+/* Títulos sólidos en todas las superficies claras. */
+body.rr-site :where(h1, h2, h3, h4, h5, h6),
+body.rr-site
+  :where(
+    .rr-product-card__title,
+    .rr-footer__title,
+    .rr-experience-tool strong,
+    .rr-need-card strong,
+    .rr-selector-option strong,
+    .rr-brand-card h3,
+    .rr-collection-card h2,
+    .rr-collection-card h3,
+    .rr-text-title,
+    [class*="Title_"],
+    [class*="title_"]
+  ) {
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: var(--rr-title-solid) !important;
+  color: var(--rr-title-solid) !important;
+  text-shadow: none !important;
+}
+
+/* Contraste sólido para contenedores oscuros. */
+
+
+body.rr-site .rr-needs-grid .rr-need-card:nth-child(n) strong,
+body.rr-site .rr-experience-tool:nth-child(n) strong {
+  color: var(--rr-title-solid) !important;
+  -webkit-text-fill-color: var(--rr-title-solid) !important;
+}
+
+/* Corrige la alineación de línea base de todos los SVG. */
+body.rr-site svg {
+  display: block;
+  flex: 0 0 auto;
+  vertical-align: middle;
+}
+
+/* Contenedores de iconografía del sistema. */
+
+
+
+
+.rr-policy-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 1rem;
+  border: 1.5px solid var(--rr-ui-border-soft);
+  border-radius: var(--rr-ui-radius-md);
+  background: var(--rr-ui-surface-soft);
+  font-size: 1.8rem;
+}
+
+.rr-search-section-icon {
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--rr-ui-border-soft);
+  border-radius: 9px;
+  background: var(--rr-ui-surface-soft);
+  font-size: 0.95rem;
+}
+
+/* Elimina índices decorativos, sin afectar cantidades o paginación. */
+.rr-brand-steps {
+  counter-reset: none !important;
+}
+
+.rr-brand-step {
+  counter-increment: none !important;
+  padding-top: 1.25rem !important;
+}
+
+.rr-brand-step::before {
+  content: none !important;
+  display: none !important;
+}
+
+body.rr-site :where(button, a, .rr-button, .rr-text-link):has(> svg) {
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .rr-policy-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.55rem;
+  }
+}

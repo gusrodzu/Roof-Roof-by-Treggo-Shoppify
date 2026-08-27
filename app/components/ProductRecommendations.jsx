@@ -1,6 +1,8 @@
 import {useRef} from 'react';
 import {Link} from 'react-router';
 
+const RATING_POINTS = [1, 2, 3, 4, 5];
+
 /**
  * Carrusel de productos recomendados.
  * Usa la paleta de marca:
@@ -40,6 +42,7 @@ export function ProductRecommendations({
 
   return (
     <section
+      className="rr-product-recommendations"
       style={{
         maxWidth: '1280px',
         margin: '0 auto',
@@ -48,6 +51,7 @@ export function ProductRecommendations({
       }}
     >
       <h2
+        className="rr-product-recommendations__title"
         style={{
           fontSize: '1.375rem',
           fontWeight: 800,
@@ -62,6 +66,7 @@ export function ProductRecommendations({
         {/* Flecha izquierda */}
         <button
           type="button"
+          className="rr-icon-button"
           aria-label="Anterior"
           onClick={() => scrollByAmount(-1)}
           style={{
@@ -83,7 +88,14 @@ export function ProductRecommendations({
             boxShadow: '0 2px 8px rgba(44,24,16,0.12)',
           }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
@@ -109,6 +121,7 @@ export function ProductRecommendations({
         {/* Flecha derecha */}
         <button
           type="button"
+          className="rr-icon-button"
           aria-label="Siguiente"
           onClick={() => scrollByAmount(1)}
           style={{
@@ -130,7 +143,14 @@ export function ProductRecommendations({
             boxShadow: '0 2px 8px rgba(44,24,16,0.12)',
           }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <path d="M9 18l6-6-6-6" />
           </svg>
         </button>
@@ -158,6 +178,7 @@ function ProductCard({product}) {
 
   return (
     <div
+      className="rr-product-card rr-recommendation-card"
       data-card
       style={{
         flex: '0 0 auto',
@@ -243,8 +264,8 @@ function ProductCard({product}) {
 
         {/* Rating (patitas) */}
         <div style={{display: 'flex', gap: '2px', margin: '0.125rem 0'}}>
-          {Array.from({length: 5}).map((_, i) => (
-            <PawIcon key={i} filled={i < Math.round(rating)} />
+          {RATING_POINTS.map((point) => (
+            <PawIcon key={point} filled={point <= Math.round(rating)} />
           ))}
         </div>
 
@@ -274,6 +295,7 @@ function ProductCard({product}) {
 
         {/* CTA */}
         <Link
+          className="rr-button rr-button--brand"
           to={url}
           style={{
             marginTop: '0.5rem',
@@ -287,7 +309,9 @@ function ProductCard({product}) {
             textDecoration: 'none',
             transition: 'filter 0.15s',
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.filter = 'brightness(0.95)')}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.filter = 'brightness(0.95)')
+          }
           onMouseLeave={(e) => (e.currentTarget.style.filter = 'brightness(1)')}
         >
           Ver producto

@@ -1,0 +1,726 @@
+/* ============================================================
+   Roof Roof — Layout Quality System
+   Final source of truth for spacing, typography, contrast,
+   responsive grids and sticky storefront surfaces.
+   Loaded last. Keep component logic untouched.
+   ============================================================ */
+
+:root {
+  --rr-content-max: 1280px;
+  --rr-content-narrow: 1160px;
+  --rr-page-pad: clamp(0.875rem, 2.4vw, 2rem);
+  --rr-section-y: clamp(2.75rem, 6vw, 5.75rem);
+  --rr-card-pad: clamp(1rem, 2vw, 1.5rem);
+  --rr-space-1: 0.375rem;
+  --rr-space-2: 0.625rem;
+  --rr-space-3: 0.875rem;
+  --rr-space-4: 1rem;
+  --rr-space-5: 1.25rem;
+  --rr-space-6: 1.5rem;
+  --rr-space-8: 2rem;
+  --rr-text: #17120f;
+  --rr-text-soft: #675d57;
+  --rr-text-muted: #887c75;
+  --rr-light: #fffdf8;
+  --rr-sticky-gap-final: 0.75rem;
+}
+
+/* ---------- Baseline: dimensions and text wrapping ---------- */
+html {
+  scroll-padding-top: calc(var(--header-height, 0px) + 1rem);
+}
+
+body.rr-site {
+  color: var(--rr-text);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(0.9375rem, 0.25vw + 0.875rem, 1rem);
+  font-weight: 400;
+  line-height: 1.55;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.rr-page-main *,
+.rr-page-main *::before,
+.rr-page-main *::after {
+  box-sizing: border-box;
+}
+
+.rr-page-main :where(h1, h2, h3, h4, h5, h6, p, a, button, span, li, dd, dt) {
+  min-width: 0;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto;
+}
+
+body.rr-site :where(h1, h2, h3, h4, h5, h6) {
+  margin-block-start: 0;
+  color: var(--rr-text);
+  font-family: var(--rr-display, 'Baloo 2', 'Inter', sans-serif);
+  font-style: normal;
+  text-wrap: balance;
+}
+
+body.rr-site h1 {
+  font-size: clamp(2rem, 3.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+body.rr-site h2 {
+  font-size: clamp(1.75rem, 2.7vw, 3rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+body.rr-site h3 {
+  font-size: clamp(1.125rem, 1.35vw, 1.5rem);
+  font-weight: 750;
+  line-height: 1.18;
+  letter-spacing: -0.018em;
+}
+
+body.rr-site h4,
+body.rr-site h5,
+body.rr-site h6 {
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+body.rr-site :where(p, li, dd) {
+  color: var(--rr-text-soft);
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+body.rr-site :where(button, input, select, textarea, summary) {
+  font: inherit;
+}
+
+body.rr-site :where(button, .rr-button, [class*='Button']) {
+  font-weight: 750;
+}
+
+body.rr-site :where(.rr-kicker, .rr-eyebrow, [class*='eyebrow'], [class*='kicker']) {
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* ---------- Shared containers and spacing ---------- */
+.rr-page-main :where(
+  .rr-experience__inner,
+  .rr-brand-page__inner,
+  .rr-collection-layout,
+  .rr-product-layout,
+  .rr-cart-page__inner,
+  .rr-search-page__inner,
+  .rr-policy-page__inner,
+  .rr-content-page__inner
+) {
+  width: min(calc(100% - (2 * var(--rr-page-pad))), var(--rr-content-max)) !important;
+  max-width: var(--rr-content-max) !important;
+  margin-inline: auto !important;
+}
+
+.rr-page-main :where(section, article, main, aside, header, footer, div) {
+  min-width: 0;
+}
+
+.rr-page-main :where(img, video, iframe) {
+  max-width: 100%;
+}
+
+.rr-page-main :where(.rr-product-card, .rr-brand-card, .rr-ui-card, .rr-experience-tool, .rr-need-card) {
+  isolation: isolate;
+  max-width: 100%;
+}
+
+/* Prevent old playful transforms from creating collisions. */
+.rr-page-main :where(
+  .rr-product-card,
+  .rr-collection-card,
+  .rr-experience-tool,
+  .rr-need-card,
+  .rr-brand-card,
+  .rr-selector-card
+) {
+  transform: none !important;
+}
+
+/* ---------- Correct contrast on dark surfaces ---------- */
+body.rr-site :where(
+  .rr-brand-hero--dark,
+  .rr-account-banner,
+  .rr-search-hero,
+  .rr-search-hero__content,
+  .trust-bar,
+  .rr-dark-surface,
+  [data-theme='dark']
+) :where(h1, h2, h3, h4, h5, h6, strong) {
+  background: none !important;
+  background-image: none !important;
+  color: var(--rr-light) !important;
+  -webkit-text-fill-color: var(--rr-light) !important;
+  text-shadow: none !important;
+}
+
+body.rr-site :where(
+  .rr-brand-hero--dark,
+  .rr-account-banner,
+  .rr-search-hero,
+  .rr-search-hero__content,
+  .trust-bar,
+  .rr-dark-surface,
+  [data-theme='dark']
+) :where(p, li, small, span:not(.rr-coming-soon-badge):not(.rr-button)) {
+  color: rgba(255, 253, 248, 0.8) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+/* ---------- Grids: cards should use all available width ---------- */
+:is(
+  .rr-products-grid,
+  .rr-related-products-grid,
+  .rr-experience-tools-grid,
+  .rr-needs-grid,
+  .rr-brand-grid,
+  .rr-collections-grid,
+  .rr-search-products-grid
+) {
+  width: 100%;
+  align-items: stretch;
+}
+
+@media (min-width: 768px) {
+  :is(
+    .rr-products-grid,
+    .rr-related-products-grid,
+    .rr-experience-tools-grid,
+    .rr-needs-grid,
+    .rr-brand-grid,
+    .rr-collections-grid,
+    .rr-search-products-grid
+  ):has(> :nth-child(2):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  :is(
+    .rr-products-grid,
+    .rr-related-products-grid,
+    .rr-experience-tools-grid,
+    .rr-needs-grid,
+    .rr-brand-grid,
+    .rr-collections-grid,
+    .rr-search-products-grid
+  ):has(> :only-child) {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+/* ---------- Product page: fixed gallery, scrolling information ---------- */
+.rr-product-page {
+  background: #fff9eb !important;
+}
+
+.rr-product-layout {
+  width: min(calc(100% - (2 * var(--rr-page-pad))), var(--rr-content-narrow)) !important;
+  max-width: var(--rr-content-narrow) !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 0.98fr) minmax(380px, 1.02fr) !important;
+  align-items: start !important;
+  gap: clamp(1.5rem, 3vw, 3rem) !important;
+  padding: clamp(1.25rem, 3vw, 2.5rem) 0 clamp(3rem, 6vw, 5rem) !important;
+  overflow: visible !important;
+}
+
+.rr-product-gallery-column,
+.rr-product-info-column {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.rr-product-info-column {
+  position: relative !important;
+  top: auto !important;
+  align-self: start !important;
+  padding: clamp(1rem, 2vw, 1.5rem) !important;
+}
+
+.rr-product-info-column > :first-child {
+  margin-top: 0 !important;
+}
+
+.rr-product-info-column h1 {
+  margin: 0 0 0.9rem !important;
+  color: var(--rr-text) !important;
+  font-size: clamp(1.65rem, 2.5vw, 2.55rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.06 !important;
+}
+
+.rr-product-media {
+  width: 100% !important;
+  min-height: 0 !important;
+  margin-bottom: var(--rr-space-3) !important;
+  border-radius: clamp(1rem, 2vw, 1.5rem) !important;
+}
+
+.rr-product-media img {
+  width: 100% !important;
+  height: 100% !important;
+  padding: clamp(0.75rem, 2vw, 1.25rem) !important;
+  object-fit: contain !important;
+}
+
+.rr-product-thumbnails {
+  display: flex !important;
+  width: 100% !important;
+  margin: 0 0 var(--rr-space-4) !important;
+  padding: 0.1rem 0 0.45rem !important;
+  gap: clamp(0.4rem, 0.8vw, 0.625rem) !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+
+.rr-product-thumbnail {
+  flex: 0 0 clamp(54px, 5vw, 68px) !important;
+  width: clamp(54px, 5vw, 68px) !important;
+  height: clamp(54px, 5vw, 68px) !important;
+  scroll-snap-align: start;
+}
+
+.rr-product-assurance-card {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: clamp(1rem, 1.6vw, 1.25rem) !important;
+  border-radius: clamp(1rem, 2vw, 1.35rem) !important;
+  background: #fffdf8 !important;
+}
+
+.rr-product-assurance-card > div:first-child {
+  margin-bottom: 0.7rem !important;
+}
+
+.rr-product-assurance-card h4 {
+  color: var(--rr-text) !important;
+  font-size: clamp(0.95rem, 0.3vw + 0.9rem, 1.05rem) !important;
+  font-weight: 750 !important;
+}
+
+.rr-product-assurance-card p {
+  margin: 0 !important;
+  color: var(--rr-text-soft) !important;
+  font-size: clamp(0.84rem, 0.2vw + 0.8rem, 0.94rem) !important;
+  line-height: 1.6 !important;
+}
+
+@media (min-width: 992px) {
+  .rr-product-gallery-column {
+    position: sticky !important;
+    top: calc(var(--header-height, 0px) + var(--rr-sticky-gap-final)) !important;
+    align-self: start !important;
+    max-height: none !important;
+    padding-right: 0 !important;
+    overflow: visible !important;
+  }
+
+  .rr-product-gallery-column .rr-product-media {
+    height: clamp(280px, calc(100dvh - var(--header-height, 0px) - 270px), 460px) !important;
+    aspect-ratio: auto !important;
+  }
+}
+
+/* ---------- Collection page: sticky toolbar and sidebar ---------- */
+.rr-collection-page,
+.rr-collection-layout,
+.rr-collection-main {
+  overflow: visible !important;
+  transform: none !important;
+}
+
+.rr-collection-layout {
+  width: min(calc(100% - (2 * var(--rr-page-pad))), var(--rr-content-max)) !important;
+  max-width: var(--rr-content-max) !important;
+  align-items: start !important;
+  gap: clamp(1rem, 2.5vw, 2rem) !important;
+  padding: clamp(1rem, 2.4vw, 2rem) 0 clamp(3rem, 6vw, 5rem) !important;
+}
+
+.rr-collection-main {
+  min-width: 0 !important;
+}
+
+.rr-collection-toolbar {
+  position: sticky !important;
+  top: calc(var(--header-height, 0px) + var(--rr-sticky-gap-final)) !important;
+  z-index: 45 !important;
+  width: 100% !important;
+  margin: 0 0 1rem !important;
+  padding: clamp(0.75rem, 1.5vw, 1rem) !important;
+  border-radius: 1rem !important;
+  background: rgba(255, 253, 248, 0.98) !important;
+  box-shadow: 0 10px 28px rgba(43, 23, 15, 0.12) !important;
+  backdrop-filter: blur(14px) saturate(1.08);
+}
+
+.rr-collection-toolbar__row {
+  width: 100% !important;
+  align-items: center !important;
+}
+
+.rr-collection-toolbar__title h1 {
+  margin: 0 0 0.2rem !important;
+  color: var(--rr-text) !important;
+  font-size: clamp(1.2rem, 1.3vw, 1.55rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: none !important;
+}
+
+.rr-collection-toolbar__title p {
+  font-size: clamp(0.78rem, 0.2vw + 0.74rem, 0.88rem) !important;
+  line-height: 1.4 !important;
+}
+
+.rr-filter-sidebar {
+  position: sticky !important;
+  top: calc(var(--header-height, 0px) + var(--rr-sticky-gap-final)) !important;
+  align-self: start !important;
+  max-height: calc(100dvh - var(--header-height, 0px) - 1.5rem) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+
+/* ---------- Cards and content spacing ---------- */
+.rr-page-main :where(
+  .rr-product-card,
+  .rr-collection-card,
+  .rr-experience-tool,
+  .rr-need-card,
+  .rr-brand-card,
+  .rr-selector-card,
+  .rr-product-guidance,
+  .rr-collection-guidance,
+  .rr-cart-lines-card,
+  .rr-cart-summary-card,
+  .rr-empty-state
+) {
+  min-height: 0;
+  padding-block-start: 0;
+}
+
+.rr-page-main :where(.rr-product-card__body, .rr-collection-card__body, .rr-experience-tool, .rr-need-card, .rr-brand-card) {
+  padding: var(--rr-card-pad) !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991px) {
+  .rr-product-layout {
+    grid-template-columns: 1fr !important;
+    max-width: 760px !important;
+  }
+
+  .rr-product-gallery-column,
+  .rr-product-info-column,
+  .rr-filter-sidebar {
+    position: static !important;
+    top: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .rr-product-media {
+    aspect-ratio: 1 / 0.86 !important;
+  }
+
+  .rr-collection-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .rr-collection-toolbar {
+    top: calc(var(--header-height, 0px) + 0.35rem) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --rr-page-pad: 0.75rem;
+    --rr-card-pad: 0.95rem;
+  }
+
+  body.rr-site h1 {
+    font-size: clamp(1.75rem, 9vw, 2.6rem);
+  }
+
+  body.rr-site h2 {
+    font-size: clamp(1.55rem, 7vw, 2.2rem);
+  }
+
+  .rr-product-layout {
+    width: calc(100% - 1.25rem) !important;
+    gap: 1rem !important;
+    padding-top: 0.75rem !important;
+  }
+
+  .rr-product-media {
+    margin-bottom: 0.6rem !important;
+    border-radius: 1.15rem !important;
+  }
+
+  .rr-product-info-column {
+    padding: 1rem !important;
+  }
+
+  .rr-product-assurance-card {
+    padding: 1rem !important;
+  }
+
+  .rr-collection-layout {
+    width: calc(100% - 1.25rem) !important;
+  }
+
+  .rr-collection-toolbar {
+    margin-inline: 0 !important;
+    padding: 0.75rem !important;
+    border-radius: 0.9rem !important;
+  }
+
+  .rr-collection-toolbar__row {
+    align-items: stretch !important;
+    gap: 0.65rem !important;
+  }
+
+  .rr-collection-toolbar__controls {
+    width: 100% !important;
+  }
+
+  :is(
+    .rr-experience-tools-grid,
+    .rr-needs-grid,
+    .rr-brand-grid,
+    .rr-collections-grid
+  ):has(> :nth-child(2):last-child) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .rr-product-thumbnail {
+    flex-basis: 52px !important;
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .rr-product-assurance-card p {
+    font-size: 0.82rem !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rr-page-main *,
+  .rr-page-main *::before,
+  .rr-page-main *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ============================================================
+   Promo banners — two-card full-width layout
+   This component must not inherit the generic four-column grid.
+   ============================================================ */
+.rr-promo-section {
+  padding-block: clamp(2.75rem, 5vw, 5rem) !important;
+  padding-inline: var(--rr-fluid-gutter, clamp(1rem, 4vw, 2rem)) !important;
+}
+
+.rr-promo-section__inner {
+  width: min(100%, var(--rr-container, 1280px)) !important;
+  max-width: var(--rr-container, 1280px) !important;
+  margin-inline: auto !important;
+}
+
+.rr-promo-section__title {
+  max-width: none !important;
+  margin: 0 0 clamp(1.25rem, 2.5vw, 2rem) !important;
+  font-size: clamp(2rem, 3.5vw, 3.25rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.035em !important;
+  text-wrap: balance;
+}
+
+.rr-promo-section .rr-promo-grid.rr-promo-grid--two {
+  display: grid !important;
+  grid-auto-flow: row !important;
+  grid-auto-columns: initial !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  max-width: none !important;
+  gap: clamp(1rem, 2vw, 1.5rem) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  scroll-snap-type: none !important;
+}
+
+.rr-promo-section .rr-promo-grid--two > * {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  flex: initial !important;
+  scroll-snap-align: none !important;
+}
+
+.rr-promo-section .rr-promo-card {
+  position: relative;
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: clamp(300px, 31vw, 430px) !important;
+  aspect-ratio: 16 / 10;
+  overflow: hidden !important;
+  padding: clamp(1.25rem, 2.5vw, 2rem) !important;
+  border: 2px solid var(--rr-ui-border, #2b170f) !important;
+  border-radius: clamp(1.4rem, 2.5vw, 2rem) !important;
+  background: #17120f !important;
+  color: var(--ink, #17120f) !important;
+  box-shadow: var(--rr-ui-shadow, 5px 6px 0 rgba(43, 23, 15, 0.14)) !important;
+  text-decoration: none !important;
+  isolation: isolate;
+}
+
+.rr-promo-card__image,
+.rr-promo-card__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.rr-promo-card__image {
+  z-index: -2;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 320ms ease;
+}
+
+.rr-promo-card__overlay {
+  z-index: -1;
+  background: linear-gradient(
+    to top,
+    rgba(20, 12, 8, 0.68) 0%,
+    rgba(20, 12, 8, 0.18) 48%,
+    rgba(20, 12, 8, 0.02) 74%
+  );
+}
+
+.rr-promo-card__badge {
+  position: absolute !important;
+  top: clamp(1rem, 2vw, 1.5rem) !important;
+  right: clamp(1rem, 2vw, 1.5rem) !important;
+  left: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  max-width: calc(100% - 2rem);
+  padding: 0.5rem 0.85rem !important;
+  border: 1.5px solid var(--rr-ui-border, #2b170f) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 253, 248, 0.92) !important;
+  color: var(--ink, #17120f) !important;
+  box-shadow: 2px 3px 0 rgba(43, 23, 15, 0.12) !important;
+  backdrop-filter: blur(8px);
+  transform: none !important;
+  white-space: nowrap;
+}
+
+.rr-promo-card__badge strong,
+.rr-promo-card__badge span {
+  display: inline !important;
+  color: inherit !important;
+  font-size: clamp(0.66rem, 1vw, 0.78rem) !important;
+  line-height: 1 !important;
+  text-transform: uppercase;
+}
+
+.rr-promo-card__badge strong {
+  font-weight: 900 !important;
+  letter-spacing: 0.08em !important;
+}
+
+.rr-promo-card__badge span {
+  font-weight: 600 !important;
+  letter-spacing: 0.16em !important;
+}
+
+.rr-promo-card__cta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.55rem !important;
+  width: auto !important;
+  max-width: calc(100% - 1rem);
+  min-height: 48px !important;
+  padding: 0.75rem 1.25rem !important;
+  color: var(--ink, #17120f) !important;
+  font-size: clamp(0.88rem, 1.3vw, 1rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  white-space: normal;
+  text-align: center;
+}
+
+.rr-promo-card:hover .rr-promo-card__image,
+.rr-promo-card:focus-visible .rr-promo-card__image {
+  transform: scale(1.025);
+}
+
+@media (max-width: 767px) {
+  .rr-promo-section {
+    margin: 0.75rem !important;
+    padding: clamp(1.25rem, 5vw, 1.75rem) !important;
+  }
+
+  .rr-promo-section__title {
+    font-size: clamp(1.7rem, 8vw, 2.2rem) !important;
+  }
+
+  .rr-promo-section .rr-promo-grid.rr-promo-grid--two {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .rr-promo-section .rr-promo-card {
+    min-height: clamp(250px, 72vw, 340px) !important;
+    aspect-ratio: 4 / 3;
+  }
+
+  .rr-promo-card__badge {
+    top: 0.9rem !important;
+    right: 0.9rem !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .rr-promo-card__badge span {
+    display: none !important;
+  }
+
+  .rr-promo-card__cta {
+    width: 100% !important;
+  }
+}

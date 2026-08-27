@@ -1,125 +1,122 @@
 import {Link} from 'react-router';
-import {useState, useEffect} from 'react';
-import {Button} from '~/components/design-system';
+import {ExperienceIcon} from '~/components/ExperienceIcon';
+import styles from '~/styles/AboutSection.module.css';
 
-const VALUES = [
+const PRINCIPLES = [
   {
-    title: 'Envío rápido',
-    desc: 'Entrega ágil a todo México para que tu mascota no espere.',
-    icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-        <rect x="1" y="3" width="15" height="13" rx="1"/>
-        <path d="M16 8h3.5a1 1 0 01.9.55L22 12v4h-6"/>
-        <circle cx="6" cy="18" r="2"/>
-        <circle cx="18" cy="18" r="2"/>
-      </svg>
-    ),
-    accent: 'var(--brand-cta)',
-    bg: 'var(--surface-cream)',
-    border: 'var(--border-gold)',
+    icon: 'heart',
+    title: 'Bienestar primero',
+    copy: 'Cada producto parte de una necesidad real: descansar mejor, sentirse seguro o hacer más simple su rutina diaria.',
   },
   {
-    title: 'Calidad asegurada',
-    desc: 'Productos seleccionados para durar y disfrutarse por mucho tiempo.',
-    icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-        <path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z"/>
-        <path d="M9 12l2 2 4-4"/>
-      </svg>
-    ),
-    accent: '#acc3fa',
-    bg: '#f0f3fd',
-    border: '#acc3fa',
+    icon: 'home',
+    title: 'Diseño para la vida real',
+    copy: 'Buscamos soluciones funcionales que convivan mejor con tu espacio, tus hábitos y la personalidad de tu mascota.',
   },
   {
-    title: 'Soporte excepcional',
-    desc: 'Asesoría experta para que tu compra sea siempre la correcta.',
-    icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-      </svg>
-    ),
-    accent: '#A8B4E8',
-    bg: '#eef0fb',
-    border: '#c8d0f0',
+    icon: 'checklist',
+    title: 'Elegir con claridad',
+    copy: 'Medidas, usos y recomendaciones fáciles de entender para que compres con mayor seguridad y menos dudas.',
   },
 ];
 
 export function AboutSection() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
-    setIsMobile(mq.matches);
-    const handler = (e) => setIsMobile(e.matches);
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
-
   return (
-    <section
-      style={{
-        padding: isMobile ? '2.5rem 1rem' : '4rem 1.5rem',
-    
-   
-      }}
-    >
-      <div style={{maxWidth: '1100px', margin: '0 auto'}}>
+    <section className={styles.section} aria-labelledby="roof-philosophy-title">
+      <div className={styles.glow} aria-hidden="true" />
 
-        {/* Header */}
-        <div style={{textAlign: 'center', marginBottom: isMobile ? '1.75rem' : '2.5rem'}}>
-          <p style={{
-            fontSize: '11px',
-            fontWeight: 800,
-            letterSpacing: '2px',
-            textTransform: 'uppercase',
-            color: 'var(--brand-cta)',
-            marginBottom: '0.5rem',
-            margin: '0 0 0.5rem',
-          }}>
+      <div className={styles.container}>
+        <header className={styles.heading}>
+          <span className={styles.kicker}>
+            <span className={styles.kickerIcon}>
+              <ExperienceIcon name="paw" size={15} />
+            </span>
             Nuestra filosofía
-          </p>
+          </span>
 
-          <h2 style={{
-            fontSize: isMobile ? '1.375rem' : '1.875rem',
-            fontWeight: 800,
-            color: 'var(--ink)',
-            margin: '0 0 0.875rem',
-            letterSpacing: '-0.02em',
-          }}>
-            ¿Por qué elegir Roof Roof?
-          </h2>
+          <div className={styles.headingGrid}>
+            <h2 id="roof-philosophy-title">¿Por qué elegir Roof Roof?</h2>
+            <p>
+              Diseñamos productos pensados para el bienestar, la comodidad y la
+              vida diaria de tu mascota, sin dejar de considerar el espacio que
+              ambos comparten.
+            </p>
+          </div>
+        </header>
 
-          <p style={{
-            fontSize: '0.9375rem',
-            color: 'var(--ink-soft)',
-            maxWidth: '560px',
-            margin: '0 auto 1.5rem',
-            lineHeight: 1.6,
-          }}>
-            Diseñamos productos pensados para el bienestar, comodidad y vida diaria de tu mascota.
-          </p>
+        <div className={styles.contentGrid}>
+          <article className={`${styles.statementCard} rr-ui-feature-card`}>
+            <div className={styles.statementTop}>
+              <span className={styles.statementIcon}>
+                <ExperienceIcon name="sparkles" size={28} />
+              </span>
+              <span className={styles.statementLabel}>
+                Nuestra manera de diseñar
+              </span>
+            </div>
 
-          <Link to="/collections/roof-roof" style={{textDecoration: 'none', display: 'inline-block'}}>
-            <Button
-              variant="ghost"
-              iconAfter={
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                  <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
-                </svg>
-              }
-              style={{background: 'var(--ink)', color: 'var(--brand-cta)'}}
-            >
-              Explorar productos
-            </Button>
-          </Link>
+            <div className={styles.statementCopy}>
+              <h3>Productos con propósito, no sólo productos bonitos.</h3>
+              <p>
+                En Roof Roof buscamos que cada pieza aporte algo concreto a su
+                día: más descanso, más seguridad, una rutina más sencilla y un
+                espacio que también se sienta suyo.
+              </p>
+            </div>
+
+            <div className={styles.statementSignature}>
+              <span>Pensado para ellos.</span>
+              <strong>Diseñado para vivir contigo.</strong>
+            </div>
+          </article>
+
+          <div className={styles.principles}>
+            {PRINCIPLES.map((principle) => (
+              <article
+                className={`${styles.principleCard} rr-ui-card rr-ui-card--interactive`}
+                key={principle.title}
+              >
+                <div className={`${styles.principleIcon} rr-ui-icon`}>
+                  <ExperienceIcon name={principle.icon} size={24} />
+                </div>
+                <div className={styles.principleCopy}>
+                  <div className={styles.principleTitleRow}>
+                    <h3>{principle.title}</h3>
+                  </div>
+                  <p>{principle.copy}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
 
-       
+        <div className={`${styles.actionBar} rr-ui-card`}>
+          <div>
+            <span className={styles.actionEyebrow}>
+              Encuentra su espacio ideal
+            </span>
+            <p>
+              Explora el catálogo completo o utiliza nuestro selector para
+              encontrar una opción según su tamaño, necesidad y entorno.
+            </p>
+          </div>
 
-
-
-
+          <div className={styles.actions}>
+            <Link
+              className={`${styles.secondaryButton} rr-button rr-button--outline`}
+              to="/pages/selector-de-productos"
+            >
+              Usar selector
+            </Link>
+            <Link
+              className={`${styles.primaryButton} rr-button rr-button--dark`}
+              to="/collections/roof-roof"
+            >
+              Explorar productos
+              <ExperienceIcon name="arrow" size={17} />
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );

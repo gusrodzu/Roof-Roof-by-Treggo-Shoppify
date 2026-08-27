@@ -1,37 +1,52 @@
 import {Suspense} from 'react';
-import {Await, NavLink, Link} from 'react-router';
-import {useState, useEffect} from 'react';
+import {Await, Link, NavLink} from 'react-router';
 import logo from '~/assets/logo.png';
 
 const FOOTER_COLS = [
   {
-    heading: 'Productos',
+    heading: 'Comprar',
     links: [
+      {label: 'Todos los productos', to: '/collections/roof-roof'},
       {label: 'Casas para mascotas', to: '/collections/roof-roof-casas'},
-      {label: 'Camas elevadas', to: '/collections/roof-roof-camas'},
+      {label: 'Camas', to: '/collections/roof-roof-camas'},
       {label: 'Jaulas y corrales', to: '/collections/roof-roof-jaulas'},
       {label: 'Dispensadores', to: '/collections/roof-roof-dispensadores'},
-      {label: 'Ver todo', to: '/collections/roof-roof'},
     ],
   },
-  // {
-  //   heading: 'Ayuda',
-  //   links: [
-  //     {label: 'Preguntas frecuentes', to: '/pages/ayuda'},
-  //     {label: 'Política de envíos', to: '/policies/shipping-policy'},
-  //     {label: 'Cambios y devoluciones', to: '/policies/refund-policy'},
-  //     {label: 'Términos y condiciones', to: '/policies/terms-of-service'},
-  //     {label: 'Privacidad', to: '/policies/privacy-policy'},
-  //   ],
-  // },
-  // {
-  //   heading: 'Empresa',
-  //   links: [
-  //     {label: 'Nosotros', to: '/pages/nosotros'},
-  //     {label: 'Blog', to: '/blogs/news'},
-  //     {label: 'Contacto', to: '/pages/contacto'},
-  //   ],
-  // },
+  {
+    heading: 'Te ayudamos a elegir',
+    links: [
+      {label: 'Selector de productos', to: '/pages/selector-de-productos'},
+      {label: 'Guía de medidas', to: '/pages/guia-de-tallas'},
+      {label: 'Centro de cuidado', to: '/pages/centro-de-cuidado'},
+      {label: 'Nueva mascota', to: '/pages/nueva-mascota'},
+      {label: 'Preguntas frecuentes', to: '/pages/ayuda'},
+    ],
+  },
+  {
+    heading: 'Roof Roof',
+    links: [
+      {label: 'Beneficios Roof', to: '/pages/beneficios-roof'},
+      {
+        label: 'Blog',
+        to: '/blogs/news',
+        badge: 'Próximamente',
+        disabled: true,
+      },
+      {
+        label: 'Contacto',
+        to: '/pages/contacto',
+        badge: 'Próximamente',
+        disabled: true,
+      },
+      {
+        label: 'Mi cuenta',
+        to: '/account',
+        badge: 'Próximamente',
+        disabled: true,
+      },
+    ],
+  },
 ];
 
 const SOCIAL = [
@@ -91,86 +106,22 @@ const SOCIAL = [
 ];
 
 export function Footer({footer: footerPromise, header, publicStoreDomain}) {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
-    setIsMobile(mq.matches);
-    const handler = (e) => setIsMobile(e.matches);
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
-
   return (
-    <footer style={{background: 'var(--ink)', color: '#ffffff'}}>
-      {/* Body */}
-      <div
-        style={{
-          maxWidth: '1100px',
-          margin: '0 auto',
-          padding: isMobile ? '2.5rem 1.25rem 1.5rem' : '3.5rem 1.5rem 2rem',
-        }}
-      >
-        {/* Top row: brand + cols */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '1.6fr 1fr 1fr 1fr',
-            gap: isMobile ? '2rem' : '2.5rem',
-            paddingBottom: isMobile ? '2rem' : '2.5rem',
-            borderBottom: '1px solid rgba(255,255,255,0.1)',
-          }}
-        >
-          {/* Brand column */}
-          <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-            <Link
-              to="/"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                width: '100%',
-              }}
-            >
-              <img
-                src={logo}
-                alt="Roof Roof"
-                style={{
-                  width: '140px',
-                  height: 'auto',
-                  display: 'block',
-                  filter: 'brightness(0) invert(1)',
-                }}
-              />
+    <footer className="rr-footer">
+      <div className="rr-footer__inner">
+        <div className="rr-footer__grid">
+          <div className="rr-footer__brand">
+            <Link to="/" aria-label="Ir al inicio de Roof Roof">
+              <img className="rr-footer__logo" src={logo} alt="Roof Roof" />
             </Link>
-            {/* <Link to="/" style={{display: 'inline-block', textDecoration: 'none'}}>
-              <span style={{
-                fontSize: '1.375rem',
-                fontWeight: 900,
-                color: 'var(--brand-cta)',
-                letterSpacing: '-0.02em',
-              }}>
-                Roof Roof 🐾
-              </span>
-            </Link> */}
 
-            <p
-              style={{
-                fontSize: '0.875rem',
-                color: 'rgb(255, 255, 255)',
-                lineHeight: 1.65,
-                margin: 0,
-                maxWidth: '260px',
-              }}
-            >
-              Espacios pensados para vidas más felices. Productos de calidad
-              para el bienestar de tu mascota.
+            <p className="rr-footer__copy">
+              Espacios y accesorios para mascotas con herramientas que te ayudan
+              a elegir mejor. Compra con información clara, atención cercana,
+              envío a todo México y procesos transparentes.
             </p>
 
-            {/* Social */}
-            <div
-              style={{display: 'flex', gap: '0.625rem', marginTop: '0.25rem'}}
-            >
+            <div className="rr-footer__social" aria-label="Redes sociales">
               {SOCIAL.map(({label, href, icon}) => (
                 <a
                   key={label}
@@ -178,148 +129,68 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  style={{
-                    width: '36px',
-                    height: '36px',
-                    borderRadius: '50%',
-                    border: 'none',
-                    background: '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'var(--ink, #2C1810)',
-                    textDecoration: 'none',
-                    transition: 'color 0.15s, transform 0.15s',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'var(--brand-cta)';
-                    e.currentTarget.style.transform = 'scale(1.05)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'var(--ink, #2C1810)';
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
                 >
                   {icon}
                 </a>
               ))}
             </div>
 
-            {/* Trust chips */}
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '0.5rem',
-                marginTop: '0.25rem',
-              }}
-            >
-              {['Envío gratis +$599', 'Pago seguro', 'Garantía incluida'].map(
-                (t) => (
-                  <span
-                    key={t}
-                    style={{
-                      fontSize: '0.6875rem',
-                      fontWeight: 600,
-                      color: 'var(--ink, #2C1810)',
-                      background: '#ffffff',
-                      border: 'none',
-                      borderRadius: '999px',
-                      padding: '3px 10px',
-                    }}
-                  >
-                    {t}
-                  </span>
-                ),
-              )}
+            <div className="rr-footer__trust" aria-label="Beneficios de compra">
+              <span>Envío gratis desde $599</span>
+              <span>Pago seguro</span>
+              <span>Garantía incluida</span>
             </div>
           </div>
 
-          {/* Link columns */}
-          {FOOTER_COLS.map((col) => (
-            <div key={col.heading}>
-              <p
-                style={{
-                  fontSize: '0.6875rem',
-                  fontWeight: 800,
-                  letterSpacing: '1.5px',
-                  textTransform: 'uppercase',
-                  color: 'var(--brand-cta)',
-                  margin: '0 0 1rem',
-                }}
-              >
-                {col.heading}
-              </p>
-              <ul
-                style={{
-                  listStyle: 'none',
-                  padding: 0,
-                  margin: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.625rem',
-                }}
-              >
-                {col.links.map(({label, to}) => (
-                  <li key={label}>
-                    <Link
-                      to={to}
-                      style={{
-                        fontSize: '0.875rem',
-                        color: 'rgb(255, 255, 255)',
-                        textDecoration: 'none',
-                        transition: 'color 0.15s',
-                      }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.color = 'var(--brand-cta)')
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.color = 'rgb(255, 255, 255)')
-                      }
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {FOOTER_COLS.map((column) => (
+            <FooterColumn
+              className="rr-footer__desktop-column"
+              column={column}
+              key={column.heading}
+            />
           ))}
+
+          <div className="rr-footer__mobile-columns">
+            {FOOTER_COLS.map((column) => (
+              <details
+                className="rr-footer__mobile-column"
+                key={column.heading}
+              >
+                <summary>
+                  <span>{column.heading}</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    aria-hidden="true"
+                  >
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </summary>
+                <FooterLinks links={column.links} />
+              </details>
+            ))}
+          </div>
         </div>
 
-        {/* Bottom row */}|
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
-            alignItems: isMobile ? 'flex-start' : 'center',
-            justifyContent: 'space-between',
-            gap: '0.75rem',
-            paddingTop: '1.5rem',
-          }}
-        >
-          <p
-            style={{
-              fontSize: '0.75rem',
-              color: 'rgb(255, 255, 255)',
-              margin: 0,
-            }}
-          >
+        <div className="rr-footer__bottom">
+          <p>
             © {new Date().getFullYear()} Roof Roof · Una marca de Treggo ·
             Monterrey, México
           </p>
 
-          {/* Shopify / Hydrogen badge */}
           <Suspense fallback={null}>
             <Await resolve={footerPromise}>
-              {(footer) =>
-                footer?.menu && header.shop.primaryDomain?.url ? (
-                  <FooterLegalLinks
-                    menu={footer.menu}
-                    primaryDomainUrl={header.shop.primaryDomain.url}
-                    publicStoreDomain={publicStoreDomain}
-                  />
-                ) : null
-              }
+              {(footer) => (
+                <FooterLegalLinks
+                  menu={footer?.menu ?? FALLBACK_FOOTER_MENU}
+                  primaryDomainUrl={header?.shop?.primaryDomain?.url}
+                  publicStoreDomain={publicStoreDomain}
+                />
+              )}
             </Await>
           </Suspense>
         </div>
@@ -328,53 +199,67 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
   );
 }
 
+function FooterColumn({column, className = ''}) {
+  return (
+    <div className={className}>
+      <h2 className="rr-footer__title">{column.heading}</h2>
+      <FooterLinks links={column.links} />
+    </div>
+  );
+}
+
+function FooterLinks({links}) {
+  return (
+    <ul className="rr-footer__links">
+      {links.map(({label, to, badge, disabled}) => (
+        <li key={to}>
+          {disabled ? (
+            <span
+              aria-disabled="true"
+              className="rr-disabled-link"
+              title={`${label} estará disponible próximamente`}
+            >
+              <span>{label}</span>
+              <span className="rr-coming-soon-badge rr-coming-soon-badge--footer">
+                {badge}
+              </span>
+            </span>
+          ) : (
+            <Link to={to} prefetch="intent">
+              <span>{label}</span>
+              {badge ? (
+                <span className="rr-coming-soon-badge rr-coming-soon-badge--footer">
+                  {badge}
+                </span>
+              ) : null}
+            </Link>
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function FooterLegalLinks({menu, primaryDomainUrl, publicStoreDomain}) {
   return (
-    <nav
-      style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem 1.25rem'}}
-      role="navigation"
-      aria-label="Legal"
-    >
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
+    <nav className="rr-footer__legal" aria-label="Información legal">
+      {(menu?.items ?? FALLBACK_FOOTER_MENU.items).map((item) => {
         if (!item.url) return null;
-        const url =
+
+        const isStoreUrl =
           item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
+          (publicStoreDomain && item.url.includes(publicStoreDomain)) ||
+          (primaryDomainUrl && item.url.includes(primaryDomainUrl));
+
+        const url = isStoreUrl ? new URL(item.url).pathname : item.url;
         const isExternal = !url.startsWith('/');
-        const linkStyle = {
-          fontSize: '0.75rem',
-          color: 'rgb(255, 255, 255)',
-          textDecoration: 'none',
-          transition: 'color 0.15s',
-        };
+
         return isExternal ? (
-          <a
-            key={item.id}
-            href={url}
-            rel="noopener noreferrer"
-            target="_blank"
-            style={linkStyle}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--brand-cta)')}
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.color = 'rgba(232,228,220,0.45)')
-            }
-          >
+          <a key={item.id} href={url} rel="noopener noreferrer" target="_blank">
             {item.title}
           </a>
         ) : (
-          <NavLink
-            key={item.id}
-            end
-            prefetch="intent"
-            to={url}
-            style={({isActive}) => ({
-              ...linkStyle,
-              color: isActive ? 'var(--brand-cta)' : 'rgb(255, 255, 255)',
-            })}
-          >
+          <NavLink key={item.id} end prefetch="intent" to={url}>
             {item.title}
           </NavLink>
         );
@@ -384,43 +269,14 @@ function FooterLegalLinks({menu, primaryDomainUrl, publicStoreDomain}) {
 }
 
 const FALLBACK_FOOTER_MENU = {
-  id: 'gid://shopify/Menu/199655620664',
+  id: 'footer-fallback',
   items: [
-    {
-      id: '1',
-      title: 'Privacidad',
-      type: 'SHOP_POLICY',
-      url: '/policies/privacy-policy',
-      items: [],
-    },
-    {
-      id: '2',
-      title: 'Devoluciones',
-      type: 'SHOP_POLICY',
-      url: '/policies/refund-policy',
-      items: [],
-    },
-    {
-      id: '3',
-      title: 'Envíos',
-      type: 'SHOP_POLICY',
-      url: '/policies/shipping-policy',
-      items: [],
-    },
-    {
-      id: '4',
-      title: 'Términos',
-      type: 'SHOP_POLICY',
-      url: '/policies/terms-of-service',
-      items: [],
-    },
+    {id: 'privacy', title: 'Privacidad', url: '/policies/privacy-policy'},
+    {id: 'refunds', title: 'Devoluciones', url: '/policies/refund-policy'},
+    {id: 'shipping', title: 'Envíos', url: '/policies/shipping-policy'},
+    {id: 'terms', title: 'Términos', url: '/policies/terms-of-service'},
   ],
 };
 
-/** @typedef {Object} FooterProps
- * @property {Promise<FooterQuery|null>} footer
- * @property {HeaderQuery} header
- * @property {string} publicStoreDomain
- */
 /** @typedef {import('storefrontapi.generated').FooterQuery} FooterQuery */
 /** @typedef {import('storefrontapi.generated').HeaderQuery} HeaderQuery */

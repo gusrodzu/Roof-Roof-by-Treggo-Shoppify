@@ -1,0 +1,409 @@
+/* ============================================================
+   Roof Roof — viewport QA repair
+   Final source of truth for the issues found in mobile screenshots.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body :where(h1, h2, h3, h4, h5, h6, strong, button, .money) {
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+
+body :where(p, li, dd, dt, a, span) {
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+/* ---------- Dark surfaces: preserve readable contrast ---------- */
+.rr-brand-hero--dark :where(h1, h2, h3, h4),
+.rr-account-banner :where(h1, h2, h3, h4),
+.rr-search-hero :where(h1, h2, h3, h4),
+.rr-footer :where(h1, h2, h3, h4) {
+  color: #fffdf8 !important;
+  -webkit-text-fill-color: #fffdf8 !important;
+  background: none !important;
+}
+
+/* ---------- Footer: readable columns and headings ---------- */
+.rr-footer__grid {
+  grid-template-columns: minmax(280px, 1.35fr) repeat(3, minmax(180px, 0.75fr)) !important;
+  align-items: start !important;
+  gap: clamp(2rem, 4vw, 4.5rem) !important;
+}
+
+.rr-footer__grid > * {
+  min-width: 0;
+}
+
+.rr-footer__title {
+  max-width: 16rem;
+  margin: 0 0 1rem !important;
+  color: #ffd65a !important;
+  -webkit-text-fill-color: #ffd65a !important;
+  font-family: var(--rr-font, Inter, sans-serif) !important;
+  font-size: 0.78rem !important;
+  font-weight: 850 !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+  text-wrap: pretty;
+}
+
+.rr-footer__links,
+.rr-footer__links li,
+.rr-footer__links a,
+.rr-footer__links .rr-disabled-link {
+  min-width: 0;
+  max-width: 100%;
+  line-height: 1.45;
+  white-space: normal;
+}
+
+.rr-footer__copy,
+.rr-footer__links a,
+.rr-footer__links .rr-disabled-link,
+.rr-footer__bottom,
+.rr-footer__legal a {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+@media (max-width: 1180px) {
+  .rr-footer__grid {
+    grid-template-columns: minmax(260px, 1.2fr) repeat(2, minmax(180px, 1fr)) !important;
+  }
+
+  .rr-footer__brand {
+    grid-row: span 2;
+  }
+}
+
+@media (max-width: 900px) {
+  .rr-footer__grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .rr-footer__brand {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}
+
+/* ---------- Selector: no false height, no sticky action collision ---------- */
+#selector {
+  scroll-margin-top: calc(var(--header-height, 144px) + 1rem);
+}
+
+.rr-selector-shell {
+  min-height: 0 !important;
+  align-items: start !important;
+}
+
+.rr-selector-progress,
+.rr-selector-card {
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: start !important;
+}
+
+.rr-selector-card {
+  overflow: visible !important;
+}
+
+.rr-selector-card > .rr-brand-card {
+  margin-top: 0.85rem !important;
+}
+
+.rr-selector-actions {
+  position: static !important;
+  inset: auto !important;
+  z-index: auto !important;
+  margin-top: 1rem !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.rr-selector-result__hero {
+  padding: clamp(1.1rem, 4vw, 1.5rem) !important;
+}
+
+/* CTA blocks should fill their container and not float as undersized islands. */
+.rr-brand-cta {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* ---------- Mobile app header ---------- */
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: calc(var(--header-height, 144px) + 0.75rem);
+  }
+
+  .rr-site-header,
+  .rr-header-main,
+  .rr-mobile-header {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .rr-site-header {
+    inset-inline: 0 !important;
+  }
+
+  .rr-header-main {
+    padding-inline: max(0.75rem, env(safe-area-inset-left, 0px)) max(0.75rem, env(safe-area-inset-right, 0px)) !important;
+  }
+
+  .rr-mobile-header__brand-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 0.65rem !important;
+  }
+
+  .rr-mobile-header__identity,
+  .rr-mobile-header__copy {
+    min-width: 0 !important;
+  }
+
+  .rr-mobile-header__actions {
+    gap: 0.4rem !important;
+  }
+
+  .rr-mobile-header__action {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+  }
+
+  .rr-mobile-header__search,
+  .rr-header-search-form {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .rr-header-search-input {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .rr-selector-shell {
+    display: block !important;
+  }
+
+  .rr-selector-progress {
+    position: static !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .rr-selector-card {
+    padding: 1rem !important;
+  }
+
+  .rr-selector-card h2 {
+    font-size: clamp(1.7rem, 8vw, 2.35rem) !important;
+    line-height: 1.03 !important;
+  }
+
+  .rr-selector-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.65rem !important;
+  }
+
+  .rr-selector-actions > * {
+    width: 100% !important;
+  }
+
+  .rr-brand-cta {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    padding: 1.25rem !important;
+  }
+
+  .rr-brand-cta__actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    margin-top: 0 !important;
+  }
+
+  .rr-brand-cta__actions > * {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .rr-mobile-header__logo {
+    width: 42px !important;
+    height: 42px !important;
+    flex-basis: 42px !important;
+  }
+
+  .rr-mobile-header__action {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+  }
+
+  .rr-mobile-header__copy strong {
+    font-size: 0.96rem !important;
+  }
+}
+
+/* ---------- Mobile filters: class-driven bottom sheet ---------- */
+.rr-mobile-filter-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 300 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  background: rgba(23, 18, 15, 0.58) !important;
+  backdrop-filter: blur(4px);
+}
+
+.rr-mobile-filter-sheet {
+  position: fixed !important;
+  inset: auto 0 0 0 !important;
+  z-index: 301 !important;
+  display: flex !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: min(88dvh, 760px) !important;
+  max-height: calc(100dvh - env(safe-area-inset-top, 0px) - 0.5rem) !important;
+  overflow: hidden !important;
+  border: 2px solid rgba(43, 23, 15, 0.78) !important;
+  border-bottom: 0 !important;
+  border-radius: 1.4rem 1.4rem 0 0 !important;
+  background: #fffdf8 !important;
+  box-shadow: 0 -20px 55px rgba(23, 18, 15, 0.24) !important;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(0, 102%, 0) !important;
+  transition: transform 0.28s ease, visibility 0.28s ease !important;
+}
+
+.rr-mobile-filter-sheet.is-open {
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+.rr-mobile-filter-sheet__header,
+.rr-mobile-filter-sheet__footer {
+  flex: 0 0 auto;
+  background: #fffdf8 !important;
+}
+
+.rr-mobile-filter-sheet__body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+
+/* ---------- Cart drawer: natural document flow, no artificial empty row ---------- */
+.rr-aside--cart .rr-aside__content {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+
+.rr-drawer-cart--aside {
+  display: flex !important;
+  height: auto !important;
+  min-height: 100% !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+}
+
+.rr-drawer-cart--aside .rr-drawer-cart__toggle,
+.rr-drawer-cart--aside .rr-drawer-cart__items,
+.rr-drawer-cart--aside .rr-drawer-cart__summary {
+  flex: 0 0 auto !important;
+}
+
+.rr-drawer-cart--aside .rr-drawer-cart__items {
+  min-height: auto !important;
+  overflow: visible !important;
+}
+
+.rr-drawer-cart--aside .rr-drawer-cart__items-scroll {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.rr-drawer-cart--aside .rr-drawer-cart__summary {
+  position: static !important;
+  inset: auto !important;
+  margin-top: 0 !important;
+}
+
+.rr-drawer-cart--aside .rr-cart-line-item {
+  min-height: 0 !important;
+}
+
+@media (max-width: 767px) {
+  .rr-aside--cart {
+    right: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    border-left: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .rr-aside--cart .rr-aside__header {
+    min-height: 68px !important;
+  }
+
+  .rr-drawer-cart--aside {
+    padding: 0.75rem !important;
+  }
+
+  .rr-drawer-cart--aside .rr-cart-line-item__main {
+    grid-template-columns: 82px minmax(0, 1fr) !important;
+  }
+}
+
+/* Remove double mobile gutters on brand/guide/selector pages. */
+@media (max-width: 767px) {
+  .rr-brand-section,
+  .rr-content-page,
+  .rr-policy-page {
+    padding-inline: 0.75rem !important;
+  }
+
+  .rr-brand-page__inner,
+  .rr-content-page__inner,
+  .rr-policy-shell {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: 0 !important;
+  }
+
+  .rr-brand-card,
+  .rr-brand-cta,
+  .rr-selector-progress,
+  .rr-selector-card {
+    max-width: 100% !important;
+  }
+}

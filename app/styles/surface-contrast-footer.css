@@ -1,0 +1,218 @@
+/* ============================================================
+   Roof Roof — Dark Surface & Footer Final Fix
+   Final source of truth for dark-surface contrast and footer grid.
+   ============================================================ */
+
+/* Philosophy: guarantee readable contrast on the dark feature card. */
+body.rr-site .rr-dark-surface,
+body.rr-site .rr-dark-surface * {
+  box-sizing: border-box;
+}
+
+body.rr-site .rr-dark-surface :where(h1, h2, h3, h4, h5, h6, strong) {
+  background: none !important;
+  background-image: none !important;
+  color: #fffdf8 !important;
+  -webkit-text-fill-color: #fffdf8 !important;
+  text-shadow: none !important;
+}
+
+body.rr-site .rr-dark-surface :where(p, li, small) {
+  color: rgba(255, 253, 248, 0.78) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+body.rr-site .rr-dark-surface span:not(.rr-coming-soon-badge):not(.rr-button) {
+  color: rgba(255, 253, 248, 0.7) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+body.rr-site .rr-dark-surface [class*='statementCopy'] h3 {
+  max-width: 18ch;
+  color: #fffdf8 !important;
+  -webkit-text-fill-color: #fffdf8 !important;
+  font-size: clamp(1.85rem, 3.2vw, 3.15rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.035em !important;
+  text-wrap: balance;
+}
+
+body.rr-site .rr-dark-surface [class*='statementCopy'] {
+  margin-block: clamp(2.25rem, 5vw, 4.75rem) 1.75rem !important;
+}
+
+body.rr-site .rr-dark-surface [class*='statementLabel'] {
+  color: rgba(255, 253, 248, 0.68) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+body.rr-site .rr-dark-surface [class*='statementSignature'] strong {
+  color: #ffb11b !important;
+  -webkit-text-fill-color: #ffb11b !important;
+}
+
+/* Footer: protect it from generic black-title and fluid-heading rules. */
+body.rr-site .rr-footer {
+  overflow: clip;
+  background: #27120b !important;
+  color: #fffdf8;
+}
+
+body.rr-site .rr-footer__inner {
+  width: min(calc(100% - (2 * clamp(1rem, 4vw, 2rem))), 1320px) !important;
+  padding-top: clamp(3rem, 6vw, 5rem) !important;
+}
+
+body.rr-site .rr-footer__grid {
+  display: grid !important;
+  grid-template-columns: minmax(280px, 1.35fr) repeat(3, minmax(180px, 0.8fr)) !important;
+  align-items: start !important;
+  gap: clamp(2rem, 3.5vw, 4rem) !important;
+}
+
+body.rr-site .rr-footer__grid > * {
+  min-width: 0;
+}
+
+body.rr-site .rr-footer__brand {
+  max-width: 38rem;
+}
+
+body.rr-site .rr-footer__title {
+  display: block;
+  max-width: 16ch;
+  margin: 0 0 1.15rem !important;
+  background: none !important;
+  background-image: none !important;
+  color: #ffd65a !important;
+  -webkit-text-fill-color: #ffd65a !important;
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: clamp(0.78rem, 0.2vw + 0.72rem, 0.92rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  text-wrap: pretty !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
+
+body.rr-site .rr-footer :where(p, a, li, span) {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+body.rr-site .rr-footer__copy {
+  max-width: 36rem;
+  color: rgba(255, 253, 248, 0.76) !important;
+  -webkit-text-fill-color: currentColor !important;
+  font-size: clamp(0.9rem, 0.25vw + 0.84rem, 1rem) !important;
+  line-height: 1.7 !important;
+}
+
+body.rr-site .rr-footer__links {
+  gap: 0.78rem !important;
+}
+
+body.rr-site .rr-footer__links a,
+body.rr-site .rr-footer__legal a,
+body.rr-site .rr-footer .rr-disabled-link {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  color: rgba(255, 253, 248, 0.82) !important;
+  -webkit-text-fill-color: currentColor !important;
+  font-size: clamp(0.88rem, 0.18vw + 0.84rem, 0.98rem) !important;
+  line-height: 1.45 !important;
+  text-wrap: pretty;
+}
+
+body.rr-site .rr-footer__links a:hover,
+body.rr-site .rr-footer__legal a:hover {
+  color: #ffd65a !important;
+  -webkit-text-fill-color: #ffd65a !important;
+}
+
+body.rr-site .rr-footer__social a {
+  color: #fffdf8 !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+body.rr-site .rr-footer__trust span {
+  color: rgba(255, 253, 248, 0.88) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+body.rr-site .rr-footer__bottom p {
+  color: rgba(255, 253, 248, 0.58) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+@media (max-width: 1180px) {
+  body.rr-site .rr-footer__grid {
+    grid-template-columns: minmax(260px, 1.2fr) repeat(2, minmax(190px, 1fr)) !important;
+  }
+
+  body.rr-site .rr-footer__brand {
+    grid-row: span 2;
+  }
+}
+
+@media (max-width: 920px) {
+  body.rr-site .rr-footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  body.rr-site .rr-footer__brand {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  body.rr-site .rr-footer__title {
+    max-width: none;
+  }
+}
+
+@media (max-width: 767px) {
+  body.rr-site .rr-dark-surface [class*='statementCopy'] {
+    margin-block: 2rem 1.35rem !important;
+  }
+
+  body.rr-site .rr-dark-surface [class*='statementCopy'] h3 {
+    max-width: 15ch;
+    font-size: clamp(1.7rem, 8vw, 2.45rem) !important;
+  }
+
+  body.rr-site .rr-footer__inner {
+    width: min(calc(100% - 2rem), 680px) !important;
+    padding-top: 2.5rem !important;
+  }
+
+  body.rr-site .rr-footer__grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.75rem !important;
+  }
+
+  body.rr-site .rr-footer__desktop-column {
+    display: none !important;
+  }
+
+  body.rr-site .rr-footer__mobile-columns {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+
+  body.rr-site .rr-footer__mobile-column summary {
+    color: #fffdf8 !important;
+    -webkit-text-fill-color: #fffdf8 !important;
+    font-size: 0.92rem !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+  }
+}

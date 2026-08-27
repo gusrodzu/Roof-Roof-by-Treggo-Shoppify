@@ -1,5 +1,12 @@
-import {createContext, useCallback, useContext, useEffect, useMemo, useState} from 'react';
-import {CartForm, Image, Money} from '@shopify/hydrogen';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import {Image, Money} from '@shopify/hydrogen';
 const ProductComparisonContext = createContext(null);
 const STORAGE_KEY = 'roofroof-product-comparison';
 const MAX_PRODUCTS = 3;
@@ -94,25 +101,28 @@ export function ProductComparisonProvider({children}) {
     [compareProducts],
   );
 
-  const value = useMemo(() => ({
-    compareProducts,
-    maxProducts: MAX_PRODUCTS,
-    showCompare,
-    setShowCompare,
-    addToCompare,
-    removeFromCompare,
-    toggleCompare,
-    clearCompare,
-    isCompared,
-  }), [
-    compareProducts,
-    showCompare,
-    addToCompare,
-    removeFromCompare,
-    toggleCompare,
-    clearCompare,
-    isCompared,
-  ]);
+  const value = useMemo(
+    () => ({
+      compareProducts,
+      maxProducts: MAX_PRODUCTS,
+      showCompare,
+      setShowCompare,
+      addToCompare,
+      removeFromCompare,
+      toggleCompare,
+      clearCompare,
+      isCompared,
+    }),
+    [
+      compareProducts,
+      showCompare,
+      addToCompare,
+      removeFromCompare,
+      toggleCompare,
+      clearCompare,
+      isCompared,
+    ],
+  );
 
   return (
     <ProductComparisonContext.Provider value={value}>
@@ -127,7 +137,9 @@ export function useProductComparison() {
   const context = useContext(ProductComparisonContext);
 
   if (!context) {
-    throw new Error('useProductComparison must be used inside ProductComparisonProvider');
+    throw new Error(
+      'useProductComparison must be used inside ProductComparisonProvider',
+    );
   }
 
   return context;
@@ -138,18 +150,15 @@ export function ProductCompareButton({
   size = 'sm',
   fullWidth = false,
 }) {
-  const {
-    toggleCompare,
-    isCompared,
-    compareProducts,
-    maxProducts,
-  } = useProductComparison();
+  const {toggleCompare, isCompared, compareProducts, maxProducts} =
+    useProductComparison();
 
   const compared = isCompared(product?.id);
   const limitReached = compareProducts.length >= maxProducts && !compared;
 
   return (
     <button
+      className="rr-compare-button rr-button rr-button--outline"
       type="button"
       onClick={() => toggleCompare(product)}
       disabled={limitReached}
@@ -164,7 +173,7 @@ export function ProductCompareButton({
         border: `3px solid ${compared ? '#F5A623' : '#000000'}`,
         background: compared ? '#fff8ee' : '#000000',
         color: compared ? '#8a5a00' : '#ffffff',
-         borderRadius: '10rem',
+        borderRadius: '10rem',
         padding: size === 'lg' ? '0.75rem 1rem' : '0.55rem 0.75rem',
         fontSize: size === 'lg' ? '0.875rem' : '0.75rem',
         fontWeight: 700,
@@ -172,22 +181,25 @@ export function ProductCompareButton({
         opacity: limitReached ? 0.45 : 1,
       }}
     >
-      {compared ? '✓ En comparación' : '＋ Comparar Producto'}
+      <span className="rr-compare-button__label rr-compare-button__label--full">
+        {compared ? '✓ En comparación' : '＋ Comparar producto'}
+      </span>
+      <span className="rr-compare-button__label rr-compare-button__label--compact">
+        {compared ? '✓ Comparando' : '＋ Comparar'}
+      </span>
     </button>
   );
 }
 
 function ProductComparisonBar() {
-  const {
-    compareProducts,
-    clearCompare,
-    setShowCompare,
-  } = useProductComparison();
+  const {compareProducts, clearCompare, setShowCompare} =
+    useProductComparison();
 
   if (!compareProducts.length) return null;
 
   return (
     <div
+      className="rr-compare-bar rr-ui-card"
       role="region"
       aria-label="Comparador de productos"
       style={{
@@ -199,7 +211,7 @@ function ProductComparisonBar() {
         width: 'min(680px, calc(100vw - 2rem))',
         background: '#ffffff',
         color: '#000000',
-         borderRadius: '10rem',
+        borderRadius: '10rem',
         padding: '0.875rem 1rem',
         boxShadow: '0 16px 40px rgba(44,24,16,0.25)',
         display: 'flex',
@@ -208,15 +220,21 @@ function ProductComparisonBar() {
         gap: '0.75rem',
       }}
     >
-      <div style={{minWidth: 0}}>
+      <div className="rr-compare-bar__summary" style={{minWidth: 0}}>
         <strong style={{fontSize: '0.875rem'}}>Comparar productos</strong>
-        <span style={{fontSize: '0.75rem', opacity: 0.75, marginLeft: '0.5rem'}}>
+        <span
+          style={{fontSize: '0.75rem', opacity: 0.75, marginLeft: '0.5rem'}}
+        >
           {compareProducts.length}/3 seleccionados
         </span>
       </div>
 
-      <div style={{display: 'flex', gap: '0.5rem', flexShrink: 0}}>
+      <div
+        className="rr-compare-bar__actions"
+        style={{display: 'flex', gap: '0.5rem', flexShrink: 0}}
+      >
         <button
+          className="rr-button rr-button--outline"
           type="button"
           onClick={clearCompare}
           style={{
@@ -233,6 +251,7 @@ function ProductComparisonBar() {
         </button>
 
         <button
+          className="rr-button rr-button--brand"
           type="button"
           onClick={() => setShowCompare(true)}
           disabled={compareProducts.length < 2}
@@ -255,21 +274,17 @@ function ProductComparisonBar() {
 }
 
 function ProductComparisonModal() {
-  const {
-    compareProducts,
-    showCompare,
-    setShowCompare,
-    removeFromCompare,
-  } = useProductComparison();
+  const {compareProducts, showCompare, setShowCompare, removeFromCompare} =
+    useProductComparison();
 
   if (!showCompare) return null;
 
   return (
     <div
+      className="rr-compare-overlay"
       role="dialog"
       aria-modal="true"
       aria-labelledby="product-comparison-title"
-      onClick={() => setShowCompare(false)}
       style={{
         position: 'fixed',
         inset: 0,
@@ -281,9 +296,23 @@ function ProductComparisonModal() {
         padding: '1rem',
       }}
     >
-      <div
-        onClick={(event) => event.stopPropagation()}
+      <button
+        type="button"
+        aria-label="Cerrar comparador"
+        onClick={() => setShowCompare(false)}
         style={{
+          position: 'absolute',
+          inset: 0,
+          border: 0,
+          background: 'transparent',
+          cursor: 'default',
+        }}
+      />
+      <div
+        className="rr-compare-modal rr-ui-card"
+        style={{
+          position: 'relative',
+          zIndex: 1,
           width: 'min(1000px, 100%)',
           maxHeight: '90vh',
           overflow: 'auto',
@@ -293,22 +322,27 @@ function ProductComparisonModal() {
           boxShadow: '0 24px 70px rgba(0,0,0,0.25)',
         }}
       >
-        <div style={{
-          display: 'flex',
-          alignItems: 'flex-start',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          marginBottom: '1.25rem',
-        }}>
+        <div
+          className="rr-compare-modal__header"
+          style={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            marginBottom: '1.25rem',
+          }}
+        >
           <div>
-            <p style={{
-              fontSize: '11px',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              color: '#000000',
-              margin: '0 0 0.35rem',
-            }}>
+            <p
+              style={{
+                fontSize: '11px',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '2px',
+                color: '#000000',
+                margin: '0 0 0.35rem',
+              }}
+            >
               Comparador
             </p>
             <h2
@@ -325,6 +359,7 @@ function ProductComparisonModal() {
           </div>
 
           <button
+            className="rr-icon-button"
             type="button"
             onClick={() => setShowCompare(false)}
             aria-label="Cerrar comparador"
@@ -343,11 +378,14 @@ function ProductComparisonModal() {
           </button>
         </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: `repeat(${Math.max(compareProducts.length, 1)}, minmax(0, 1fr))`,
-          gap: '0.75rem',
-        }}>
+        <div
+          className="rr-compare-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${Math.max(compareProducts.length, 1)}, minmax(0, 1fr))`,
+            gap: '0.75rem',
+          }}
+        >
           {compareProducts.map((product) => (
             <CompareCard
               key={product.id}
@@ -363,52 +401,61 @@ function ProductComparisonModal() {
 
 function CompareCard({product, onRemove}) {
   const price = product.priceRange?.minVariantPrice;
-  const available = product.variants?.nodes?.some((variant) => variant.availableForSale) ?? false;
+  const available =
+    product.variants?.nodes?.some((variant) => variant.availableForSale) ??
+    false;
 
   return (
-    <article style={{
-      border: '1px solid #e8e4dc',
-      borderRadius: '0.75rem',
-      overflow: 'hidden',
-      background: '#fff',
-      minWidth: 0,
-    }}>
-      <div style={{
-        height: '150px',
-        background: '#f5f7fa',
-        position: 'relative',
-      }}>
-       {product.featuredImage ? (
-  <Image
-    data={product.featuredImage}
-    alt={product.featuredImage.altText || product.title}
-    sizes="(min-width: 768px) 280px, 45vw"
-    style={{
-      width: '100%',
-      height: '100%',
-      objectFit: 'contain',
-      padding: '0.75rem',
-    }}
-  />
-) : (
-  <div
-    aria-hidden="true"
-    style={{
-      width: '100%',
-      height: '100%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: '#9a8d85',
-      fontSize: '0.75rem',
-      fontWeight: 700,
-    }}
-  >
-    Sin imagen
-  </div>
-)}
+    <article
+      className="rr-compare-card rr-ui-card"
+      style={{
+        border: '1px solid #e8e4dc',
+        borderRadius: '0.75rem',
+        overflow: 'hidden',
+        background: '#fff',
+        minWidth: 0,
+      }}
+    >
+      <div
+        className="rr-compare-card__media"
+        style={{
+          height: '150px',
+          background: '#f5f7fa',
+          position: 'relative',
+        }}
+      >
+        {product.featuredImage ? (
+          <Image
+            data={product.featuredImage}
+            alt={product.featuredImage.altText || product.title}
+            sizes="(min-width: 768px) 280px, 45vw"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              padding: '0.75rem',
+            }}
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#9a8d85',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+            }}
+          >
+            Sin imagen
+          </div>
+        )}
 
         <button
+          className="rr-icon-button"
           type="button"
           onClick={onRemove}
           aria-label={`Quitar ${product.title} del comparador`}
@@ -430,30 +477,37 @@ function CompareCard({product, onRemove}) {
         </button>
       </div>
 
-      <div style={{padding: '0.875rem'}}>
-        <h3 style={{
-          fontSize: '0.875rem',
-          fontWeight: 800,
-          color: '#2C1810',
-          lineHeight: 1.35,
-          margin: '0 0 0.75rem',
-        }}>
+      <div className="rr-compare-card__body" style={{padding: '0.875rem'}}>
+        <h3
+          style={{
+            fontSize: '0.875rem',
+            fontWeight: 800,
+            color: '#2C1810',
+            lineHeight: 1.35,
+            margin: '0 0 0.75rem',
+          }}
+        >
           {product.title}
         </h3>
 
         {price && (
-          <div style={{
-            fontSize: '1rem',
-            fontWeight: 800,
-            color: '#2C1810',
-            marginBottom: '0.75rem',
-          }}>
+          <div
+            style={{
+              fontSize: '1rem',
+              fontWeight: 800,
+              color: '#2C1810',
+              marginBottom: '0.75rem',
+            }}
+          >
             <Money data={price} />
           </div>
         )}
 
         <CompareRow label="Marca" value={product.vendor || '—'} />
-        <CompareRow label="Disponibilidad" value={available ? 'Disponible' : 'Agotado'} />
+        <CompareRow
+          label="Disponibilidad"
+          value={available ? 'Disponible' : 'Agotado'}
+        />
         <CompareRow
           label="Descripción"
           value={
@@ -485,26 +539,33 @@ function CompareCard({product, onRemove}) {
 
 function CompareRow({label, value}) {
   return (
-    <div style={{
-      paddingTop: '0.55rem',
-      marginTop: '0.55rem',
-      borderTop: '1px solid #f0ece7',
-    }}>
-      <div style={{
-        fontSize: '0.6875rem',
-        fontWeight: 800,
-        textTransform: 'uppercase',
-        letterSpacing: '0.5px',
-        color: '#9a8d85',
-        marginBottom: '0.2rem',
-      }}>
+    <div
+      className="rr-compare-row"
+      style={{
+        paddingTop: '0.55rem',
+        marginTop: '0.55rem',
+        borderTop: '1px solid #f0ece7',
+      }}
+    >
+      <div
+        style={{
+          fontSize: '0.6875rem',
+          fontWeight: 800,
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px',
+          color: '#9a8d85',
+          marginBottom: '0.2rem',
+        }}
+      >
         {label}
       </div>
-      <div style={{
-        fontSize: '0.75rem',
-        color: '#4f4038',
-        lineHeight: 1.45,
-      }}>
+      <div
+        style={{
+          fontSize: '0.75rem',
+          color: '#4f4038',
+          lineHeight: 1.45,
+        }}
+      >
         {value}
       </div>
     </div>

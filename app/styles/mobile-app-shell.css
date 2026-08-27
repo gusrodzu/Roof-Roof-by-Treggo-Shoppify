@@ -1,0 +1,566 @@
+/* Roof Roof — Mobile App Shell */
+@media (max-width: 767px) {
+  :root {
+    --rr-app-bg: #f4f1e9;
+    --rr-app-surface: #fffdf8;
+    --rr-app-surface-strong: #fff;
+    --rr-app-ink: #17120f;
+    --rr-app-muted: #746b64;
+    --rr-app-accent: #f6a800;
+    --rr-app-border: rgba(23, 18, 15, 0.82);
+    --rr-app-soft-border: rgba(23, 18, 15, 0.12);
+    --rr-app-radius: 22px;
+    --rr-app-shadow: 0 8px 26px rgba(23, 18, 15, 0.09);
+    --rr-mobile-bottom-nav: 82px;
+    --bottom-nav-height: var(--rr-mobile-bottom-nav);
+  }
+
+  html {
+    background: var(--rr-app-bg);
+  }
+
+  body.rr-site {
+    background:
+      radial-gradient(
+        circle at 10% 4%,
+        rgba(246, 168, 0, 0.1),
+        transparent 14rem
+      ),
+      var(--rr-app-bg) !important;
+    color: var(--rr-app-ink);
+  }
+
+  .rr-announcement-bar {
+    display: none !important;
+  }
+
+  .rr-site-header {
+    position: sticky !important;
+    top: 0;
+    z-index: 80 !important;
+    filter: none !important;
+  }
+
+  .rr-header-main {
+    padding: calc(0.6rem + env(safe-area-inset-top, 0px)) 0.85rem 0.75rem !important;
+    border: 0 !important;
+    border-bottom: 1.5px solid var(--rr-app-soft-border) !important;
+    border-radius: 0 0 24px 24px;
+    background: rgba(255, 248, 225, 0.96) !important;
+    box-shadow: 0 8px 24px rgba(23, 18, 15, 0.1) !important;
+    backdrop-filter: blur(18px) saturate(1.1);
+  }
+
+  .rr-header-main::after {
+    display: none !important;
+  }
+  .rr-mobile-header {
+    gap: 0.65rem !important;
+    width: 100% !important;
+  }
+  .rr-mobile-header__brand-row {
+    min-height: 44px !important;
+    gap: 0.75rem !important;
+  }
+
+  .rr-mobile-header__identity {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--rr-app-ink);
+    text-decoration: none;
+  }
+
+  .rr-mobile-header__logo {
+    display: grid !important;
+    width: 48px !important;
+    height: 48px;
+    flex: 0 0 48px;
+    place-items: center;
+    overflow: hidden;
+    border: 1.5px solid var(--rr-app-border);
+    border-radius: 16px;
+    background: var(--rr-app-accent);
+    box-shadow: 3px 4px 0 rgba(23, 18, 15, 0.12);
+  }
+
+  .rr-mobile-header__logo img {
+    width: 100% !important;
+    height: 100%;
+    max-width: none !important;
+    object-fit: cover;
+    filter: none !important;
+  }
+
+  .rr-mobile-header__copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    line-height: 1.05;
+  }
+
+  .rr-mobile-header__copy strong {
+    overflow: hidden;
+    color: var(--rr-app-ink);
+    font-family: var(--rr-display);
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rr-mobile-header__copy small {
+    margin-top: 0.2rem;
+    overflow: hidden;
+    color: var(--rr-app-muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rr-mobile-header__actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .rr-mobile-header__action {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    min-height: 44px !important;
+    place-items: center;
+    padding: 0;
+    border: 1.5px solid var(--rr-app-border) !important;
+    border-radius: 15px !important;
+    background: var(--rr-app-surface-strong) !important;
+    color: var(--rr-app-ink) !important;
+    box-shadow: 2px 3px 0 rgba(23, 18, 15, 0.1) !important;
+    text-decoration: none;
+  }
+
+  .rr-mobile-header__action:active {
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0 rgba(23, 18, 15, 0.1) !important;
+  }
+
+  .rr-header-search-form {
+    min-height: 48px !important;
+    padding: 3px 3px 3px 0.7rem !important;
+    border: 1.5px solid var(--rr-app-border) !important;
+    border-radius: 17px !important;
+    background: var(--rr-app-surface-strong) !important;
+    box-shadow: 0 5px 16px rgba(23, 18, 15, 0.08) !important;
+  }
+
+  .rr-header-search-input {
+    min-height: 40px !important;
+    padding: 0.6rem 0.45rem !important;
+    color: var(--rr-app-ink) !important;
+  }
+
+  .rr-header-search-submit {
+    width: 42px !important;
+    min-width: 42px !important;
+    height: 42px !important;
+    border: 1.5px solid var(--rr-app-border) !important;
+    border-radius: 14px !important;
+    background: var(--rr-app-accent) !important;
+  }
+
+  .rr-page-main {
+    min-height: calc(100dvh - var(--header-height, 0px));
+    background: transparent;
+  }
+
+  .rr-home {
+    display: flow-root;
+    padding-top: 0.25rem;
+  }
+
+  .rr-home-hero__mobile-side,
+.rr-experience--account,
+section[aria-labelledby="roof-philosophy-title"],
+.discover-banner,
+.discover-subheader,
+.rr-life-stages__banner,
+.rr-footer{
+    display: none !important;
+  }
+
+  .trust-bar {
+    width: auto !important;
+    margin: 0.7rem 0.75rem !important;
+    border: 1.5px solid var(--rr-app-border) !important;
+    border-radius: 18px !important;
+    background: var(--rr-app-ink) !important;
+    box-shadow: var(--rr-app-shadow) !important;
+  }
+
+  .trust-bar-inner {
+    min-height: 54px !important;
+    padding: 0.55rem 0.9rem !important;
+  }
+  .trust-mobile-slider {
+    min-height: 34px !important;
+  }
+  .trust-label {
+    font-size: 0.78rem !important;
+  }
+  .trust-dots {
+    margin-top: 0.35rem !important;
+  }
+
+  .rr-home-hero {
+    margin: 0 0.75rem !important;
+    padding: 0 !important;
+  }
+
+  .rr-home-hero__main {
+    aspect-ratio: 1.5 / 1 !important;
+    border: 1.5px solid var(--rr-app-border) !important;
+    border-radius: var(--rr-app-radius) !important;
+    background: var(--rr-app-surface);
+    box-shadow: var(--rr-app-shadow) !important;
+  }
+
+  .rr-home-hero__main > a > img {
+    min-height: 0 !important;
+  }
+
+  .rr-home
+    :where(
+      .rr-experience,
+      .discover-section,
+      .rr-promo-section,
+      .rr-life-stages,
+      .rr-interest-section
+    ) {
+    width: auto !important;
+    margin: 0.75rem !important;
+    padding: 1.15rem !important;
+    overflow: hidden;
+    border: 1.5px solid var(--rr-app-soft-border);
+    border-radius: var(--rr-app-radius) !important;
+    background: var(--rr-app-surface-strong) !important;
+    box-shadow: var(--rr-app-shadow);
+  }
+
+  .rr-experience--tools::after,
+  .rr-experience--needs::after,
+  .discover-paws {
+    display: none !important;
+  }
+
+  .rr-section-heading,
+  .rr-promo-section__title,
+  .rr-life-stages__title,
+  .rr-interest-section__title,
+  .discover-title {
+    margin-bottom: 1rem !important;
+  }
+
+  .rr-section-heading--split {
+    display: block !important;
+  }
+  .rr-section-heading--split > p {
+    display: none !important;
+  }
+
+  .rr-section-heading h2,
+  .rr-promo-section__title,
+  .rr-life-stages__title,
+  .rr-interest-section__title,
+  .discover-title {
+    font-size: clamp(1.45rem, 7vw, 1.9rem) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.025em !important;
+  }
+
+  .rr-kicker {
+    margin-bottom: 0.65rem !important;
+    padding: 0.36rem 0.65rem !important;
+    font-size: 0.62rem !important;
+  }
+
+  .rr-experience-tools-grid,
+  .rr-promo-grid,
+  .rr-interest-grid,
+  .discover-grid,
+  .rr-life-stages__grid {
+    display: grid !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: min(80vw, 310px) !important;
+    grid-template-columns: none !important;
+    gap: 0.75rem !important;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    margin-inline: -0.15rem;
+    padding: 0.2rem 0.15rem 0.8rem !important;
+    scroll-padding-inline: 0.15rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .rr-experience-tools-grid::-webkit-scrollbar,
+  .rr-promo-grid::-webkit-scrollbar,
+  .rr-interest-grid::-webkit-scrollbar,
+  .discover-grid::-webkit-scrollbar,
+  .rr-life-stages__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rr-experience-tool,
+  .rr-promo-card,
+  .rr-interest-card-wrap,
+  .rr-discover-card,
+  .rr-life-stage-card {
+    width: auto !important;
+    min-width: 0 !important;
+    scroll-snap-align: start;
+  }
+
+  .rr-experience-tool {
+    min-height: 245px !important;
+  }
+
+  .rr-needs-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.65rem !important;
+  }
+
+  .rr-needs-grid .rr-need-card {
+    min-height: 150px !important;
+    grid-template-columns: 1fr !important;
+    align-content: start;
+    justify-items: center;
+    gap: 0.65rem !important;
+    padding: 0.9rem !important;
+    text-align: center;
+  }
+
+  .rr-needs-grid .rr-need-card > svg:last-child {
+    display: none;
+  }
+
+  .rr-needs-grid .rr-need-card div {
+    display: grid;
+    gap: 0.35rem;
+    justify-items: center;
+  }
+
+  .rr-needs-grid .rr-need-card strong {
+    font-size: 0.9rem !important;
+  }
+
+  .rr-needs-grid .rr-need-card div > span {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 0.75rem !important;
+    line-height: 1.4;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .rr-collection-layout,
+  .rr-product-layout,
+  .rr-cart-container,
+  .rr-content-page,
+  .rr-brand-page {
+    padding-inline: 0.75rem !important;
+  }
+
+  .rr-collection-toolbar {
+    top: calc(var(--header-height, 0px) + 0.45rem) !important;
+    border-radius: 18px !important;
+    background: rgba(255, 253, 248, 0.96) !important;
+    box-shadow: 0 8px 24px rgba(23, 18, 15, 0.12) !important;
+  }
+
+  .rr-products-grid {
+    gap: 0.75rem !important;
+  }
+
+  .rr-collection-card,
+  .rr-product-card {
+    border-radius: 18px !important;
+    box-shadow: 0 6px 18px rgba(23, 18, 15, 0.08) !important;
+  }
+
+  .rr-product-layout {
+    padding-top: 0.75rem !important;
+  }
+
+  .rr-product-media,
+  .rr-product-info-column,
+  .rr-product-guidance,
+  .rr-product-assurance-card {
+    border-radius: 20px !important;
+  }
+
+  .rr-mobile-purchase-bar {
+    right: 0.75rem !important;
+    bottom: calc(
+      var(--rr-mobile-bottom-nav) + env(safe-area-inset-bottom, 0px) + 0.45rem
+    ) !important;
+    left: 0.75rem !important;
+    border-radius: 18px !important;
+    background: rgba(255, 253, 248, 0.98) !important;
+    box-shadow: 0 14px 34px rgba(23, 18, 15, 0.2) !important;
+  }
+
+  .rr-aside--cart,
+  .rr-aside--search,
+  .rr-mobile-filter-sheet {
+    height: min(91dvh, 820px) !important;
+    border-radius: 26px 26px 0 0 !important;
+    background: var(--rr-app-surface) !important;
+  }
+
+  .rr-aside--mobile {
+    top: 0 !important;
+    height: 100dvh !important;
+    background: var(--rr-app-bg) !important;
+  }
+
+  .rr-mobile-menu {
+    background: var(--rr-app-bg) !important;
+  }
+
+  .rr-mobile-menu__header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    min-height: 72px !important;
+    padding: calc(0.75rem + env(safe-area-inset-top, 0px)) 1rem 0.75rem !important;
+    border-bottom: 1.5px solid var(--rr-app-soft-border);
+    background: rgba(255, 248, 225, 0.96) !important;
+    backdrop-filter: blur(18px);
+  }
+
+  .rr-mobile-menu nav {
+    padding: 0.85rem 0.75rem calc(1.25rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .rr-mobile-menu nav > div:first-child {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .rr-mobile-menu nav > div:first-child > * {
+    min-height: 104px !important;
+    border: 1.5px solid var(--rr-app-border) !important;
+    border-radius: 18px !important;
+    background: var(--rr-app-surface-strong) !important;
+    box-shadow: 2px 3px 0 rgba(23, 18, 15, 0.08);
+  }
+
+  .rr-bottom-nav {
+    height: calc(
+      var(--rr-mobile-bottom-nav) + env(safe-area-inset-bottom, 0px)
+    ) !important;
+    padding: 7px 9px calc(7px + env(safe-area-inset-bottom, 0px)) !important;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(244, 241, 233, 0.94) 30%
+    ) !important;
+    backdrop-filter: blur(14px);
+  }
+
+  .rr-bottom-nav__inner {
+    grid-template-columns:
+      minmax(0, 1fr) minmax(0, 1fr) 70px minmax(0, 1fr)
+      minmax(0, 1fr) !important;
+    gap: 3px !important;
+    height: 66px !important;
+    padding: 4px !important;
+    border: 1.5px solid var(--rr-app-border) !important;
+    border-radius: 22px !important;
+    background: rgba(255, 253, 248, 0.98) !important;
+    box-shadow: 0 10px 28px rgba(23, 18, 15, 0.16) !important;
+  }
+
+  .rr-bottom-nav__item {
+    min-height: 56px !important;
+    gap: 3px !important;
+    border-radius: 16px !important;
+  }
+
+  .rr-bottom-nav__item.is-active {
+    background: #fff1c5 !important;
+    color: var(--rr-app-ink) !important;
+  }
+
+  .rr-bottom-nav__item.is-active .rr-bottom-nav__icon {
+    color: #c86d00 !important;
+  }
+  .rr-bottom-nav__active-indicator {
+    display: none !important;
+  }
+
+  .rr-bottom-nav__cart-icon {
+    width: 56px !important;
+    height: 56px !important;
+    margin-top: -21px !important;
+    border: 1.5px solid var(--rr-app-border) !important;
+    background: var(--rr-app-accent) !important;
+    color: var(--rr-app-ink) !important;
+    box-shadow:
+      3px 5px 0 rgba(23, 18, 15, 0.12),
+      0 10px 22px rgba(23, 18, 15, 0.14) !important;
+  }
+
+  .rr-bottom-nav__cart-label {
+    margin-top: -1px !important;
+  }
+  .rr-bottom-nav__menu {
+    background: transparent !important;
+  }
+
+  .rr-breadcrumbs {
+    overflow-x: auto;
+    padding-block: 0.65rem !important;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  .rr-breadcrumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rr-brand-hero,
+  .rr-brand-cta,
+  .rr-selector-card,
+  .rr-cart-lines-card,
+  .rr-cart-summary-card,
+  .rr-filter-sidebar,
+  .rr-faq-card {
+    border-radius: 22px !important;
+    box-shadow: var(--rr-app-shadow) !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .rr-mobile-header__copy small {
+    display: none;
+  }
+  .rr-mobile-header__logo {
+    width: 44px !important;
+    height: 44px;
+    flex-basis: 44px;
+  }
+  .rr-mobile-header__action {
+    width: 42px;
+    height: 42px;
+  }
+  .rr-needs-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .rr-needs-grid .rr-need-card {
+    min-height: 118px !important;
+  }
+}

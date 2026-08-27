@@ -8,33 +8,37 @@ import {Image} from '@shopify/hydrogen';
 export function ProductImage({image}) {
   if (!image) {
     return (
-      <div style={{
-        aspectRatio: '1 / 1',
-        background: 'var(--surface-cool)',
-        borderRadius: '0.875rem',
-        border: '1.5px solid var(--border)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '3rem',
-        color: 'var(--ink-disabled)',
-      }}>
+      <div
+        style={{
+          aspectRatio: '1 / 1',
+          background: 'var(--surface-cool)',
+          borderRadius: '0.875rem',
+          border: '1.5px solid var(--border)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '3rem',
+          color: 'var(--ink-disabled)',
+        }}
+      >
         🐾
       </div>
     );
   }
 
   return (
-    <div style={{
-      aspectRatio: '1 / 1',
-      background: 'var(--surface-warm)',
-      borderRadius: '0.875rem',
-      border: '1.5px solid var(--border)',
-      overflow: 'hidden',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}>
+    <div
+      style={{
+        aspectRatio: '1 / 1',
+        background: 'var(--surface-warm)',
+        borderRadius: '0.875rem',
+        border: '1.5px solid var(--border)',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <Image
         alt={image.altText || 'Imagen del producto'}
         aspectRatio="1/1"

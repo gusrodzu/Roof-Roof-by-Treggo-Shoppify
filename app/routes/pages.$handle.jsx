@@ -57,7 +57,7 @@ async function loadCriticalData({context, request, params}) {
  * Make sure to not throw any errors here, as it will cause the page to 500.
  * @param {Route.LoaderArgs}
  */
-function loadDeferredData({context}) {
+function loadDeferredData() {
   return {};
 }
 
@@ -66,11 +66,14 @@ export default function Page() {
   const {page} = useLoaderData();
 
   return (
-    <div className="page">
-      <header>
+    <div className="page rr-content-page">
+      <header className="rr-content-page__hero">
         <h1>{page.title}</h1>
       </header>
-      <main dangerouslySetInnerHTML={{__html: page.body}} />
+      <main
+        className="rr-content-page__body rr-ui-card"
+        dangerouslySetInnerHTML={{__html: page.body}}
+      />
     </div>
   );
 }

@@ -1,10 +1,13 @@
 import {useState, useEffect} from 'react';
-import {Link} from 'react-router';
 import {Badge} from '~/components/design-system';
 
 export const meta = () => [
   {title: 'Ayuda — Roof Roof'},
-  {name: 'description', content: 'Preguntas frecuentes sobre envíos, pagos, productos y devoluciones en Roof Roof.'},
+  {
+    name: 'description',
+    content:
+      'Preguntas frecuentes sobre envíos, pagos, productos y devoluciones en Roof Roof.',
+  },
 ];
 
 const CATEGORIES = [
@@ -12,11 +15,19 @@ const CATEGORIES = [
     key: 'envios',
     label: 'Envíos',
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-        <rect x="1" y="3" width="15" height="13" rx="1"/>
-        <path d="M16 8h3.5a1 1 0 01.9.55L22 12v4h-6"/>
-        <circle cx="6" cy="18" r="2"/>
-        <circle cx="18" cy="18" r="2"/>
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        aria-hidden="true"
+      >
+        <rect x="1" y="3" width="15" height="13" rx="1" />
+        <path d="M16 8h3.5a1 1 0 01.9.55L22 12v4h-6" />
+        <circle cx="6" cy="18" r="2" />
+        <circle cx="18" cy="18" r="2" />
       </svg>
     ),
     color: '#e3eefb',
@@ -49,10 +60,18 @@ const CATEGORIES = [
     key: 'pagos',
     label: 'Pagos',
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-        <rect x="2" y="5" width="20" height="14" rx="2"/>
-        <line x1="2" y1="10" x2="22" y2="10"/>
-        <line x1="6" y1="15" x2="10" y2="15"/>
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        aria-hidden="true"
+      >
+        <rect x="2" y="5" width="20" height="14" rx="2" />
+        <line x1="2" y1="10" x2="22" y2="10" />
+        <line x1="6" y1="15" x2="10" y2="15" />
       </svg>
     ),
     color: '#e3f5e9',
@@ -81,9 +100,17 @@ const CATEGORIES = [
     key: 'productos',
     label: 'Productos',
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        aria-hidden="true"
+      >
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
       </svg>
     ),
     color: 'var(--surface-cream)',
@@ -116,10 +143,18 @@ const CATEGORIES = [
     key: 'devoluciones',
     label: 'Devoluciones',
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-        <path d="M3 9l4-4 4 4"/>
-        <path d="M7 5v8a4 4 0 004 4h6"/>
-        <path d="M21 15l-4 4-4-4"/>
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        aria-hidden="true"
+      >
+        <path d="M3 9l4-4 4 4" />
+        <path d="M7 5v8a4 4 0 004 4h6" />
+        <path d="M21 15l-4 4-4-4" />
       </svg>
     ),
     color: '#fbe3e0',
@@ -163,35 +198,64 @@ export default function AyudaPage() {
 
   return (
     <div style={{background: 'var(--surface-light)', minHeight: '100vh'}}>
-
       {/* ── Hero ── */}
-      <div style={{
-        background: 'var(--ink)',
-        padding: isMobile ? '2.5rem 1.25rem' : '4rem 2rem',
-        textAlign: 'center',
-      }}>
-        <p style={{fontSize: '0.8125rem', fontWeight: 700, color: 'var(--brand-cta)', textTransform: 'uppercase', letterSpacing: '1.5px', margin: '0 0 0.75rem'}}>
+      <div
+        style={{
+          background: 'var(--ink)',
+          padding: isMobile ? '2.5rem 1.25rem' : '4rem 2rem',
+          textAlign: 'center',
+        }}
+      >
+        <p
+          style={{
+            fontSize: '0.8125rem',
+            fontWeight: 700,
+            color: 'var(--brand-cta)',
+            textTransform: 'uppercase',
+            letterSpacing: '1.5px',
+            margin: '0 0 0.75rem',
+          }}
+        >
           Centro de ayuda
         </p>
-        <h1 style={{fontSize: isMobile ? '1.75rem' : '2.5rem', fontWeight: 900, color: '#fff', margin: '0 0 0.75rem', lineHeight: 1.2}}>
+        <h1
+          style={{
+            fontSize: isMobile ? '1.75rem' : '2.5rem',
+            fontWeight: 900,
+            color: '#fff',
+            margin: '0 0 0.75rem',
+            lineHeight: 1.2,
+          }}
+        >
           ¿En qué te podemos ayudar?
         </h1>
-        <p style={{fontSize: '1rem', color: 'rgba(232,228,220,0.7)', margin: '0 0 2rem'}}>
+        <p
+          style={{
+            fontSize: '1rem',
+            color: 'rgba(232,228,220,0.7)',
+            margin: '0 0 2rem',
+          }}
+        >
           Encuentra respuestas rápidas a las preguntas más frecuentes
         </p>
 
         {/* Tarjetas de categoría */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
-          gap: '0.75rem',
-          maxWidth: '860px',
-          margin: '0 auto',
-        }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
+            gap: '0.75rem',
+            maxWidth: '860px',
+            margin: '0 auto',
+          }}
+        >
           {CATEGORIES.map((cat) => (
             <button
               key={cat.key}
-              onClick={() => { setActiveCategory(cat.key); setOpenFaq(null); }}
+              onClick={() => {
+                setActiveCategory(cat.key);
+                setOpenFaq(null);
+              }}
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -200,14 +264,27 @@ export default function AyudaPage() {
                 padding: '1.25rem 0.75rem',
                 borderRadius: '1rem',
                 border: `2px solid ${activeCategory === cat.key ? 'var(--brand-cta)' : 'rgba(255,255,255,0.1)'}`,
-                background: activeCategory === cat.key ? 'rgba(245,166,35,0.12)' : 'rgba(255,255,255,0.05)',
+                background:
+                  activeCategory === cat.key
+                    ? 'rgba(245,166,35,0.12)'
+                    : 'rgba(255,255,255,0.05)',
                 cursor: 'pointer',
                 fontFamily: 'inherit',
                 transition: 'all 0.15s',
-                color: activeCategory === cat.key ? 'var(--brand-cta)' : 'rgba(232,228,220,0.7)',
+                color:
+                  activeCategory === cat.key
+                    ? 'var(--brand-cta)'
+                    : 'rgba(232,228,220,0.7)',
               }}
             >
-              <span style={{color: activeCategory === cat.key ? 'var(--brand-cta)' : 'rgba(232,228,220,0.6)'}}>
+              <span
+                style={{
+                  color:
+                    activeCategory === cat.key
+                      ? 'var(--brand-cta)'
+                      : 'rgba(232,228,220,0.6)',
+                }}
+              >
                 {cat.icon}
               </span>
               <span style={{fontSize: '0.875rem', fontWeight: 700}}>
@@ -219,23 +296,46 @@ export default function AyudaPage() {
       </div>
 
       {/* ── FAQ de la categoría activa ── */}
-      <div style={{maxWidth: '760px', margin: '0 auto', padding: isMobile ? '2rem 1rem' : '3rem 1.5rem'}}>
-
+      <div
+        style={{
+          maxWidth: '760px',
+          margin: '0 auto',
+          padding: isMobile ? '2rem 1rem' : '3rem 1.5rem',
+        }}
+      >
         {/* Header de categoría */}
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: '1rem',
-          marginBottom: '1.5rem',
-        }}>
-          <div style={{
-            width: '52px', height: '52px', borderRadius: '0.875rem',
-            background: activeData.color,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: activeData.iconColor, flexShrink: 0,
-          }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            marginBottom: '1.5rem',
+          }}
+        >
+          <div
+            style={{
+              width: '52px',
+              height: '52px',
+              borderRadius: '0.875rem',
+              background: activeData.color,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: activeData.iconColor,
+              flexShrink: 0,
+            }}
+          >
             {activeData.icon}
           </div>
           <div>
-            <h2 style={{fontSize: '1.25rem', fontWeight: 800, color: 'var(--ink)', margin: '0 0 0.25rem'}}>
+            <h2
+              style={{
+                fontSize: '1.25rem',
+                fontWeight: 800,
+                color: 'var(--ink)',
+                margin: '0 0 0.25rem',
+              }}
+            >
               {activeData.label}
             </h2>
             <Badge tone="neutral">{activeData.badge}</Badge>
@@ -243,12 +343,14 @@ export default function AyudaPage() {
         </div>
 
         {/* Acordeones */}
-        <div style={{display: 'flex', flexDirection: 'column', gap: '0.625rem'}}>
+        <div
+          style={{display: 'flex', flexDirection: 'column', gap: '0.625rem'}}
+        >
           {activeData.faqs.map((faq, i) => {
             const isOpen = openFaq === `${activeCategory}-${i}`;
             return (
               <div
-                key={i}
+                key={faq.question}
                 style={{
                   background: '#fff',
                   borderRadius: '0.875rem',
@@ -258,42 +360,62 @@ export default function AyudaPage() {
                 }}
               >
                 <button
-                  onClick={() => setOpenFaq(isOpen ? null : `${activeCategory}-${i}`)}
+                  onClick={() =>
+                    setOpenFaq(isOpen ? null : `${activeCategory}-${i}`)
+                  }
                   style={{
                     width: '100%',
-                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
                     gap: '1rem',
                     padding: '1.125rem 1.25rem',
-                    background: 'none', border: 'none',
-                    cursor: 'pointer', fontFamily: 'inherit',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontFamily: 'inherit',
                     textAlign: 'left',
                   }}
                 >
-                  <span style={{fontSize: '0.9375rem', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.4}}>
+                  <span
+                    style={{
+                      fontSize: '0.9375rem',
+                      fontWeight: 700,
+                      color: 'var(--ink)',
+                      lineHeight: 1.4,
+                    }}
+                  >
                     {faq.q}
                   </span>
                   <svg
-                    width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="var(--brand-cta)" strokeWidth="2.5" aria-hidden="true"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="var(--brand-cta)"
+                    strokeWidth="2.5"
+                    aria-hidden="true"
                     style={{
                       flexShrink: 0,
                       transition: 'transform 0.2s',
                       transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                     }}
                   >
-                    <polyline points="6 9 12 15 18 9"/>
+                    <polyline points="6 9 12 15 18 9" />
                   </svg>
                 </button>
 
                 {isOpen && (
-                  <div style={{
-                    padding: '0 1.25rem 1.25rem',
-                    fontSize: '0.9375rem',
-                    color: 'var(--ink-soft)',
-                    lineHeight: 1.75,
-                    borderTop: '1px solid var(--border-soft)',
-                    paddingTop: '1rem',
-                  }}>
+                  <div
+                    style={{
+                      padding: '0 1.25rem 1.25rem',
+                      fontSize: '0.9375rem',
+                      color: 'var(--ink-soft)',
+                      lineHeight: 1.75,
+                      borderTop: '1px solid var(--border-soft)',
+                      paddingTop: '1rem',
+                    }}
+                  >
                     {faq.a}
                   </div>
                 )}
@@ -303,22 +425,37 @@ export default function AyudaPage() {
         </div>
 
         {/* ── ¿No encontraste tu respuesta? ── */}
-        <div style={{
-          marginTop: '2.5rem',
-          background: 'var(--ink)',
-          borderRadius: '1.25rem',
-          padding: isMobile ? '1.5rem' : '2rem',
-          display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-          alignItems: isMobile ? 'flex-start' : 'center',
-          justifyContent: 'space-between',
-          gap: '1.25rem',
-        }}>
+        <div
+          style={{
+            marginTop: '2.5rem',
+            background: 'var(--ink)',
+            borderRadius: '1.25rem',
+            padding: isMobile ? '1.5rem' : '2rem',
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'flex-start' : 'center',
+            justifyContent: 'space-between',
+            gap: '1.25rem',
+          }}
+        >
           <div>
-            <h3 style={{fontSize: '1.125rem', fontWeight: 800, color: '#fff', margin: '0 0 0.375rem'}}>
+            <h3
+              style={{
+                fontSize: '1.125rem',
+                fontWeight: 800,
+                color: '#fff',
+                margin: '0 0 0.375rem',
+              }}
+            >
               ¿No encontraste lo que buscas?
             </h3>
-            <p style={{fontSize: '0.875rem', color: 'rgba(232,228,220,0.65)', margin: 0}}>
+            <p
+              style={{
+                fontSize: '0.875rem',
+                color: 'rgba(232,228,220,0.65)',
+                margin: 0,
+              }}
+            >
               Nuestro equipo está listo para ayudarte
             </p>
           </div>
@@ -328,35 +465,60 @@ export default function AyudaPage() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                background: '#25D366', color: '#fff',
-                fontWeight: 700, fontSize: '0.9375rem',
-                padding: '0.75rem 1.25rem', borderRadius: '999px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                background: '#25D366',
+                color: '#fff',
+                fontWeight: 700,
+                fontSize: '0.9375rem',
+                padding: '0.75rem 1.25rem',
+                borderRadius: '999px',
                 textDecoration: 'none',
                 boxShadow: '0 3px 0 rgba(0,0,0,0.2)',
                 transition: 'opacity 0.15s',
               }}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                <path d="M11.906 0C5.343 0 0 5.343 0 11.906c0 2.09.546 4.05 1.5 5.752L0 24l6.545-1.476A11.85 11.85 0 0011.906 23.812C18.469 23.812 23.812 18.47 23.812 11.906 23.812 5.343 18.469 0 11.906 0zm0 21.75a9.844 9.844 0 01-5.02-1.374l-.36-.214-3.733.842.876-3.638-.235-.374A9.844 9.844 0 012.063 11.906c0-5.43 4.413-9.844 9.843-9.844 5.43 0 9.844 4.414 9.844 9.844 0 5.43-4.414 9.844-9.844 9.844z"/>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                <path d="M11.906 0C5.343 0 0 5.343 0 11.906c0 2.09.546 4.05 1.5 5.752L0 24l6.545-1.476A11.85 11.85 0 0011.906 23.812C18.469 23.812 23.812 18.47 23.812 11.906 23.812 5.343 18.469 0 11.906 0zm0 21.75a9.844 9.844 0 01-5.02-1.374l-.36-.214-3.733.842.876-3.638-.235-.374A9.844 9.844 0 012.063 11.906c0-5.43 4.413-9.844 9.843-9.844 5.43 0 9.844 4.414 9.844 9.844 0 5.43-4.414 9.844-9.844 9.844z" />
               </svg>
               WhatsApp
             </a>
             <a
               href="mailto:ayuda@roofroof.mx"
               style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                background: 'rgba(255,255,255,0.1)', color: '#fff',
-                fontWeight: 700, fontSize: '0.9375rem',
-                padding: '0.75rem 1.25rem', borderRadius: '999px',
-                textDecoration: 'none', border: '1px solid rgba(255,255,255,0.2)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                background: 'rgba(255,255,255,0.1)',
+                color: '#fff',
+                fontWeight: 700,
+                fontSize: '0.9375rem',
+                padding: '0.75rem 1.25rem',
+                borderRadius: '999px',
+                textDecoration: 'none',
+                border: '1px solid rgba(255,255,255,0.2)',
                 transition: 'background 0.15s',
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                <polyline points="22,6 12,13 2,6"/>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+              >
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
               </svg>
               Email
             </a>
