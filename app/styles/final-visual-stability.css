@@ -3459,3 +3459,15 @@ body.rr-site .rr-drawer-cart--aside .rr-drawer-cart__empty > a .rr-button svg {
     font-size: 0.9rem !important;
   }
 }
+
+/* ========================================================================== 
+   FOOTER — WHITE COLUMN TITLES
+   ========================================================================== */
+body.rr-site .rr-footer__title,
+body.rr-site .rr-footer__mobile-column summary {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  background-image: none !important;
+  text-shadow: none !important;
+}

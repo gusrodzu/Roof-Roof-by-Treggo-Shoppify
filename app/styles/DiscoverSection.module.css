@@ -62,13 +62,13 @@
 
 .card {
   display: grid;
-  grid-template-rows: minmax(180px, 210px) 1fr;
+  grid-template-rows: minmax(210px, 238px) 1fr;
   min-width: 0;
   height: 100%;
   overflow: hidden;
   border: 2px solid rgba(43, 23, 15, 0.78);
   border-radius: 1.5rem;
-  background: #fffdf8;
+  background: #ffffff;
   color: #17120f;
   text-decoration: none;
   box-shadow: 5px 6px 0 rgba(43, 23, 15, 0.12);
@@ -93,25 +93,34 @@
 .media {
   display: grid;
   place-items: center;
+  align-content: center;
   min-width: 0;
   overflow: hidden;
-  padding: clamp(1rem, 2vw, 1.5rem);
-  border-bottom: 1.5px dashed rgba(43, 23, 15, 0.17);
-  background:
-    radial-gradient(
-      circle at 50% 100%,
-      rgba(255, 216, 77, 0.34),
-      transparent 48%
-    ),
-    #fff8ec;
+  padding: clamp(1.1rem, 2vw, 1.4rem) clamp(1rem, 2vw, 1.25rem) 0.9rem;
+  border-bottom: 1px solid rgba(43, 23, 15, 0.1);
+  background: #ffffff;
 }
 
 .image {
-  width: 100%;
-  height: 100%;
-  max-width: 190px;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 280px);
+  max-height: 182px;
   object-fit: contain;
-  filter: drop-shadow(0 10px 16px rgba(43, 23, 15, 0.15));
+  object-position: center center;
+  filter: none;
+}
+
+.media :global(img),
+.image :global(img) {
+  width: auto !important;
+  height: auto !important;
+  max-width: min(100%, 280px) !important;
+  max-height: 182px !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  margin-inline: auto !important;
+  filter: none !important;
 }
 
 .placeholder {
@@ -178,14 +187,20 @@
   }
 
   .media {
-    border-right: 1.5px dashed rgba(43, 23, 15, 0.17);
+    border-right: 1px solid rgba(43, 23, 15, 0.1);
     border-bottom: 0;
-    padding: 0.75rem;
+    padding: 0.85rem 0.75rem;
   }
 
   .image {
-    max-width: 104px;
-    max-height: 120px;
+    max-width: 100%;
+    max-height: 112px;
+  }
+
+  .media :global(img),
+  .image :global(img) {
+    max-width: 100% !important;
+    max-height: 112px !important;
   }
 }
 
@@ -207,7 +222,7 @@
   }
 
   .card {
-    grid-template-columns: 96px minmax(0, 1fr);
+    grid-template-columns: 104px minmax(0, 1fr);
     min-height: 158px;
     border-radius: 1.25rem;
   }
