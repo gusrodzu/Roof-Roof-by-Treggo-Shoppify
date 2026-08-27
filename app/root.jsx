@@ -30,7 +30,7 @@ import storefrontFinalFixes from './styles/storefront-final-fixes.css?url';
 import screenshotCorrections from './styles/screenshot-corrections.css?url';
 import layoutQualitySystem from './styles/layout-quality-system.css?url';
 import cartAsidePolish from './styles/cart-aside-polish.css?url';
-import visualConsistencyFinal from './styles/visual-consistency-final.css?url';
+import finalVisualStability from './styles/final-visual-stability.css?url';
 import {PageLayout} from './components/PageLayout';
 
 import {ProductComparisonProvider} from './components/ProductComparison';
@@ -58,7 +58,7 @@ export function links() {
     {rel: 'stylesheet', href: screenshotCorrections},
     {rel: 'stylesheet', href: layoutQualitySystem},
     {rel: 'stylesheet', href: cartAsidePolish},
-    {rel: 'stylesheet', href: visualConsistencyFinal},
+    {rel: 'stylesheet', href: finalVisualStability},
     {rel: 'preconnect', href: 'https://cdn.shopify.com'},
     {rel: 'preconnect', href: 'https://shop.app'},
     {rel: 'icon', type: 'image/png', href: favicon},

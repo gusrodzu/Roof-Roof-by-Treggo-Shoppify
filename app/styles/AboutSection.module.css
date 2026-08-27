@@ -155,10 +155,12 @@
   margin-block: clamp(3rem, 8vw, 7rem) 2rem;
 }
 
-.statementCopy h3 {
+.statementCard .statementCopy h3 {
   max-width: 610px;
   margin: 0;
-  color: #fff;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  background: none !important;
   font-size: clamp(2rem, 4.1vw, 3.65rem);
   line-height: 1.02;
   letter-spacing: -0.045em;
@@ -546,19 +548,4 @@
     width: 44px;
     height: 44px;
   }
-}
-
-
-/* Final dark-card contrast */
-.statementCopy h3,
-.statementCopy h3 * {
-  color: #fffdf8 !important;
-  -webkit-text-fill-color: #fffdf8 !important;
-  background: none !important;
-}
-
-.statementCopy p,
-.statementLabel,
-.statementSignature span {
-  color: rgba(255, 253, 248, 0.76) !important;
 }

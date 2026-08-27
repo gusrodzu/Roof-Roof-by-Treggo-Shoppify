@@ -415,158 +415,79 @@ function FilterDrawer({open, onClose, children}) {
   const closeButtonRef = useRef(null);
 
   useEffect(() => {
-    if (!open) {
-      document.body.style.overflow = '';
-      return undefined;
-    }
+    if (!open) return undefined;
 
     const previousFocus = document.activeElement;
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') onClose();
     };
 
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('rr-dialog-open');
     document.addEventListener('keydown', handleKeyDown);
     requestAnimationFrame(() => closeButtonRef.current?.focus());
 
     return () => {
-      document.body.style.overflow = '';
+      document.body.classList.remove('rr-dialog-open');
       document.removeEventListener('keydown', handleKeyDown);
       previousFocus?.focus?.();
     };
   }, [open, onClose]);
 
-  return (
-    <>
-      {/* Overlay */}
-      <div
+  if (!open || typeof document === 'undefined') return null;
+
+  return createPortal(
+    <div className="rr-mobile-filter-dialog" role="presentation">
+      <button
+        aria-label="Cerrar filtros"
         className="rr-mobile-filter-overlay"
         onClick={onClose}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 100,
-          background: 'rgba(44,24,16,0.4)',
-          opacity: open ? 1 : 0,
-          pointerEvents: open ? 'auto' : 'none',
-          transition: 'opacity 0.25s ease',
-        }}
-        aria-hidden="true"
+        type="button"
       />
 
-      {/* Panel */}
-      <div
-        className={`rr-mobile-filter-sheet${open ? ' is-open' : ''}`}
-        role="dialog"
-        aria-modal="true"
+      <section
         aria-label="Filtros de productos"
-        aria-hidden={!open}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          zIndex: 101,
-          width: '85vw',
-          maxWidth: '320px',
-          background: '#f5f7fa',
-          transform: open ? 'translateX(0)' : 'translateX(-100%)',
-          transition: 'transform 0.3s ease',
-          overflowY: 'auto',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
+        aria-modal="true"
+        className="rr-mobile-filter-sheet is-open"
+        role="dialog"
       >
-        {/* Header del drawer */}
-        <div
-          className="rr-mobile-filter-sheet__header"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '1rem',
-            background: '#fff',
-            borderBottom: '1px solid #e8e4dc',
-            position: 'sticky',
-            top: 0,
-            zIndex: 1,
-          }}
-        >
-          <span style={{fontSize: '1rem', fontWeight: 700, color: '#2C1810'}}>
-            Filtros
-          </span>
+        <header className="rr-mobile-filter-sheet__header">
+          <strong>Filtros</strong>
           <button
             ref={closeButtonRef}
-            onClick={onClose}
             aria-label="Cerrar filtros"
-            style={{
-              background: 'rgba(44,24,16,0.07)',
-              border: 'none',
-              borderRadius: '50%',
-              width: '36px',
-              height: '36px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              color: '#2C1810',
-            }}
+            className="rr-mobile-filter-sheet__close"
+            onClick={onClose}
+            type="button"
           >
             <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
+              aria-hidden="true"
               fill="none"
+              height="18"
               stroke="currentColor"
               strokeWidth="2.5"
-              aria-hidden="true"
+              viewBox="0 0 24 24"
+              width="18"
             >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
+              <line x1="18" x2="6" y1="6" y2="18" />
+              <line x1="6" x2="18" y1="6" y2="18" />
             </svg>
           </button>
-        </div>
+        </header>
 
-        {/* Contenido */}
-        <div
-          className="rr-mobile-filter-sheet__body"
-          style={{padding: '1rem', flex: 1}}
-        >
-          {children}
-        </div>
+        <div className="rr-mobile-filter-sheet__body">{children}</div>
 
-        {/* Footer */}
-        <div
-          className="rr-mobile-filter-sheet__footer"
-          style={{
-            padding: '1rem',
-            background: '#fff',
-            borderTop: '1px solid #e8e4dc',
-            position: 'sticky',
-            bottom: 0,
-          }}
-        >
+        <footer className="rr-mobile-filter-sheet__footer">
           <button
             className="rr-button rr-button--dark rr-mobile-filter-sheet__apply"
             onClick={onClose}
-            style={{
-              width: '100%',
-              background: '#2C1810',
-              color: '#F5A623',
-              border: 'none',
-              borderRadius: '0.625rem',
-              padding: '0.875rem',
-              fontSize: '0.9375rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-            }}
+            type="button"
           >
             Ver resultados
           </button>
-        </div>
-      </div>
-    </>
+        </footer>
+      </section>
+    </div>,
+    document.body,
   );
 }
 

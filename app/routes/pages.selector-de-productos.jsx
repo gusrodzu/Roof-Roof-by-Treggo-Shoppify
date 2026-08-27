@@ -181,7 +181,7 @@ export default function ProductSelectorPage() {
 
   return (
     <div className="rr-brand-page">
-      <section className="rr-brand-hero">
+      <section className="rr-brand-hero rr-selector-hero">
         <div className="rr-brand-hero__grid">
           <div className="rr-brand-hero__copy">
             <span className="rr-kicker">Compra guiada</span>
@@ -219,7 +219,7 @@ export default function ProductSelectorPage() {
       </section>
 
       <section
-        className="rr-brand-section rr-brand-section--white"
+        className="rr-brand-section rr-brand-section--white rr-selector-section"
         id="selector"
       >
         <div className="rr-brand-page__inner rr-selector-shell">

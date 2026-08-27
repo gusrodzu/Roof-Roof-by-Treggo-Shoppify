@@ -1,0 +1,389 @@
+/* ============================================================
+   Roof Roof — Final visual stability layer
+   Corrige los casos reportados en móvil sin alterar la lógica.
+   Esta hoja debe cargarse al final de la cascada.
+   ============================================================ */
+
+:root {
+  --rr-final-ink: #17120f;
+  --rr-final-paper: #fffdf8;
+  --rr-final-cream: #fff7e5;
+  --rr-final-border: #4b382f;
+  --rr-final-accent: #ff9f1c;
+  --rr-final-nav-space: calc(88px + env(safe-area-inset-bottom, 0px));
+}
+
+/* ---------- Texto y contraste ---------- */
+.rr-selector-hero:not(.rr-brand-hero--dark) .rr-brand-hero__copy h1,
+.rr-selector-hero:not(.rr-brand-hero--dark) .rr-brand-hero__copy h2,
+.rr-selector-hero:not(.rr-brand-hero--dark) .rr-brand-hero__copy h3 {
+  color: var(--rr-final-ink) !important;
+  -webkit-text-fill-color: var(--rr-final-ink) !important;
+  background: none !important;
+  background-image: none !important;
+  text-shadow: none !important;
+}
+
+.rr-selector-hero:not(.rr-brand-hero--dark) .rr-brand-hero__copy > p {
+  color: #6c5b52 !important;
+  -webkit-text-fill-color: #6c5b52 !important;
+}
+
+.rr-selector-hero .rr-brand-hero__panel :where(strong, span) {
+  color: var(--rr-final-ink) !important;
+  -webkit-text-fill-color: var(--rr-final-ink) !important;
+}
+
+/* ---------- Filosofía: superficie oscura ---------- */
+body.rr-site [class*='statementCard'] [class*='statementCopy'] h3,
+body.rr-site [class*='statementCard'] [class*='statementTop'] span,
+body.rr-site [class*='statementCard'] [class*='statementSignature'] span {
+  background: none !important;
+  background-image: none !important;
+  color: #fffdf8 !important;
+  -webkit-text-fill-color: #fffdf8 !important;
+}
+
+body.rr-site [class*='statementCard'] [class*='statementCopy'] p {
+  color: rgba(255, 253, 248, 0.78) !important;
+  -webkit-text-fill-color: rgba(255, 253, 248, 0.78) !important;
+}
+
+/* ---------- Footer: títulos legibles y columnas estables ---------- */
+.rr-footer__grid {
+  grid-template-columns: minmax(280px, 1.5fr) repeat(3, minmax(180px, 0.85fr)) !important;
+  align-items: start !important;
+}
+
+.rr-footer__grid > * {
+  min-width: 0 !important;
+}
+
+.rr-footer__title {
+  max-width: 14ch;
+  margin: 0 0 1rem !important;
+  color: #fffdf8 !important;
+  -webkit-text-fill-color: #fffdf8 !important;
+  font-size: clamp(1rem, 1.2vw, 1.2rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
+
+.rr-footer__links a,
+.rr-footer__links .rr-disabled-link {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+/* ---------- Promociones: dos cards desktop, carrusel compacto móvil ---------- */
+.rr-promo-section .rr-promo-grid.rr-promo-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+@media (max-width: 767px) {
+  .rr-promo-section {
+    margin: 0.75rem !important;
+    padding: 1.15rem !important;
+    padding-bottom: 1.25rem !important;
+    overflow: hidden !important;
+  }
+
+  .rr-promo-section__title {
+    margin-bottom: 0.9rem !important;
+    font-size: clamp(1.65rem, 8vw, 2.15rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  .rr-promo-section .rr-promo-grid.rr-promo-grid--two {
+    display: grid !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: min(82vw, 330px) !important;
+    grid-template-columns: none !important;
+    gap: 0.85rem !important;
+    margin-inline: -0.15rem !important;
+    padding: 0.15rem 0.15rem 0.8rem !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-padding-inline: 0.15rem;
+    scroll-snap-type: x mandatory !important;
+    scrollbar-width: none;
+  }
+
+  .rr-promo-section .rr-promo-grid.rr-promo-grid--two::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rr-promo-section .rr-promo-grid--two > * {
+    width: auto !important;
+    min-width: 0 !important;
+    scroll-snap-align: center !important;
+  }
+
+  .rr-promo-section .rr-promo-card {
+    min-height: 0 !important;
+    aspect-ratio: 4 / 3 !important;
+    padding: 1rem !important;
+  }
+
+  .rr-promo-card__image {
+    object-position: center center !important;
+  }
+
+  .rr-promo-card__cta {
+    min-height: 46px !important;
+    padding: 0.7rem 1rem !important;
+    font-size: 0.88rem !important;
+  }
+}
+
+/* ---------- Selector: densidad, lectura y flujo móvil ---------- */
+.rr-selector-section,
+.rr-selector-section .rr-brand-page__inner,
+.rr-selector-shell,
+.rr-selector-card {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+.rr-selector-card {
+  align-self: start !important;
+}
+
+.rr-selector-actions {
+  position: static !important;
+  inset: auto !important;
+  z-index: auto !important;
+  margin-top: 1rem !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+@media (max-width: 767px) {
+  .rr-selector-hero {
+    margin: 0.75rem !important;
+    padding: 1.15rem !important;
+  }
+
+  .rr-selector-hero .rr-brand-hero__grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.9rem !important;
+  }
+
+  .rr-selector-hero .rr-brand-hero__copy h1 {
+    max-width: 12ch;
+    font-size: clamp(2rem, 10vw, 3rem) !important;
+    line-height: 0.98 !important;
+  }
+
+  .rr-selector-hero .rr-brand-hero__copy > p {
+    margin-top: 0.85rem !important;
+    font-size: 0.98rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .rr-selector-hero .rr-brand-hero__actions {
+    margin-top: 1rem !important;
+    gap: 0.6rem !important;
+  }
+
+  .rr-selector-hero .rr-brand-hero__panel {
+    min-height: 240px !important;
+    padding: 1.25rem !important;
+  }
+
+  .rr-selector-hero .rr-brand-hero__panel-icon {
+    width: 58px !important;
+    height: 58px !important;
+    margin-bottom: 2.25rem !important;
+  }
+
+  .rr-selector-hero .rr-brand-hero__panel strong {
+    font-size: clamp(1.65rem, 8vw, 2.15rem) !important;
+    line-height: 0.98 !important;
+  }
+
+  .rr-selector-section {
+    padding: 1rem 0.75rem calc(1.5rem + var(--rr-final-nav-space)) !important;
+  }
+
+  .rr-selector-shell {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .rr-selector-progress {
+    position: static !important;
+    margin-bottom: 0.8rem !important;
+    padding: 1rem !important;
+  }
+
+  .rr-selector-card {
+    width: 100% !important;
+    padding: 1rem !important;
+  }
+
+  .rr-selector-card h2 {
+    font-size: clamp(1.85rem, 9vw, 2.55rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  .rr-selector-options {
+    margin-top: 1rem !important;
+    gap: 0.65rem !important;
+  }
+
+  .rr-selector-option {
+    min-height: 74px !important;
+    padding: 0.75rem 0.85rem !important;
+  }
+
+  .rr-selector-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.55rem !important;
+  }
+
+  .rr-selector-actions > * {
+    width: 100% !important;
+  }
+}
+
+/* ---------- Filtros móviles: overlay y panel siempre sincronizados ---------- */
+body.rr-dialog-open {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+.rr-mobile-filter-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  display: grid;
+  align-items: end;
+  pointer-events: none;
+}
+
+.rr-mobile-filter-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: rgba(23, 18, 15, 0.55) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  backdrop-filter: blur(3px);
+}
+
+.rr-mobile-filter-sheet {
+  position: relative !important;
+  inset: auto !important;
+  z-index: 1 !important;
+  display: grid !important;
+  grid-template-rows: auto minmax(0, 1fr) auto !important;
+  width: min(100%, 560px) !important;
+  max-width: 100% !important;
+  height: min(86dvh, 760px) !important;
+  max-height: calc(100dvh - 1rem) !important;
+  margin-inline: auto !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 2px solid var(--rr-final-border) !important;
+  border-bottom: 0 !important;
+  border-radius: 1.5rem 1.5rem 0 0 !important;
+  background: var(--rr-final-paper) !important;
+  box-shadow: 0 -20px 60px rgba(23, 18, 15, 0.28) !important;
+  transform: none !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  animation: rr-filter-sheet-in 180ms ease-out both;
+}
+
+.rr-mobile-filter-sheet__header,
+.rr-mobile-filter-sheet__footer {
+  position: relative !important;
+  inset: auto !important;
+  z-index: 2;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 1rem !important;
+  background: var(--rr-final-paper) !important;
+}
+
+.rr-mobile-filter-sheet__header {
+  border-bottom: 1px solid rgba(75, 56, 47, 0.16) !important;
+}
+
+.rr-mobile-filter-sheet__header strong {
+  color: var(--rr-final-ink) !important;
+  font-size: 1.1rem !important;
+}
+
+.rr-mobile-filter-sheet__close {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  flex: 0 0 44px;
+  padding: 0;
+  border: 1.5px solid var(--rr-final-border);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--rr-final-ink);
+}
+
+.rr-mobile-filter-sheet__body {
+  min-height: 0 !important;
+  padding: 0.85rem 1rem !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rr-mobile-filter-sheet__footer {
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px)) !important;
+  border-top: 1px solid rgba(75, 56, 47, 0.16) !important;
+}
+
+.rr-mobile-filter-sheet__apply {
+  width: 100% !important;
+}
+
+@keyframes rr-filter-sheet-in {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ---------- Evitar que la navegación inferior tape contenido ---------- */
+@media (max-width: 767px) {
+  .rr-page-main,
+  .rr-home,
+  .rr-brand-page,
+  .rr-collection-page,
+  .rr-product-page {
+    padding-bottom: var(--rr-final-nav-space) !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1180px) {
+  .rr-footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .rr-footer__brand {
+    grid-column: 1 / -1;
+  }
+}
