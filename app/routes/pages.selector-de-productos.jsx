@@ -225,7 +225,18 @@ export default function ProductSelectorPage() {
         <div className="rr-brand-page__inner rr-selector-shell">
           <aside className="rr-selector-progress">
             <span className="rr-kicker">Tu recomendación</span>
-            <h2>{isResult ? 'Resultado listo' : 'Tu avance'}</h2>
+            <h2
+              className={`rr-selector-progress__title${isResult ? ' is-result' : ''}`}
+            >
+              {isResult ? (
+                <>
+                  <span>Resultado</span>{' '}
+                  <span>listo</span>
+                </>
+              ) : (
+                'Tu avance'
+              )}
+            </h2>
             <p>Selecciona la opción más cercana a tu situación.</p>
             <div className="rr-selector-progress__bar">
               <span style={{width: `${progress}%`}} />
