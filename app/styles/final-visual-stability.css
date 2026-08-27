@@ -3414,3 +3414,48 @@ body.rr-site .rr-experience--tools .rr-section-heading--split > p {
     padding: 0 !important;
   }
 }
+
+/* ========================================================================== 
+   CART EMPTY STATE — FIX OVERSIZED CTA ICON / BUTTON
+   ========================================================================== */
+body.rr-site .rr-drawer-cart--aside .rr-drawer-cart__empty > svg:first-child {
+  width: min(160px, 45vw) !important;
+  height: auto !important;
+  flex: 0 0 auto !important;
+}
+
+body.rr-site .rr-drawer-cart--aside .rr-drawer-cart__empty > a {
+  display: inline-flex !important;
+  width: auto !important;
+  max-width: 100% !important;
+  text-decoration: none !important;
+}
+
+body.rr-site .rr-drawer-cart--aside .rr-drawer-cart__empty > a .rr-button {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  min-height: 52px !important;
+  padding: 0.85rem 1.2rem !important;
+  gap: 0.65rem !important;
+  font-size: 0.95rem !important;
+  line-height: 1.1 !important;
+  white-space: nowrap !important;
+  box-shadow: 3px 4px 0 rgba(43, 23, 15, 0.13) !important;
+}
+
+body.rr-site .rr-drawer-cart--aside .rr-drawer-cart__empty > a .rr-button svg {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  flex: 0 0 14px !important;
+}
+
+@media (max-width: 640px) {
+  body.rr-site .rr-drawer-cart--aside .rr-drawer-cart__empty > a .rr-button {
+    min-height: 50px !important;
+    padding: 0.8rem 1.05rem !important;
+    font-size: 0.9rem !important;
+  }
+}
