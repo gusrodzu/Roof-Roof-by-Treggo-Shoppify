@@ -3297,3 +3297,120 @@ body.rr-site .rr-brand-note > svg {
 body.rr-site .rr-brand-note > svg * {
   stroke: currentColor !important;
 }
+
+/* ========================================================================== 
+   HOME ORIENTATION HEADING — CONTROLLED LINE BREAKS
+   ========================================================================== */
+body.rr-site .rr-experience--tools .rr-section-heading--split {
+  grid-template-columns: minmax(0, 1.28fr) minmax(300px, 0.72fr) !important;
+  align-items: end !important;
+  gap: clamp(2rem, 5vw, 5rem) !important;
+}
+
+body.rr-site .rr-experience--tools .rr-tools-heading-title {
+  display: flex !important;
+  max-width: 760px !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  margin: 0 !important;
+  font-size: clamp(2.6rem, 4.45vw, 4.35rem) !important;
+  line-height: 0.96 !important;
+  letter-spacing: -0.052em !important;
+  hyphens: none !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  text-wrap: nowrap !important;
+}
+
+body.rr-site .rr-experience--tools .rr-tools-heading-title > span {
+  display: block !important;
+  white-space: nowrap !important;
+}
+
+body.rr-site .rr-experience--tools .rr-section-heading--split > p {
+  max-width: 430px !important;
+  padding-bottom: 0.25rem !important;
+  font-size: clamp(1rem, 1.2vw, 1.1rem) !important;
+  line-height: 1.65 !important;
+}
+
+@media (max-width: 1024px) {
+  body.rr-site .rr-experience--tools .rr-section-heading--split {
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr) !important;
+    gap: 2.2rem !important;
+  }
+
+  body.rr-site .rr-experience--tools .rr-tools-heading-title {
+    font-size: clamp(2.35rem, 5.6vw, 3.85rem) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  body.rr-site .rr-experience--tools .rr-section-heading--split {
+    grid-template-columns: 1fr !important;
+    align-items: start !important;
+    gap: 1rem !important;
+  }
+
+  body.rr-site .rr-experience--tools .rr-tools-heading-title {
+    font-size: clamp(2.15rem, 10vw, 3.1rem) !important;
+    line-height: 0.98 !important;
+    text-wrap: balance !important;
+  }
+
+  body.rr-site .rr-experience--tools .rr-tools-heading-title > span {
+    white-space: normal !important;
+  }
+
+  body.rr-site .rr-experience--tools .rr-section-heading--split > p {
+    max-width: 38rem !important;
+    padding-bottom: 0 !important;
+    font-size: 0.98rem !important;
+    line-height: 1.6 !important;
+  }
+}
+
+/* ========================================================================== 
+   HOME ORIENTATION HEADING — FINAL DESKTOP SPACING
+   ========================================================================== */
+@media (min-width: 1101px) {
+  body.rr-site .rr-experience--tools .rr-section-heading--split {
+    grid-template-columns: minmax(560px, 620px) minmax(340px, 420px) !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    column-gap: clamp(5rem, 7vw, 8rem) !important;
+  }
+
+  body.rr-site .rr-experience--tools .rr-tools-heading-title {
+    width: 100% !important;
+    max-width: 620px !important;
+    font-size: clamp(2.85rem, 4vw, 4.05rem) !important;
+  }
+
+  body.rr-site .rr-experience--tools .rr-section-heading--split > p {
+    width: 100% !important;
+    max-width: 420px !important;
+    justify-self: end !important;
+    align-self: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1100px) {
+  body.rr-site .rr-experience--tools .rr-section-heading--split {
+    grid-template-columns: 1fr !important;
+    align-items: start !important;
+    gap: 1.5rem !important;
+  }
+
+  body.rr-site .rr-experience--tools .rr-tools-heading-title {
+    max-width: 720px !important;
+  }
+
+  body.rr-site .rr-experience--tools .rr-section-heading--split > p {
+    max-width: 620px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}

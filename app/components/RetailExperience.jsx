@@ -80,8 +80,10 @@ export function RetailExperience() {
               <span className="rr-kicker">
                 Una tienda que te ayuda a elegir
               </span>
-              <h2 id="rr-tools-title">
-                Más orientación, menos compras a ciegas
+              <h2 id="rr-tools-title" className="rr-tools-heading-title">
+                <span>Más orientación,</span>
+                <span>menos compras</span>
+                <span>a ciegas</span>
               </h2>
             </div>
             <p>
