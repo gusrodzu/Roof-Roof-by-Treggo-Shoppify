@@ -3471,3 +3471,57 @@ body.rr-site .rr-footer__mobile-column summary {
   background-image: none !important;
   text-shadow: none !important;
 }
+
+/* ========================================================================== 
+   HOME HERO — MOBILE BANNERS ALIGNED TO BOTH PAGE EDGES
+   ========================================================================== */
+@media (max-width: 767px) {
+  body.rr-site .rr-home-hero {
+    box-sizing: border-box !important;
+    width: calc(100% - 1.5rem) !important;
+    max-width: calc(100% - 1.5rem) !important;
+    margin: 0.75rem auto 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  body.rr-site .rr-home-hero__grid,
+  body.rr-site .rr-home-hero__mobile-side {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: 0 !important;
+  }
+
+  body.rr-site .rr-home-hero__grid {
+    display: block !important;
+  }
+
+  body.rr-site .rr-home-hero__mobile-side {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.65rem !important;
+    margin-top: 0.65rem !important;
+    padding: 0 0 0.25rem !important;
+  }
+
+  body.rr-site .rr-home-hero__main,
+  body.rr-site .rr-home-hero__mobile-side > .rr-home-hero__side-card {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 390px) {
+  body.rr-site .rr-home-hero {
+    width: calc(100% - 1rem) !important;
+    max-width: calc(100% - 1rem) !important;
+  }
+
+  body.rr-site .rr-home-hero__mobile-side {
+    gap: 0.5rem !important;
+  }
+}
