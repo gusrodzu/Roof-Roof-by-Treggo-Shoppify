@@ -204,7 +204,7 @@ export default function ProductSelectorPage() {
           </div>
           <div className="rr-brand-hero__panel">
             <span className="rr-brand-hero__panel-icon">
-              <ExperienceIcon name="sparkles" size={38} />
+              <ExperienceIcon name="sparkles" size={28} />
             </span>
             <strong>
               Menos dudas.
@@ -279,8 +279,8 @@ export default function ProductSelectorPage() {
           ) : (
             <div className="rr-selector-card">
               <div className="rr-selector-result__hero">
-                <span className="rr-brand-icon">
-                  <ExperienceIcon name={result.icon} size={32} />
+                <span className="rr-brand-icon rr-selector-result__icon">
+                  <ExperienceIcon name={result.icon} size={28} />
                 </span>
                 <div className="rr-selector-result__title-row">
                   <h2>{result.title}</h2>
@@ -295,7 +295,7 @@ export default function ProductSelectorPage() {
                   <span>{labelFor('need', answers.need)}</span>
                 </div>
               </div>
-              <div className="rr-brand-card" style={{marginTop: '1rem'}}>
+              <div className="rr-brand-card rr-selector-result__checklist">
                 <h3>Antes de elegir, revisa</h3>
                 <ul className="rr-brand-list">
                   {result.checks.map((check) => (

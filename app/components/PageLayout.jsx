@@ -309,18 +309,21 @@ function SearchAside() {
 
 /* ── Mobile menu aside ── */
 function MobileMenuAside({header, publicStoreDomain}) {
+  /*
+   * El menú visual de Roof Roof usa sus propias rutas y no depende de que
+   * Shopify tenga creado el menú `main-menu`. Antes, si `header.menu` venía
+   * vacío, el botón hamburguesa cambiaba el estado del Aside pero el panel no
+   * existía en el DOM, por eso en móvil parecía que no funcionaba.
+   */
   return (
-    header.menu &&
-    header.shop.primaryDomain?.url && (
-      <Aside type="mobile" heading="Menú">
-        <HeaderMenu
-          menu={header.menu}
-          viewport="mobile"
-          primaryDomainUrl={header.shop.primaryDomain.url}
-          publicStoreDomain={publicStoreDomain}
-        />
-      </Aside>
-    )
+    <Aside type="mobile" heading="Menú">
+      <HeaderMenu
+        menu={header?.menu ?? null}
+        viewport="mobile"
+        primaryDomainUrl={header?.shop?.primaryDomain?.url ?? ''}
+        publicStoreDomain={publicStoreDomain}
+      />
+    </Aside>
   );
 }
 

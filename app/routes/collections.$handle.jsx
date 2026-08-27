@@ -590,7 +590,7 @@ export default function CollectionRoute() {
       >
         <div
           style={{
-            maxWidth: '1280px',
+            maxWidth: '1600px',
             margin: '0 auto',
             display: 'flex',
             alignItems: 'center',
@@ -644,7 +644,7 @@ export default function CollectionRoute() {
       <div
         className="rr-collection-layout"
         style={{
-          maxWidth: '1280px',
+          maxWidth: '1600px',
           margin: '0 auto',
           padding: 'clamp(1rem, 2vw, 1.75rem)',
           display: 'grid',
@@ -653,22 +653,22 @@ export default function CollectionRoute() {
           alignItems: 'start',
         }}
       >
-        {/* ── SIDEBAR DESKTOP ── */}
-        {!isMobile && (
-          <aside
-            className="rr-filter-sidebar"
-            style={{
-              position: 'sticky',
-              top: 'calc(var(--header-height, 0px) + 1rem)',
-              alignSelf: 'start',
-              width: '220px',
-              minWidth: 0,
-              overflow: 'auto',
-            }}
-          >
-            <SidebarContent {...sidebarProps} />
-          </aside>
-        )}
+        {/* ── SIDEBAR DESKTOP ──
+            Se renderiza siempre y CSS decide cuándo mostrarla. Esto evita que
+            el HTML SSR muestre el panel de escritorio durante la hidratación
+            en pantallas móviles. */}
+        <aside
+          className="rr-filter-sidebar"
+          style={{
+            position: 'sticky',
+            top: 'calc(var(--header-height, 0px) + 1rem)',
+            alignSelf: 'start',
+            width: '220px',
+            minWidth: 0,
+          }}
+        >
+          <SidebarContent {...sidebarProps} />
+        </aside>
 
         {/* ── ÁREA PRINCIPAL ── */}
         <main
@@ -1018,10 +1018,11 @@ export default function CollectionRoute() {
           ) : viewMode === 'grid' ? (
             <div
               className="rr-products-grid"
+              data-product-count={filtered.length}
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 320px))',
-                justifyContent: 'start',
+                '--rr-grid-columns': '5',
+                justifyContent: 'stretch',
                 gap: 'clamp(0.875rem, 1.5vw, 1.25rem)',
               }}
             >
@@ -1265,6 +1266,7 @@ function QuickViewModal({product, price, compare, discount, onClose}) {
           }}
         >
           <p
+            className="rr-collection-card__eyebrow"
             style={{
               fontSize: '0.6875rem',
               fontWeight: 700,
@@ -1673,6 +1675,7 @@ function ProductCard({product, isMobile}) {
 
       <article
         className="rr-collection-card"
+        data-available={product.availableForSale ? 'true' : 'false'}
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -1796,61 +1799,43 @@ function ProductCard({product, isMobile}) {
             </span>
           )}
 
-          {/* Overlay Vista rápida — cubre toda la imagen, solo desktop */}
+          {/* Botón de detalle — sin máscara ni fondo sobre la imagen */}
           {!isMobile && (
             <button
+              className="rr-product-quick-view-trigger"
+              data-visible={imgHovered ? 'true' : 'false'}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 setQuickViewOpen(true);
               }}
-              aria-label="Vista rápida"
+              aria-label={`Ver más sobre ${product.title}`}
               style={{
                 position: 'absolute',
-                inset: 0,
-                zIndex: 1,
-                background: imgHovered
-                  ? 'rgba(44,24,16,0.48)'
-                  : 'rgba(44,24,16,0)',
-                border: 'none',
+                top: '50%',
+                left: '50%',
+                zIndex: 3,
+                width: 'auto',
+                minWidth: 'max-content',
+                padding: '0.5rem 1rem',
+                border: '1.5px solid #2C1810',
+                borderRadius: '999px',
+                background: '#2C1810',
+                color: '#fff',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                fontFamily: 'inherit',
+                lineHeight: 1,
                 cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
                 opacity: imgHovered ? 1 : 0,
-                transition: 'opacity 0.22s ease, background 0.22s ease',
+                pointerEvents: imgHovered ? 'auto' : 'none',
+                transform: imgHovered
+                  ? 'translate(-50%, -50%)'
+                  : 'translate(-50%, calc(-50% + 6px))',
+                transition: 'opacity 0.2s ease, transform 0.2s ease',
               }}
             >
-              <span
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.375rem',
-                  background: 'rgba(44,24,16,0.9)',
-                  color: '#fff',
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  padding: '0.4rem 0.875rem',
-                  borderRadius: '999px',
-                  letterSpacing: '0.2px',
-                  transform: imgHovered ? 'translateY(0)' : 'translateY(6px)',
-                  transition: 'transform 0.22s ease',
-                }}
-              >
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  aria-hidden="true"
-                >
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-                Vista rápida
-              </span>
+              Ver más
             </button>
           )}
         </div>
@@ -1867,6 +1852,7 @@ function ProductCard({product, isMobile}) {
           }}
         >
           <p
+            className="rr-collection-card__eyebrow"
             style={{
               fontSize: '0.6875rem',
               fontWeight: 700,
@@ -1880,6 +1866,7 @@ function ProductCard({product, isMobile}) {
           </p>
 
           <p
+            className="rr-collection-card__title"
             style={{
               fontSize: isMobile ? '0.75rem' : '0.8125rem',
               color: '#2C1810',
@@ -1924,6 +1911,7 @@ function ProductCard({product, isMobile}) {
           )}
 
           <div
+            className="rr-collection-card__price-row"
             style={{
               display: 'flex',
               alignItems: 'baseline',
@@ -1953,12 +1941,16 @@ function ProductCard({product, isMobile}) {
               )}
           </div>
 
-          {product.availableForSale && product.variants?.nodes?.[0]?.id && (
+          {product.availableForSale && product.variants?.nodes?.[0]?.id ? (
             <ProductCardButtons
               variantId={product.variants.nodes[0].id}
               triggerFly={triggerFly}
               openCart={open}
             />
+          ) : (
+            <div className="rr-collection-card__unavailable" aria-live="polite">
+              Producto agotado
+            </div>
           )}
         </div>
       </article>

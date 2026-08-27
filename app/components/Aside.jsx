@@ -73,7 +73,7 @@ export function Aside({children, heading, type}) {
     <>
       {/* Overlay oscuro */}
       <div
-        className="rr-aside-overlay"
+        className={`rr-aside-overlay rr-aside-overlay--${type}`}
         onClick={close}
         aria-hidden="true"
         style={{

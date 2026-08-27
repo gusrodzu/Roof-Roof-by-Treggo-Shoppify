@@ -1,0 +1,61 @@
+/* Roof Roof — corrección de visibilidad del menú móvil */
+
+.rr-aside--mobile {
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: min(100vw, 440px) !important;
+  max-width: 100vw !important;
+  height: 100dvh !important;
+  z-index: 1001 !important;
+  visibility: visible !important;
+}
+
+.rr-aside--mobile .rr-aside__content,
+.rr-aside--mobile .rr-mobile-menu {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 0 !important;
+}
+
+.rr-aside--mobile.is-open {
+  transform: translateX(0) !important;
+  pointer-events: auto !important;
+}
+
+.rr-aside--mobile:not(.is-open) {
+  pointer-events: none !important;
+}
+
+.rr-aside-overlay--mobile {
+  z-index: 1000 !important;
+}
+
+
+@media (max-width: 899px) {
+  .rr-mobile-header {
+    display: grid !important;
+  }
+
+  .rr-mobile-header__actions,
+  .rr-mobile-header__action {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .rr-mobile-header__actions {
+    display: flex !important;
+  }
+
+  .rr-mobile-header__action {
+    display: grid !important;
+    pointer-events: auto !important;
+  }
+}
+
+@media (min-width: 900px) {
+  .rr-aside--mobile,
+  .rr-aside-overlay--mobile {
+    display: none !important;
+  }
+}
