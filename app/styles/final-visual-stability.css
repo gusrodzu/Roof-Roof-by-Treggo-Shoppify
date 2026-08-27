@@ -3275,3 +3275,25 @@ body.rr-site .rr-brand-page > .rr-brand-hero:not(.rr-care-center-hero) .rr-brand
     font-size: clamp(1.7rem, 7vw, 2rem) !important;
   }
 }
+
+/* ========================================================================== 
+   GUIDE NOTE — GREEN SHIELD ICON
+   ========================================================================== */
+body.rr-site .rr-brand-note > svg {
+  display: grid !important;
+  place-items: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  padding: 8px !important;
+  border: 1.5px solid rgba(44, 154, 113, 0.26) !important;
+  border-radius: 999px !important;
+  background: rgba(230, 248, 238, 0.9) !important;
+  color: #2c9a71 !important;
+  box-shadow: none !important;
+}
+
+body.rr-site .rr-brand-note > svg * {
+  stroke: currentColor !important;
+}
