@@ -3595,3 +3595,88 @@ body.rr-site .trust-mobile-slider {
     animation: none !important;
   }
 }
+
+/* ========================================================================== 
+   HOME HERO SIDE BANNERS — HIGH-CONTRAST WHITE COPY
+   ========================================================================== */
+body.rr-site .rr-home-hero__side-card {
+  isolation: isolate !important;
+}
+
+body.rr-site .rr-home-hero__side-card::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 10, 6, 0.04) 28%,
+    rgba(20, 10, 6, 0.38) 64%,
+    rgba(20, 10, 6, 0.84) 100%
+  ) !important;
+}
+
+body.rr-site .rr-home-hero__side-card > img {
+  z-index: 0 !important;
+}
+
+body.rr-site .rr-home-hero__side-card > div:not(.rr-home-hero__side-card-content) {
+  z-index: 1 !important;
+}
+
+body.rr-site .rr-home-hero__side-card-content {
+  z-index: 2 !important;
+}
+
+body.rr-site .rr-home-hero__side-card-content p,
+body.rr-site .rr-home-hero__side-card-content h3 {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  background-image: none !important;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.72) !important;
+}
+
+body.rr-site .rr-home-hero__side-card-content p {
+  font-size: clamp(0.62rem, 0.8vw, 0.72rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.08em !important;
+  line-height: 1.2 !important;
+}
+
+body.rr-site .rr-home-hero__side-card-content h3 {
+  max-width: 95% !important;
+  margin-top: 0.3rem !important;
+  font-size: clamp(0.88rem, 1.15vw, 1.08rem) !important;
+  font-weight: 850 !important;
+  line-height: 1.18 !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+/* Orientation intro: preserve readable spacing and prevent collisions. */
+body.rr-site .rr-experience--tools .rr-tools-heading-title > span {
+  min-width: 0 !important;
+}
+
+body.rr-site .rr-experience--tools .rr-section-heading--split > p {
+  position: relative !important;
+  z-index: 1 !important;
+  margin-left: 0 !important;
+}
+
+@media (max-width: 767px) {
+  body.rr-site .rr-home-hero__side-card-content {
+    padding: 0.75rem !important;
+  }
+
+  body.rr-site .rr-home-hero__side-card-content p {
+    font-size: 0.62rem !important;
+  }
+
+  body.rr-site .rr-home-hero__side-card-content h3 {
+    font-size: 0.84rem !important;
+    line-height: 1.15 !important;
+  }
+}

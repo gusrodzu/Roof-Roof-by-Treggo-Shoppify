@@ -309,6 +309,7 @@ function SideCard({card, height}) {
         </>
       )}
       <div
+        className="rr-home-hero__side-card-content"
         style={{
           position: 'absolute',
           bottom: 0,
