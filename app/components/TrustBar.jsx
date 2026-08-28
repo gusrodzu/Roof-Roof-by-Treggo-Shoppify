@@ -1,3 +1,5 @@
+import {useEffect, useState} from 'react';
+
 const TRUST_ITEMS = [
   {
     label: 'Envío gratis desde $599',
@@ -64,18 +66,37 @@ const TRUST_ITEMS = [
 ];
 
 export function TrustBar() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % TRUST_ITEMS.length);
+    }, 2600);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const activeItem = TRUST_ITEMS[currentIndex] ?? TRUST_ITEMS[0];
+
   return (
     <section
       className="trust-bar"
       aria-label="Beneficios de comprar en Roof Roof"
     >
-      <div className="trust-bar-inner">
+      <div className="trust-bar-inner trust-bar-inner--desktop">
         {TRUST_ITEMS.map(({label, icon}) => (
           <div className="trust-item" key={label}>
             <span className="trust-icon">{icon}</span>
             <span className="trust-label">{label}</span>
           </div>
         ))}
+      </div>
+
+      <div className="trust-mobile-slider" aria-live="polite">
+        <div className="trust-mobile-slide" key={activeItem.label}>
+          <span className="trust-icon">{activeItem.icon}</span>
+          <span className="trust-label">{activeItem.label}</span>
+        </div>
       </div>
     </section>
   );
