@@ -1,6 +1,6 @@
 import {useLoaderData, Link} from 'react-router';
 import {CartForm, Image, Money} from '@shopify/hydrogen';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useAside} from '~/components/Aside';
 import {ProductCompareButton} from '~/components/ProductComparison';
 import {ExperienceIcon} from '~/components/ExperienceIcon';
@@ -41,6 +41,7 @@ export default function ProductRoute() {
   const [mainImageIdx, setMainImageIdx] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [showInstallments, setShowInstallments] = useState(false);
+  const [isImageZoomOpen, setIsImageZoomOpen] = useState(false);
   const showMSI = true;
   const isMobile = useMediaQuery('(max-width: 767px)');
   const {open} = useAside();
@@ -172,16 +173,44 @@ export default function ProductRoute() {
               </span>
             )}
             {images[mainImageIdx] ? (
-              <Image
-                data={images[mainImageIdx]}
-                sizes="(min-width: 768px) 50vw, 100vw"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
-                  padding: '1rem',
-                }}
-              />
+              <>
+                <button
+                  type="button"
+                  className="rr-product-image-open"
+                  onClick={() => setIsImageZoomOpen(true)}
+                  aria-label={`Ampliar imagen de ${product.title}`}
+                >
+                  <Image
+                    data={images[mainImageIdx]}
+                    sizes="(min-width: 768px) 58vw, 100vw"
+                    className="rr-product-main-image"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      objectPosition: 'center',
+                    }}
+                  />
+                </button>
+                <button
+                  type="button"
+                  className="rr-product-zoom-trigger"
+                  onClick={() => setIsImageZoomOpen(true)}
+                  aria-label="Abrir zoom de la imagen"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    aria-hidden="true"
+                  >
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m20 20-4-4M11 8v6M8 11h6" />
+                  </svg>
+                  <span>Ampliar</span>
+                </button>
+              </>
             ) : (
               <div
                 style={{
@@ -1076,6 +1105,16 @@ export default function ProductRoute() {
         </section>
       )}
 
+      {isImageZoomOpen && images.length > 0 ? (
+        <ProductImageZoomModal
+          images={images}
+          activeIndex={mainImageIdx}
+          onIndexChange={setMainImageIdx}
+          onClose={() => setIsImageZoomOpen(false)}
+          productTitle={product.title}
+        />
+      ) : null}
+
       <div
         className="rr-mobile-purchase-bar"
         role="region"
@@ -1114,6 +1153,164 @@ export default function ProductRoute() {
             Agotado
           </Button>
         )}
+      </div>
+    </div>
+  );
+}
+
+function ProductImageZoomModal({
+  images,
+  activeIndex,
+  onIndexChange,
+  onClose,
+  productTitle,
+}) {
+  const [zoom, setZoom] = useState(1);
+  const activeImage = images[activeIndex] ?? images[0];
+  const hasMultipleImages = images.length > 1;
+
+  useEffect(() => {
+    setZoom(1);
+  }, [activeIndex]);
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') onClose();
+      if (event.key === 'ArrowLeft' && hasMultipleImages) {
+        onIndexChange((activeIndex - 1 + images.length) % images.length);
+      }
+      if (event.key === 'ArrowRight' && hasMultipleImages) {
+        onIndexChange((activeIndex + 1) % images.length);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activeIndex, hasMultipleImages, images.length, onClose, onIndexChange]);
+
+  const previousImage = () =>
+    onIndexChange((activeIndex - 1 + images.length) % images.length);
+  const nextImage = () => onIndexChange((activeIndex + 1) % images.length);
+  const decreaseZoom = () => setZoom((current) => Math.max(1, current - 0.5));
+  const increaseZoom = () => setZoom((current) => Math.min(3, current + 0.5));
+
+  return (
+    <div
+      className="rr-product-zoom-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Galería ampliada de ${productTitle}`}
+    >
+      <div
+        className="rr-product-zoom-modal__backdrop"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
+      <div className="rr-product-zoom-modal__panel">
+        <div className="rr-product-zoom-modal__toolbar">
+          <span className="rr-product-zoom-modal__counter">
+            Imagen {activeIndex + 1} de {images.length}
+          </span>
+
+          <div className="rr-product-zoom-modal__controls">
+            <button
+              type="button"
+              onClick={decreaseZoom}
+              disabled={zoom <= 1}
+              aria-label="Alejar imagen"
+            >
+              −
+            </button>
+            <button
+              type="button"
+              className="rr-product-zoom-modal__zoom-value"
+              onClick={() => setZoom(1)}
+              aria-label="Restablecer zoom"
+            >
+              {Math.round(zoom * 100)}%
+            </button>
+            <button
+              type="button"
+              onClick={increaseZoom}
+              disabled={zoom >= 3}
+              aria-label="Acercar imagen"
+            >
+              +
+            </button>
+            <button
+              type="button"
+              className="rr-product-zoom-modal__close"
+              onClick={onClose}
+              aria-label="Cerrar zoom"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+
+        <div className="rr-product-zoom-modal__viewport">
+          {hasMultipleImages ? (
+            <button
+              type="button"
+              className="rr-product-zoom-modal__nav rr-product-zoom-modal__nav--previous"
+              onClick={previousImage}
+              aria-label="Imagen anterior"
+            >
+              ‹
+            </button>
+          ) : null}
+
+          <div className="rr-product-zoom-modal__canvas">
+            <img
+              src={activeImage.url}
+              alt={activeImage.altText || productTitle}
+              className={zoom > 1 ? 'is-zoomed' : ''}
+              style={
+                zoom > 1
+                  ? {width: `${zoom * 100}%`, height: 'auto'}
+                  : undefined
+              }
+            />
+          </div>
+
+          {hasMultipleImages ? (
+            <button
+              type="button"
+              className="rr-product-zoom-modal__nav rr-product-zoom-modal__nav--next"
+              onClick={nextImage}
+              aria-label="Imagen siguiente"
+            >
+              ›
+            </button>
+          ) : null}
+        </div>
+
+        {hasMultipleImages ? (
+          <div className="rr-product-zoom-modal__thumbnails">
+            {images.map((image, index) => (
+              <button
+                type="button"
+                key={image.id ?? image.url}
+                className={index === activeIndex ? 'is-active' : ''}
+                onClick={() => onIndexChange(index)}
+                aria-label={`Ver imagen ${index + 1}`}
+                aria-current={index === activeIndex ? 'true' : undefined}
+              >
+                <img
+                  src={image.url}
+                  alt={image.altText || `${productTitle}, imagen ${index + 1}`}
+                />
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );
