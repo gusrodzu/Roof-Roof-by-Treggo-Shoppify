@@ -3680,3 +3680,174 @@ body.rr-site .rr-experience--tools .rr-section-heading--split > p {
     line-height: 1.15 !important;
   }
 }
+
+/* ========================================================================== 
+   PRODUCT PAGE — CREDIT CARD INSTALLMENT OPTIONS
+   ========================================================================== */
+body.rr-site .rr-product-installments {
+  width: 100%;
+  margin: 0 0 1rem;
+  overflow: hidden;
+  border: 1.5px solid rgba(77, 58, 49, 0.24);
+  border-radius: 1rem;
+  background: #fffdf8;
+  box-shadow: 3px 4px 0 rgba(43, 23, 15, 0.08);
+}
+
+body.rr-site .rr-product-installments__summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.9rem 1rem;
+}
+
+body.rr-site .rr-product-installments__icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  place-items: center;
+  border: 1.5px solid rgba(77, 58, 49, 0.2);
+  border-radius: 12px;
+  background: #fff2c7;
+  color: #8a5700;
+}
+
+body.rr-site .rr-product-installments__icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+body.rr-site .rr-product-installments__copy {
+  min-width: 0;
+}
+
+body.rr-site .rr-product-installments__eyebrow,
+body.rr-site .rr-product-installments__copy strong,
+body.rr-site .rr-product-installments__copy small {
+  display: block;
+}
+
+body.rr-site .rr-product-installments__eyebrow {
+  margin-bottom: 0.18rem;
+  color: #8a5700;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+body.rr-site .rr-product-installments__copy strong {
+  color: var(--rr-final-ink, #18110e);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+body.rr-site .rr-product-installments__copy strong span {
+  color: #b25e00;
+  white-space: nowrap;
+}
+
+body.rr-site .rr-product-installments__copy small {
+  margin-top: 0.18rem;
+  color: var(--rr-final-muted, #75665f);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+body.rr-site .rr-product-installments__toggle {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #9a5200;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+body.rr-site .rr-product-installments__toggle:hover {
+  background: #fff4d6;
+}
+
+body.rr-site .rr-product-installments__toggle svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 180ms ease;
+}
+
+body.rr-site .rr-product-installments__toggle[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+
+body.rr-site .rr-product-installments__details {
+  padding: 0 1rem 0.95rem;
+  border-top: 1px solid rgba(77, 58, 49, 0.12);
+}
+
+body.rr-site .rr-product-installments__details[hidden] {
+  display: none !important;
+}
+
+body.rr-site .rr-product-installments__table {
+  display: grid;
+  gap: 0;
+}
+
+body.rr-site .rr-product-installments__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 46px;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid rgba(77, 58, 49, 0.1);
+  color: var(--rr-final-ink, #18110e);
+  font-size: 0.82rem;
+}
+
+body.rr-site .rr-product-installments__row strong {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+body.rr-site .rr-product-installments__note {
+  margin: 0.75rem 0 0;
+  color: var(--rr-final-muted, #75665f);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 520px) {
+  body.rr-site .rr-product-installments__summary {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 0.85rem;
+  }
+
+  body.rr-site .rr-product-installments__toggle {
+    grid-column: 2;
+    justify-self: start;
+    min-height: 34px;
+    margin-top: 0.1rem;
+    padding: 0.35rem 0;
+  }
+
+  body.rr-site .rr-product-installments__details {
+    padding-inline: 0.85rem;
+  }
+
+  body.rr-site .rr-product-installments__row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}

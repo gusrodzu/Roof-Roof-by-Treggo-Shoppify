@@ -40,6 +40,7 @@ export default function ProductRoute() {
   const [selectedVariantIdx, setSelectedVariantIdx] = useState(0);
   const [mainImageIdx, setMainImageIdx] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [showInstallments, setShowInstallments] = useState(false);
   const showMSI = true;
   const isMobile = useMediaQuery('(max-width: 767px)');
   const {open} = useAside();
@@ -61,6 +62,21 @@ export default function ProductRoute() {
           100,
       )
     : null;
+
+  const priceAmount = Number.parseFloat(variant.price.amount) || 0;
+  const currencyCode = variant.price.currencyCode || 'MXN';
+  const formatPrice = (amount) =>
+    new Intl.NumberFormat('es-MX', {
+      style: 'currency',
+      currency: currencyCode,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(amount);
+  const installmentOptions = [3, 6].map((months) => ({
+    months,
+    monthlyAmount: priceAmount / months,
+  }));
+  const sixMonthPayment = priceAmount / 6;
 
   const productSchema = {
     '@context': 'https://schema.org',
@@ -544,66 +560,82 @@ export default function ProductRoute() {
             </div>
           )}
 
-          {/* Banner MSI */}
-          {showMSI && (
-            <div
-              style={{
-                background: '#fff8ee',
-                border: '1px solid #f0d490',
-                borderRadius: '0.75rem',
-                padding: '0.875rem 1rem',
-                display: 'flex',
-                alignItems: 'flex-start',
-                justifyContent: 'space-between',
-                gap: '0.75rem',
-                marginBottom: '1rem',
-              }}
+          {/* Opciones de pago con tarjeta */}
+          {showMSI && priceAmount > 0 && (
+            <section
+              className="rr-product-installments"
+              aria-label="Opciones de pago con tarjeta de crédito"
             >
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '0.75rem',
-                  alignItems: 'flex-start',
-                }}
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#d4891a"
-                  strokeWidth="1.8"
-                  style={{flexShrink: 0, marginTop: '2px'}}
-                  aria-hidden="true"
-                >
-                  <rect x="2" y="5" width="20" height="14" rx="2" />
-                  <line x1="2" y1="10" x2="22" y2="10" />
-                </svg>
-                <div>
-                  <p
-                    style={{
-                      fontSize: '0.875rem',
-                      fontWeight: 700,
-                      color: '#7a5200',
-                      margin: '0 0 0.2rem',
-                    }}
+              <div className="rr-product-installments__summary">
+                <span className="rr-product-installments__icon" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.9"
                   >
-                    Paga en 3 o 6 MSI
-                  </p>
-                  <p
-                    style={{fontSize: '0.8125rem', color: '#7a6a62', margin: 0}}
-                  >
-                    Hasta en <strong>6 mensualidades.</strong> Aceptamos Visa,
-                    Mastercard y más.
-                  </p>
+                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                    <path d="M2 10h20" />
+                    <path d="M6 15h4" />
+                  </svg>
+                </span>
+                <div className="rr-product-installments__copy">
+                  <span className="rr-product-installments__eyebrow">
+                    Tarjeta de crédito
+                  </span>
+                  <strong>
+                    Hasta 6 meses sin intereses de{' '}
+                    <span>{formatPrice(sixMonthPayment)}</span>
+                  </strong>
+                  <small>Precio total: {formatPrice(priceAmount)}</small>
                 </div>
+                <button
+                  type="button"
+                  className="rr-product-installments__toggle"
+                  onClick={() => setShowInstallments((current) => !current)}
+                  aria-expanded={showInstallments}
+                  aria-controls="rr-product-installment-options"
+                >
+                  {showInstallments ? 'Ocultar' : 'Ver opciones'}
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    aria-hidden="true"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
               </div>
-              {/* <button onClick={() => setShowMSI(false)} aria-label="Cerrar" style={{background: 'transparent', border: 'none', cursor: 'pointer', color: '#b0a49c', flexShrink: 0, padding: '0.25rem'}}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
-              </button> */}
-            </div>
+
+              <div
+                id="rr-product-installment-options"
+                className={`rr-product-installments__details${
+                  showInstallments ? ' is-open' : ''
+                }`}
+                hidden={!showInstallments}
+              >
+                <div className="rr-product-installments__table" role="list">
+                  {installmentOptions.map(({months, monthlyAmount}) => (
+                    <div
+                      className="rr-product-installments__row"
+                      role="listitem"
+                      key={months}
+                    >
+                      <span>{months} meses sin intereses</span>
+                      <strong>
+                        {months} × {formatPrice(monthlyAmount)}
+                      </strong>
+                    </div>
+                  ))}
+                </div>
+                <p className="rr-product-installments__note">
+                  Disponible con tarjetas participantes. La opción final y la
+                  aprobación se confirman durante el pago.
+                </p>
+              </div>
+            </section>
           )}
 
           {/* Banner Mercado Pago */}
